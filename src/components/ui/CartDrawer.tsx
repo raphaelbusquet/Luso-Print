@@ -43,7 +43,7 @@ export function CartDrawer({ open, onClose }: Props) {
       if (item.size) {
         return `${i + 1}. "${item.name}" — ${item.size}cm — ${item.mono ? item.nomeColorName : `Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`} — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}`
       }
-      const noteLine = item.note ? `\n   Família: ${item.note}` : ''
+      const noteLine = item.note ? `\n   ${item.note}` : ''
       return `${i + 1}. "${item.name}" — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${noteLine}`
     })
     const couponLine = couponCode ? `\nCupão: ${couponCode}` : ''
