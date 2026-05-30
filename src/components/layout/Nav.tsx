@@ -83,7 +83,7 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
           <img
             src="/assets/brand/lusoprint-thin.png"
             alt="Lusoprint"
-            style={{ height: 90, width: 'auto', maxWidth: 'none', flexShrink: 0, display: 'block', filter: 'invert(1) opacity(0.75)' }}
+            style={{ height: isMobile ? 60 : 90, width: 'auto', maxWidth: 'none', flexShrink: 0, display: 'block', filter: 'invert(1) opacity(0.75)' }}
           />
         </Link>
 
