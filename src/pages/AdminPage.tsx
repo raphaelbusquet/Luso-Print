@@ -42,6 +42,15 @@ export function AdminPage() {
     setPending(prev => ({ ...prev, [key]: !current }))
   }
 
+  const toggleRow = (material: string) => {
+    const allAvail = VISUAL_COLORS.every(c => getAvailable(material, c.name))
+    setPending(prev => {
+      const next = { ...prev }
+      VISUAL_COLORS.forEach(c => { next[pendingKey(material, c.name)] = !allAvail })
+      return next
+    })
+  }
+
   const pendingCount = Object.keys(pending).length
 
   const handleSave = async () => {
@@ -251,6 +260,9 @@ export function AdminPage() {
                       </div>
                     </th>
                   ))}
+                  <th style={{ padding: '10px 8px', borderBottom: '1px solid var(--rule)', whiteSpace: 'nowrap' }}>
+                    <span style={{ fontSize: 9, letterSpacing: '0.08em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>Linha</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -290,6 +302,32 @@ export function AdminPage() {
                         </td>
                       )
                     })}
+                    <td style={{ padding: '7px 8px', textAlign: 'center', borderBottom: '1px solid var(--rule)' }}>
+                      {(() => {
+                        const allAvail = VISUAL_COLORS.every(c => getAvailable(mat, c.name))
+                        const anyDirty = VISUAL_COLORS.some(c => pendingKey(mat, c.name) in pending)
+                        return (
+                          <button
+                            onClick={() => toggleRow(mat)}
+                            title={allAvail ? 'Marcar toda a linha fora de stock' : 'Repor toda a linha'}
+                            style={{
+                              width: 34, height: 34, borderRadius: 6,
+                              background: allAvail ? 'rgba(60,160,80,0.10)' : 'rgba(201,130,110,0.12)',
+                              border: anyDirty
+                                ? '2px dashed var(--terracotta)'
+                                : allAvail ? '1.5px solid rgba(60,160,80,0.45)' : '1.5px solid rgba(201,130,110,0.5)',
+                              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              transition: 'all 160ms',
+                            }}
+                          >
+                            {allAvail
+                              ? <span style={{ fontSize: 11, color: 'rgb(50,140,70)', lineHeight: 1 }}>✓✓</span>
+                              : <span style={{ fontSize: 11, color: 'var(--terracotta)', lineHeight: 1 }}>✕✕</span>
+                            }
+                          </button>
+                        )
+                      })()}
+                    </td>
                   </tr>
                 ))}
               </tbody>

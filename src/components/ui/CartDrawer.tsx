@@ -41,7 +41,8 @@ export function CartDrawer({ open, onClose }: Props) {
     const savings = discount > 0 ? `\nDesconto (10%): -€${(total - finalTotal).toFixed(2)}` : ''
     const lines = items.map((item, i) => {
       if (item.size) {
-        return `${i + 1}. "${item.name}" — ${item.size}cm — ${item.mono ? item.nomeColorName : `Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`} — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}`
+        const previewLine = item.previewUrl?.startsWith('http') ? `\n   Preview: ${item.previewUrl}` : ''
+        return `${i + 1}. "${item.name}" — ${item.size}cm — ${item.mono ? item.nomeColorName : `Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`} — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${previewLine}`
       }
       const noteLine = item.note ? `\n   ${item.note}` : ''
       return `${i + 1}. "${item.name}" — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${noteLine}`
@@ -164,6 +165,12 @@ export function CartDrawer({ open, onClose }: Props) {
                           {item.name.charAt(0)}
                         </span>
                       </div>
+                    ) : item.previewUrl ? (
+                      <div style={{
+                        width: 52, height: 62, borderRadius: 2,
+                        background: `url(${item.previewUrl}) center/cover no-repeat, var(--linen)`,
+                        border: '1px solid var(--rule)',
+                      }} />
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                         <div style={{ width: 28, height: 28, borderRadius: '50%', background: item.letraHex, border: '1px solid var(--rule)' }} title={item.letraColorName} />
