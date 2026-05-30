@@ -31,11 +31,11 @@ Deno.serve(async (req) => {
   const circleRow = allSteps.map(([_key, _s], i) => {
     const done = i <= currentIdx
     const isActive = i === currentIdx
-    const bg = done ? (isActive ? '#c9826e' : '#2b2722') : '#7a7066'
-    const lineColor = i < currentIdx ? '#2b2722' : '#8a8075'
+    const bg = done ? (isActive ? '#c9826e' : '#9e8a7a') : '#c8bdb6'
+    const lineColor = i < currentIdx ? '#9e8a7a' : '#c8bdb6'
     const inner = done
       ? `<span style="font-family:Arial,sans-serif;font-size:14px;color:#fff;font-weight:bold">&#10003;</span>`
-      : `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#ccc4bc"></span>`
+      : `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#a09488"></span>`
     const circle = `<td align="center" valign="middle" style="padding:0;width:40px">
       <table cellpadding="0" cellspacing="0" style="margin:0 auto"><tr>
         <td align="center" valign="middle" style="width:32px;height:32px;border-radius:50%;background:${bg};text-align:center;line-height:32px">${inner}</td>
@@ -51,7 +51,7 @@ Deno.serve(async (req) => {
   const labelRow = allSteps.map(([_key, s], i) => {
     const done = i <= currentIdx
     const isActive = i === currentIdx
-    const label = `<td align="center" style="padding:6px 2px 0;font-size:9px;color:${done ? '#2b2722' : '#a09488'};font-weight:${isActive ? 'bold' : 'normal'};line-height:1.3;font-family:Arial,sans-serif">${s.label}</td>`
+    const label = `<td align="center" style="padding:6px 2px 0;font-size:9px;color:${isActive ? '#c9826e' : done ? '#9e8a7a' : '#a09488'};font-weight:${isActive ? 'bold' : 'normal'};line-height:1.3;font-family:Arial,sans-serif">${s.label}</td>`
     const spacer = i < allSteps.length - 1 ? `<td></td>` : ''
     return label + spacer
   }).join('')

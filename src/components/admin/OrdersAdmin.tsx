@@ -41,7 +41,7 @@ function Timeline({ status, onAdvance }: { status: string; onAdvance: (s: string
       {STEPS.map((step, i) => {
         const done = i <= current
         const isActive = i === current
-        const canClick = i > current
+        const canClick = i !== current
 
         return (
           <div key={step.id} style={{ display: 'flex', alignItems: 'flex-start', flex: i < STEPS.length - 1 ? 1 : 'none' }}>
@@ -49,7 +49,7 @@ function Timeline({ status, onAdvance }: { status: string; onAdvance: (s: string
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, minWidth: 80 }}>
               <button
                 onClick={() => canClick && onAdvance(step.id)}
-                title={canClick ? `Avançar para "${step.label}"` : step.label}
+                title={canClick ? (i < current ? `Voltar para "${step.label}"` : `Avançar para "${step.label}"`) : step.label}
                 style={{
                   width: 36, height: 36, borderRadius: '50%',
                   background: done ? (isActive ? 'var(--terracotta)' : 'var(--ink)') : 'var(--linen)',
