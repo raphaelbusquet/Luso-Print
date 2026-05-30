@@ -33,20 +33,20 @@ function i4(base: string, n: number, ext = 'png'): string[] {
 
 // ─── Bebés ────────────────────────────────────────────────────────────────────
 const BEBES_PRODUCTS: ShopProduct[] = [
-  { id: 'bebes-heitor-dino',        name: 'Letreiro Heitor Dino',    universoId: 'bebes', price: 38, img: `${ap}/bebe-crianca/letreiro-heitor-dino-1.png`,    imgs: i4('bebe-crianca/letreiro-heitor-dino', 4),    tag: 'PERSONALIZÁVEL', color: 'Natural' },
-  { id: 'bebes-cecilia',            name: 'Letreiro Cecília',        universoId: 'bebes', price: 38, img: `${ap}/bebe-crianca/letreiro-cecilia-1.png`,         imgs: i4('bebe-crianca/letreiro-cecilia', 4),         tag: 'PERSONALIZÁVEL', color: 'Creme' },
-  { id: 'bebes-arco-iris',          name: 'Letreiro Arco-íris',      universoId: 'bebes', price: 44, img: `${ap}/bebe-crianca/letreiro-arco-iris-1.png`,       imgs: i4('bebe-crianca/letreiro-arco-iris', 4),       tag: 'PERSONALIZÁVEL', color: 'Sage' },
-  { id: 'bebes-escrita-sophia',     name: 'Escrita Sophia',          universoId: 'bebes', price: 38, img: `${ap}/bebe-crianca/escrita-sophia-1.png`,           imgs: i4('bebe-crianca/escrita-sophia', 4),           tag: 'PERSONALIZÁVEL', color: 'Terracota' },
-  { id: 'bebes-porta-maternidade',  name: 'Porta Maternidade Boho',  universoId: 'bebes', price: 42, img: `${ap}/bebe-crianca/porta-maternidade-boho-1.png`,   imgs: i4('bebe-crianca/porta-maternidade-boho', 4),   tag: 'NOVO',           color: 'Azul-cinza' },
+  { id: 'bebes-heitor-dino',        name: 'Letreiro Heitor Dino',    universoId: 'bebes', price: 36, img: `${ap}/bebe-crianca/letreiro-heitor-dino-1.png`,    imgs: i4('bebe-crianca/letreiro-heitor-dino', 4),    tag: 'PERSONALIZÁVEL', color: 'Natural' },
+  { id: 'bebes-cecilia',            name: 'Letreiro Cecília',        universoId: 'bebes', price: 44, img: `${ap}/bebe-crianca/letreiro-cecilia-1.png`,         imgs: i4('bebe-crianca/letreiro-cecilia', 4),         tag: 'PERSONALIZÁVEL', color: 'Creme' },
+  { id: 'bebes-arco-iris',          name: 'Letreiro Arco-íris',      universoId: 'bebes', price: 42, img: `${ap}/bebe-crianca/letreiro-arco-iris-1.png`,       imgs: i4('bebe-crianca/letreiro-arco-iris', 4),       tag: 'PERSONALIZÁVEL', color: 'Sage' },
+  { id: 'bebes-escrita-sophia',     name: 'Escrita Sophia',          universoId: 'bebes', price: 32, img: `${ap}/bebe-crianca/escrita-sophia-1.png`,           imgs: i4('bebe-crianca/escrita-sophia', 4),           tag: 'PERSONALIZÁVEL', color: 'Terracota' },
+  { id: 'bebes-porta-maternidade',  name: 'Porta Maternidade Boho',  universoId: 'bebes', price: 44, img: `${ap}/bebe-crianca/porta-maternidade-boho-1.png`,   imgs: i4('bebe-crianca/porta-maternidade-boho', 4),   tag: 'NOVO',           color: 'Azul-cinza' },
 ]
 
 // ─── Crianças ─────────────────────────────────────────────────────────────────
 const CRIANCAS_PRODUCTS: ShopProduct[] = [
-  { id: 'criancas-quadro-dino',            name: 'Quadro Dino',            universoId: 'bebes', price: 28, img: `${ap}/bebe-crianca/quadro-dino-1.png`,               imgs: i4('bebe-crianca/quadro-dino', 3),               color: 'Natural' },
-  { id: 'criancas-quadro-fazendinha',      name: 'Quadro Fazendinha',      universoId: 'bebes', price: 28, img: `${ap}/bebe-crianca/quadro-fazendinha-1.png`,          imgs: i4('bebe-crianca/quadro-fazendinha', 2),          color: 'Creme' },
-  { id: 'criancas-kit-flores-cute',        name: 'Kit Flores Cute',        universoId: 'bebes', price: 28, img: `${ap}/bebe-crianca/kit-flores-cute-1.png`,            imgs: i4('bebe-crianca/kit-flores-cute', 4),            color: 'Sage' },
-  { id: 'criancas-quadro-flores-vintage',  name: 'Quadro Flores Vintage',  universoId: 'bebes', price: 34, img: `${ap}/bebe-crianca/quadro-flores-vintage-1.jpg`,      imgs: fill4([`${ap}/bebe-crianca/quadro-flores-vintage-1.jpg`, `${ap}/bebe-crianca/quadro-flores-vintage-2.png`, `${ap}/bebe-crianca/quadro-flores-vintage-3.png`, `${ap}/bebe-crianca/quadro-flores-vintage-4.png`]), tag: 'NOVO', color: 'Terracota' },
-  { id: 'criancas-cortador-patrulha',      name: 'Cortador Patrulha Pata', universoId: 'bebes', price: 19, img: `${ap}/bebe-crianca/cortador-patrulha-1.png`,          imgs: i4('bebe-crianca/cortador-patrulha', 3),          color: 'Azul-cinza' },
+  { id: 'criancas-quadro-dino',            name: 'Quadro Dino',            universoId: 'bebes', price: 54, img: `${ap}/bebe-crianca/quadro-dino-1.png`,               imgs: i4('bebe-crianca/quadro-dino', 3),               color: 'Natural' },
+  { id: 'criancas-quadro-fazendinha',      name: 'Quadro Fazendinha',      universoId: 'bebes', price: 64, img: `${ap}/bebe-crianca/quadro-fazendinha-1.png`,          imgs: i4('bebe-crianca/quadro-fazendinha', 2),          color: 'Creme' },
+  { id: 'criancas-kit-flores-cute',        name: 'Kit Flores Cute',        universoId: 'bebes', price: 54, img: `${ap}/bebe-crianca/kit-flores-cute-1.png`,            imgs: i4('bebe-crianca/kit-flores-cute', 4),            color: 'Sage' },
+  { id: 'criancas-quadro-flores-vintage',  name: 'Quadro Flores Vintage',  universoId: 'bebes', price: 32, img: `${ap}/bebe-crianca/quadro-flores-vintage-1.jpg`,      imgs: fill4([`${ap}/bebe-crianca/quadro-flores-vintage-1.jpg`, `${ap}/bebe-crianca/quadro-flores-vintage-2.png`, `${ap}/bebe-crianca/quadro-flores-vintage-3.png`, `${ap}/bebe-crianca/quadro-flores-vintage-4.png`]), tag: 'NOVO', color: 'Terracota' },
+  { id: 'criancas-cortador-patrulha',      name: 'Cortador Patrulha Pata', universoId: 'bebes', price: 14, img: `${ap}/bebe-crianca/cortador-patrulha-1.png`,          imgs: i4('bebe-crianca/cortador-patrulha', 3),          color: 'Azul-cinza' },
 ]
 
 // ─── Cozinha ──────────────────────────────────────────────────────────────────
@@ -54,7 +54,7 @@ const COZINHA_PRODUCTS: ShopProduct[] = [
   { id: 'cozinha-apoio-talheres',    name: 'Apoio Talheres',    universoId: 'cozinha', price: 28, img: `${ap}/cozinha-real/apoio-talheres-1.png`,    imgs: i4('cozinha-real/apoio-talheres', 3),    color: 'Natural' },
   { id: 'cozinha-boleira-geometrica',name: 'Boleira Geométrica',universoId: 'cozinha', price: 48, img: `${ap}/cozinha-real/boleira-geometrica-1.png`, imgs: i4('cozinha-real/boleira-geometrica', 4), tag: 'NOVO', color: 'Creme' },
   { id: 'cozinha-boleira-torre',     name: 'Boleira Torre',     universoId: 'cozinha', price: 42, img: `${ap}/cozinha-real/boleira-torre-1.png`,      imgs: i4('cozinha-real/boleira-torre', 4),      color: 'Sage' },
-  { id: 'cozinha-mini-adega',        name: 'Mini Adega',        universoId: 'cozinha', price: 58, img: `${ap}/cozinha-real/mini-adega-1.png`,         imgs: i4('cozinha-real/mini-adega', 3),         tag: 'EDIÇÃO LIMITADA', color: 'Terracota' },
+  { id: 'cozinha-mini-adega',        name: 'Mini Adega',        universoId: 'cozinha', price: 45, img: `${ap}/cozinha-real/mini-adega-1.png`,         imgs: i4('cozinha-real/mini-adega', 3),         tag: 'EDIÇÃO LIMITADA', color: 'Terracota' },
   { id: 'cozinha-porta-capsulas',    name: 'Porta Cápsulas',    universoId: 'cozinha', price: 24, img: `${ap}/cozinha-real/porta-capsulas-1.png`,     imgs: i4('cozinha-real/porta-capsulas', 4),     color: 'Azul-cinza' },
   { id: 'cozinha-porta-talheres',    name: 'Porta Talheres',    universoId: 'cozinha', price: 32, img: `${ap}/cozinha-real/porta-talheres-1.png`,     imgs: i4('cozinha-real/porta-talheres', 3),     color: 'Olive' },
   { id: 'cozinha-suporte-tabua',     name: 'Suporte Tábua',     universoId: 'cozinha', price: 34, img: `${ap}/cozinha-real/suporte-tabua-1.png`,      imgs: i4('cozinha-real/suporte-tabua', 4),      color: 'Natural' },
@@ -63,14 +63,14 @@ const COZINHA_PRODUCTS: ShopProduct[] = [
 
 // ─── Família (estatuas) ───────────────────────────────────────────────────────
 const FAMILIA_PRODUCTS: ShopProduct[] = [
-  { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 27, img: `${ap}/familia/estatua-familia-1.png`, imgs: i4('familia/estatua-familia', 4), color: 'Natural', tag: 'PERSONALIZÁVEL' },
-  { id: 'familia-estatua-fams2',   name: 'Estátua Família S2', universoId: 'mamaes', price: 32, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme',   tag: 'PERSONALIZÁVEL' },
+  { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 34, img: `${ap}/familia/estatua-familia-1.png`, imgs: i4('familia/estatua-familia', 4), color: 'Natural', tag: 'PERSONALIZÁVEL' },
+  { id: 'familia-estatua-fams2',   name: 'Estátua Família S2', universoId: 'mamaes', price: 28, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme',   tag: 'PERSONALIZÁVEL' },
 ]
 
 const DECO_PRODUCTS: ShopProduct[] = [
-  { id: 'deco-candeeiro-fluxo',   name: 'Candeeiro Fluxo',           universoId: 'deco', price: 68, img: `${ap}/deco/candeeiro-fluxo-1.png`,   imgs: i4('deco/candeeiro-fluxo', 4),   tag: 'NOVO',           color: 'Olive' },
+  { id: 'deco-candeeiro-fluxo',   name: 'Candeeiro Fluxo',           universoId: 'deco', price: 35, img: `${ap}/deco/candeeiro-fluxo-1.png`,   imgs: i4('deco/candeeiro-fluxo', 4),   tag: 'NOVO',           color: 'Olive' },
   { id: 'deco-mini-adega-vertice',name: 'Mini Adega Vértice',         universoId: 'deco', price: 58, img: `${ap}/deco/mini-adega-vertice-1.png`, imgs: i4('deco/mini-adega-vertice', 4), tag: 'EDIÇÃO LIMITADA', color: 'Terracota' },
-  { id: 'deco-peca-horizonte',    name: 'Peça Decorativa Horizonte',  universoId: 'deco', price: 52, img: `${ap}/deco/peca-horizonte-1.png`,     imgs: i4('deco/peca-horizonte', 4),     color: 'Azul-cinza' },
+  { id: 'deco-peca-horizonte',    name: 'Peça Decorativa Horizonte',  universoId: 'deco', price: 43, img: `${ap}/deco/peca-horizonte-1.png`,     imgs: i4('deco/peca-horizonte', 4),     color: 'Azul-cinza' },
 ]
 
 // ─── Sala ─────────────────────────────────────────────────────────────────────
@@ -109,19 +109,19 @@ const ORGANIZ_PRODUCTS: ShopProduct[] = [
 const QUARTO_PRODUCTS: ShopProduct[] = [
   { id: 'quarto-oculos-elefante',   name: 'Aparador de Óculos Elefante', universoId: 'quarto', price: 22, img: `${ap}/quarto/aparador-oculos-elefante-1.png`, imgs: i4('quarto/aparador-oculos-elefante', 4), color: 'Natural' },
   { id: 'quarto-porta-joias-folha', name: 'Bandeja Porta-Joias Folha',   universoId: 'quarto', price: 8, img: `${ap}/quarto/bandeja-porta-joias-folha-1.png`,imgs: i4('quarto/bandeja-porta-joias-folha', 4),color: 'Creme' },
-  { id: 'quarto-escultura-sintonia',name: 'Escultura Sintonia',           universoId: 'quarto', price: 72, img: `${ap}/quarto/escultura-sintonia-1.png`,       imgs: i4('quarto/escultura-sintonia', 4),       tag: 'EDIÇÃO LIMITADA', color: 'Sage' },
-  { id: 'quarto-organizador-lume',  name: 'Organizador Lume',             universoId: 'quarto', price: 38, img: `${ap}/quarto/organizador-lume-1.png`,         imgs: i4('quarto/organizador-lume', 4),         color: 'Olive' },
-  { id: 'quarto-aparador-cabana',   name: 'Aparador de Livros Cabana',    universoId: 'quarto', price: 34, img: `${ap}/quarto/aparador-livros-cabana-1.png`,    imgs: i4('quarto/aparador-livros-cabana', 4),   color: 'Terracota' },
+  { id: 'quarto-escultura-sintonia',name: 'Escultura Sintonia',           universoId: 'quarto', price: 22, img: `${ap}/quarto/escultura-sintonia-1.png`,       imgs: i4('quarto/escultura-sintonia', 4),       tag: 'EDIÇÃO LIMITADA', color: 'Sage' },
+  { id: 'quarto-organizador-lume',  name: 'Organizador Lume',             universoId: 'quarto', price: 22, img: `${ap}/quarto/organizador-lume-1.png`,         imgs: i4('quarto/organizador-lume', 4),         color: 'Olive' },
+  { id: 'quarto-aparador-cabana',   name: 'Aparador de Livros Cabana',    universoId: 'quarto', price: 37, img: `${ap}/quarto/aparador-livros-cabana-1.png`,    imgs: i4('quarto/aparador-livros-cabana', 4),   color: 'Terracota' },
 ]
 
 // ─── Brinquedos ───────────────────────────────────────────────────────────────
 const BRINQUEDOS_PRODUCTS: ShopProduct[] = [
-  { id: 'brinq-arco-sensorial',    name: 'Arco Sensorial Montessori',      universoId: 'brinquedos', price: 48, img: `${ap}/brinquedos/arco-sensorial-1.png`,        imgs: i4('brinquedos/arco-sensorial', 4),        tag: 'NOVO', color: 'Natural' },
-  { id: 'brinq-cubo-sensorial',    name: 'Cubo Sensorial Infantil',        universoId: 'brinquedos', price: 38, img: `${ap}/brinquedos/cubo-sensorial-1.png`,        imgs: i4('brinquedos/cubo-sensorial', 4),        color: 'Creme' },
-  { id: 'brinq-plaquinhas-abelhas',name: 'Kit Plaquinhas Abelhinhas',      universoId: 'brinquedos', price: 22, img: `${ap}/brinquedos/kit-plaquinhas-abelhas-1.png`, imgs: i4('brinquedos/kit-plaquinhas-abelhas', 4), color: 'Sage' },
-  { id: 'brinq-plaquinhas-patrol', name: 'Kit Plaquinhas Patrulha Pata',   universoId: 'brinquedos', price: 22, img: `${ap}/brinquedos/kit-plaquinhas-patrulha-1.png`,imgs: i4('brinquedos/kit-plaquinhas-patrulha', 4),color: 'Olive' },
-  { id: 'brinq-dino-articulado',   name: 'Dino Articulado',                universoId: 'brinquedos', price: 32, img: `${ap}/brinquedos/dino-articulado-1.png`,       imgs: i4('brinquedos/dino-articulado', 4),       color: 'Terracota' },
-  { id: 'brinq-lagartixa',         name: 'Lagartixa Articulada',           universoId: 'brinquedos', price: 28, img: `${ap}/brinquedos/lagartixa-articulada-1.png`,  imgs: i4('brinquedos/lagartixa-articulada', 4),  color: 'Azul-cinza' },
+  { id: 'brinq-arco-sensorial',    name: 'Arco Sensorial Montessori',      universoId: 'brinquedos', price: 28, img: `${ap}/brinquedos/arco-sensorial-1.png`,        imgs: i4('brinquedos/arco-sensorial', 4),        tag: 'NOVO', color: 'Natural' },
+  { id: 'brinq-cubo-sensorial',    name: 'Cubo Sensorial Infantil',        universoId: 'brinquedos', price: 8, img: `${ap}/brinquedos/cubo-sensorial-1.png`,        imgs: i4('brinquedos/cubo-sensorial', 4),        color: 'Creme' },
+  { id: 'brinq-plaquinhas-abelhas',name: 'Kit Plaquinhas Abelhinhas',      universoId: 'brinquedos', price: 10, img: `${ap}/brinquedos/kit-plaquinhas-abelhas-1.png`, imgs: i4('brinquedos/kit-plaquinhas-abelhas', 4), color: 'Sage' },
+  { id: 'brinq-plaquinhas-patrol', name: 'Kit Plaquinhas Patrulha Pata',   universoId: 'brinquedos', price: 14, img: `${ap}/brinquedos/kit-plaquinhas-patrulha-1.png`,imgs: i4('brinquedos/kit-plaquinhas-patrulha', 4),color: 'Olive' },
+  { id: 'brinq-dino-articulado',   name: 'Dino Articulado',                universoId: 'brinquedos', price: 8, img: `${ap}/brinquedos/dino-articulado-1.png`,       imgs: i4('brinquedos/dino-articulado', 4),       color: 'Terracota' },
+  { id: 'brinq-lagartixa',         name: 'Lagartixa Articulada',           universoId: 'brinquedos', price: 7, img: `${ap}/brinquedos/lagartixa-articulada-1.png`,  imgs: i4('brinquedos/lagartixa-articulada', 4),  color: 'Azul-cinza' },
 ]
 
 export const SHOP_PRODUCTS: Record<string, ShopProduct[]> = {
