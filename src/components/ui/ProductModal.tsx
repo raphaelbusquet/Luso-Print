@@ -51,11 +51,29 @@ function FamilyConfig({ value, onChange }: {
     color: active ? '#fff' : 'var(--ink-soft)',
     border: active ? '1px solid var(--ink)' : '1px solid var(--rule)',
   })
+  const nothingConfigured = !value.pai && !value.mae && value.criancas.length === 0
+
   return (
     <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 14, marginBottom: 14 }}>
       <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
         Configuração da família
       </div>
+
+      {nothingConfigured && (
+        <div style={{
+          display: 'flex', alignItems: 'flex-start', gap: 8,
+          background: 'rgba(201,130,110,0.10)', border: '1px solid rgba(201,130,110,0.3)',
+          borderRadius: 6, padding: '10px 12px', marginBottom: 12,
+        }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--terracotta)" strokeWidth="2" style={{ flexShrink: 0, marginTop: 1 }}>
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span style={{ fontSize: 11, color: 'var(--terracotta)', lineHeight: 1.5 }}>
+            Escolha os membros da família antes de adicionar ao cesto.
+          </span>
+        </div>
+      )}
+
       <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
         <button style={btnStyle(value.pai)} onClick={() => toggle('pai')}>Pai</button>
         <button style={btnStyle(value.mae)} onClick={() => toggle('mae')}>Mãe</button>
@@ -88,10 +106,11 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [activeImg, setActiveImg] = useState(0)
   const [qty, setQty] = useState(1)
   const [qtyModified, setQtyModified] = useState(false)
-  const [familyConfig, setFamilyConfig] = useState({ pai: true, mae: true, criancas: [] as string[] })
+  const [familyConfig, setFamilyConfig] = useState({ pai: false, mae: false, criancas: [] as string[] })
   const swipeStartX = useRef<number | null>(null)
 
   const isFamilyProduct = p?.id === 'familia-estatua-familia' || p?.id === 'familia-estatua-fams2'
+  const familyNotConfigured = isFamilyProduct && !familyConfig.pai && !familyConfig.mae && familyConfig.criancas.length === 0
 
   useEffect(() => {
     setActiveImg(0)
@@ -366,11 +385,12 @@ export function ProductModal({ product: p, onClose }: Props) {
             <div style={{ display: 'flex', gap: 12 }}>
             <button
               onClick={handleAdd}
+              disabled={familyNotConfigured}
               style={{
                 flex: 1, padding: '15px 20px',
-                background: btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
-                color: '#fff', border: 'none',
-                cursor: btnDisabled ? 'default' : 'pointer',
+                background: familyNotConfigured ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
+                color: familyNotConfigured ? 'var(--ink-mute)' : '#fff', border: 'none',
+                cursor: familyNotConfigured || btnDisabled ? 'default' : 'pointer',
                 borderRadius: 999,
                 fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
                 fontFamily: 'inherit',
