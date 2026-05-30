@@ -3,7 +3,10 @@ import { useFavorites } from '../../context/FavoritesContext'
 import { useCart } from '../../context/CartContext'
 import { UNIVERSOS } from '../../data'
 import { useIsMobile } from '../../hooks/useIsMobile'
+import { VISUAL_COLORS } from '../../data/shop'
 import type { ShopProduct } from '../../data/shop'
+
+const COLOR_HEX: Record<string, string> = Object.fromEntries(VISUAL_COLORS.map(c => [c.name, c.hex]))
 
 type Props = {
   product: ShopProduct | null
@@ -110,6 +113,7 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [qtyModified, setQtyModified] = useState(false)
   const [familyConfig, setFamilyConfig] = useState({ pai: false, mae: false, criancas: [] as string[] })
   const [childName, setChildName] = useState('')
+  const [selectedColor, setSelectedColor] = useState<string>('')
   const swipeStartX = useRef<number | null>(null)
 
   const isFamilyProduct = p?.id === 'familia-estatua-familia' || p?.id === 'familia-estatua-fams2'
@@ -123,6 +127,7 @@ export function ProductModal({ product: p, onClose }: Props) {
     setQtyModified(false)
     setFamilyConfig({ pai: true, mae: true, criancas: [] })
     setChildName('')
+    setSelectedColor(p?.colorOptions?.[0] ?? '')
   }, [p?.id])
 
   useEffect(() => {
@@ -166,6 +171,9 @@ export function ProductModal({ product: p, onClose }: Props) {
     }
     if (isNameProduct && childName.trim()) {
       note = `Nome: ${childName.trim()}`
+    }
+    if (selectedColor && p.colorOptions && p.colorOptions.length > 1) {
+      note = note ? `${note} · Cor: ${selectedColor}` : `Cor: ${selectedColor}`
     }
     addItem({ name: p.name, price: p.price, img: p.img, productId: p.id, note }, qty)
     setQtyModified(false)
@@ -329,6 +337,40 @@ export function ProductModal({ product: p, onClose }: Props) {
               </span>
             )}
           </div>
+
+          {/* Color picker */}
+          {p.colorOptions && p.colorOptions.length > 1 && (
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
+                Cor — <span style={{ textTransform: 'capitalize', letterSpacing: '0.04em', color: 'var(--ink-soft)' }}>{selectedColor}</span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {p.colorOptions.map(c => {
+                  const hex = COLOR_HEX[c] ?? '#C8B89A'
+                  const isActive = selectedColor === c
+                  return (
+                    <button
+                      key={c}
+                      onClick={() => { setSelectedColor(c); setQtyModified(true) }}
+                      title={c}
+                      style={{
+                        width: 28, height: 28, borderRadius: '50%',
+                        background: hex,
+                        outline: isActive ? '2px solid var(--ink)' : '2px solid transparent',
+                        outlineOffset: 2,
+                        border: c === 'branco' ? '1px solid rgba(43,39,34,0.18)' : 'none',
+                        cursor: 'pointer', padding: 0,
+                        transition: 'outline 160ms',
+                        boxShadow: '0 1px 3px rgba(43,39,34,0.10)',
+                      }}
+                      aria-label={c}
+                      aria-pressed={isActive}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Details list */}
           <div style={{ borderTop: '1px solid var(--rule)', marginBottom: 20 }}>
