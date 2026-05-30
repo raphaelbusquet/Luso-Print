@@ -78,6 +78,23 @@ export function Edito() {
         )}
       </div>
 
+      {isMobile && (
+        <div className="shell-wide" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 28 }}>
+          {[
+            'url(/assets/products/deco/candeeiro-fluxo-1.png)',
+            'url(/assets/products/familia/estatua-fams2-1.png)',
+            'url(/assets/products/sala/conjunto-arco-1.png)',
+            'url(/assets/products/quarto/bandeja-porta-joias-folha-1.png)',
+          ].map((img, i) => (
+            <div key={i} style={{
+              aspectRatio: '4/3', borderRadius: 2,
+              backgroundImage: img, backgroundSize: 'cover', backgroundPosition: 'center',
+              backgroundColor: '#D9D5C9',
+            }} />
+          ))}
+        </div>
+      )}
+
       <div style={{
         marginTop: 48, marginBottom: -20,
         textAlign: 'center', overflow: 'hidden', pointerEvents: 'none',

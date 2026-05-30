@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
 import { useCart } from '../../context/CartContext'
 import { UNIVERSOS } from '../../data'
@@ -89,6 +89,7 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [qty, setQty] = useState(1)
   const [qtyModified, setQtyModified] = useState(false)
   const [familyConfig, setFamilyConfig] = useState({ pai: true, mae: true, criancas: [] as string[] })
+  const swipeStartX = useRef<number | null>(null)
 
   const isFamilyProduct = p?.id === 'familia-estatua-familia' || p?.id === 'familia-estatua-fams2'
 
@@ -176,15 +177,56 @@ export function ProductModal({ product: p, onClose }: Props) {
         {/* Left — photos */}
         <div style={{ width: isMobile ? '100%' : '54%', flexShrink: 0, display: 'flex', flexDirection: 'column', background: 'var(--linen)', ...(isMobile ? { height: '42%', flexShrink: 0 } : {}) }}>
           {/* Main photo */}
-          <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: `url(${photos[activeImg]}) center/cover no-repeat`,
-              transition: 'opacity 220ms ease',
-            }} />
+          <div
+            style={{ flex: 1, position: 'relative', overflow: 'hidden' }}
+            onTouchStart={e => { swipeStartX.current = e.touches[0].clientX }}
+            onTouchEnd={e => {
+              if (swipeStartX.current === null) return
+              const dx = e.changedTouches[0].clientX - swipeStartX.current
+              swipeStartX.current = null
+              if (Math.abs(dx) < 40) return
+              const total = photos.length
+              if (dx < 0) setActiveImg(i => (i + 1) % total)
+              else setActiveImg(i => (i - 1 + total) % total)
+            }}
+          >
+            {photos.map((img, i) => (
+              <div
+                key={i}
+                style={{
+                  position: 'absolute', inset: 0,
+                  background: `url(${img}) center/cover no-repeat`,
+                  opacity: activeImg === i ? 1 : 0,
+                  transition: 'opacity 220ms ease',
+                  pointerEvents: 'none',
+                }}
+              />
+            ))}
+
+            {/* Dot indicators — mobile only */}
+            {isMobile && photos.length > 1 && (
+              <div style={{
+                position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)',
+                display: 'flex', gap: 6, zIndex: 2,
+              }}>
+                {photos.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImg(i)}
+                    style={{
+                      width: activeImg === i ? 20 : 7, height: 7,
+                      borderRadius: 999, padding: 0, border: 'none', cursor: 'pointer',
+                      background: activeImg === i ? 'var(--ink)' : 'rgba(43,39,34,0.3)',
+                      transition: 'all 220ms ease',
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Thumbnails */}
+          {/* Thumbnails — desktop only */}
+          {!isMobile && (
           <div style={{
             display: 'flex', gap: 6, padding: '8px 10px',
             background: 'rgba(43,39,34,0.04)',
@@ -206,6 +248,7 @@ export function ProductModal({ product: p, onClose }: Props) {
               />
             ))}
           </div>
+          )}
         </div>
 
         {/* Right — info */}

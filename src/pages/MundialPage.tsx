@@ -205,12 +205,88 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
   const [hovered, setHovered] = useState(false)
   const { addItem, items } = useCart()
   const { isFav, toggle } = useFavorites()
+  const isMobile = useIsMobile()
   const inCart = items.some(i => i.productId === produto.id)
   const fav = isFav(produto.id)
   const bg = (!produto.fixedColor && selecao) ? selecao.cores[index % selecao.cores.length] : produto.corDefault
   const dark = isLightColor(bg)
   const fgMuted = dark ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.5)'
+  const imgs = getImgs(selecao?.id, produto.id)
 
+  /* ── Mobile layout: photo card, no flip ── */
+  if (isMobile) {
+    return (
+      <div>
+        <div
+          onClick={onOpen}
+          style={{
+            aspectRatio: '4/5', borderRadius: 3, position: 'relative', overflow: 'hidden',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.5)', cursor: 'pointer',
+            background: imgs ? '#0E0E0E' : bg,
+          }}
+        >
+          {/* Photo or placeholder */}
+          {imgs ? (
+            <img src={imgs[0]} alt={produto.nome} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          ) : (
+            <div style={{ position: 'absolute', inset: 0, background: '#0E0E0E', border: '1px dashed rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
+              <ProductShapeMini forma={produto.forma} dark={false} />
+              <span style={{ fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)' }}>Foto em breve</span>
+            </div>
+          )}
+
+          {/* Gold bottom line */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'var(--mundial-gold)', opacity: 0.7, zIndex: 2 }} />
+
+          {/* Bottom gradient + info */}
+          <div style={{
+            position: 'absolute', left: 0, right: 0, bottom: 0,
+            background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%)',
+            padding: '32px 12px 10px', zIndex: 1,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6 }}>
+              <button
+                onClick={e => { e.stopPropagation(); if (!inCart) { addItem({ name: produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: produto.id }) } }}
+                style={{
+                  flex: 1, padding: '7px 10px', borderRadius: 999,
+                  background: inCart ? 'var(--mundial-gold)' : 'rgba(212,168,48,0.2)',
+                  border: '1px solid rgba(212,168,48,0.6)',
+                  color: inCart ? '#111' : 'var(--mundial-gold)',
+                  fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase',
+                  fontFamily: 'inherit', cursor: inCart ? 'default' : 'pointer',
+                  backdropFilter: 'blur(4px)',
+                }}
+              >
+                {inCart ? 'No cesto ✓' : '+ Cesto'}
+              </button>
+              <button
+                onClick={e => { e.stopPropagation(); toggle(produto.id) }}
+                style={{
+                  width: 30, height: 30, borderRadius: '50%', flexShrink: 0,
+                  background: fav ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)',
+                  border: 'none', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: fav ? '#111' : 'rgba(255,255,255,0.8)',
+                  backdropFilter: 'blur(4px)',
+                }}
+                aria-label={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              >
+                <HeartIcon filled={fav} />
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div className="serif" style={{ fontSize: 15, color: '#F4EFE6', lineHeight: 1.2 }}>{produto.nome}</div>
+          <div className="serif" style={{ fontSize: 14, color: 'var(--mundial-gold)', flexShrink: 0 }}>€{produto.preco}</div>
+        </div>
+      </div>
+    )
+  }
+
+  /* ── Desktop layout: flip card ── */
   return (
     <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div style={{
@@ -232,33 +308,23 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
             <path d="M110 180 h80 M150 140 v80" stroke={dark ? '#000' : 'white'} strokeWidth="2" opacity="0.5" />
           </svg>
           <ProductShapeMini forma={produto.forma} dark={dark} />
-          {/* top-left: number + selecao badge */}
           <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div className="serif-it" style={{ fontSize: 26, color: fgMuted, lineHeight: 1 }}>
-              0{index + 1}
-            </div>
+            <div className="serif-it" style={{ fontSize: 26, color: fgMuted, lineHeight: 1 }}>0{index + 1}</div>
             {selecao && (
-              <div style={{
-                fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase',
-                background: 'rgba(0,0,0,0.35)', color: 'rgba(255,255,255,0.9)',
-                padding: '3px 8px', borderRadius: 999, backdropFilter: 'blur(4px)',
-              }}>
+              <div style={{ fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', background: 'rgba(0,0,0,0.35)', color: 'rgba(255,255,255,0.9)', padding: '3px 8px', borderRadius: 999, backdropFilter: 'blur(4px)' }}>
                 {selecao.nome}
               </div>
             )}
           </div>
-          {/* top-right: heart */}
           <button
             onClick={e => { e.stopPropagation(); toggle(produto.id) }}
             style={{
-              position: 'absolute', top: 12, right: 12,
-              width: 32, height: 32, borderRadius: '50%',
+              position: 'absolute', top: 12, right: 12, width: 32, height: 32, borderRadius: '50%',
               background: fav ? (dark ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.95)') : dark ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.35)',
               border: dark ? '1.5px solid rgba(0,0,0,0.28)' : 'none', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               color: fav ? (dark ? '#fff' : '#111') : dark ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.85)',
-              backdropFilter: 'blur(4px)',
-              transition: 'all 180ms ease',
+              backdropFilter: 'blur(4px)', transition: 'all 180ms ease',
             }}
             aria-label={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
           >
@@ -269,68 +335,36 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
 
         {/* Back — reveal */}
         <div style={{
-          position: 'absolute', inset: 0,
-          background: '#0E0E0E',
+          position: 'absolute', inset: 0, background: '#0E0E0E',
           backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(218,41,28,0.1) 0%, transparent 55%), radial-gradient(circle at 70% 70%, rgba(4,106,56,0.1) 0%, transparent 55%)',
           transform: hovered ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform 420ms cubic-bezier(.4,0,.2,1)',
           display: 'flex', flexDirection: 'column', padding: '24px 20px', justifyContent: 'space-between',
         }}>
-          {(() => {
-            const imgs = getImgs(selecao?.id, produto.id)
-            return imgs ? (
-              <div style={{ flex: 1, borderRadius: 2, overflow: 'hidden', marginBottom: 16 }}>
-                <img src={imgs[0]} alt={produto.nome} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              </div>
-            ) : (
-              <div style={{
-                flex: 1, borderRadius: 2,
-                background: 'rgba(255,255,255,0.04)', border: '1px dashed rgba(255,255,255,0.1)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16,
-              }}>
-                <span style={{ fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
-                  Foto em breve
-                </span>
-              </div>
-            )
-          })()}
+          {imgs ? (
+            <div style={{ flex: 1, borderRadius: 2, overflow: 'hidden', marginBottom: 16 }}>
+              <img src={imgs[0]} alt={produto.nome} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+          ) : (
+            <div style={{ flex: 1, borderRadius: 2, background: 'rgba(255,255,255,0.04)', border: '1px dashed rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+              <span style={{ fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>Foto em breve</span>
+            </div>
+          )}
           <div>
-            <div style={{ fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--mundial-gold)', marginBottom: 6 }}>
-              Coleção Mundial · Edição limitada
-            </div>
-            <div className="serif" style={{ fontSize: 20, color: '#F4EFE6', lineHeight: 1.15, marginBottom: 8 }}>
-              {produto.nome}
-            </div>
-            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: '0 0 14px', lineHeight: 1.6 }}>
-              {produto.desc}
-            </p>
+            <div style={{ fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--mundial-gold)', marginBottom: 6 }}>Coleção Mundial · Edição limitada</div>
+            <div className="serif" style={{ fontSize: 20, color: '#F4EFE6', lineHeight: 1.15, marginBottom: 8 }}>{produto.nome}</div>
+            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: '0 0 14px', lineHeight: 1.6 }}>{produto.desc}</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span className="serif" style={{ fontSize: 20, color: 'var(--mundial-gold)', marginRight: 'auto' }}>€{produto.preco}</span>
-              {/* heart on back panel */}
               <button
                 onClick={e => { e.stopPropagation(); toggle(produto.id) }}
-                style={{
-                  width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
-                  background: fav ? 'rgba(255,255,255,0.95)' : 'transparent',
-                  border: fav ? 'none' : '1px solid rgba(212,168,48,0.4)',
-                  color: fav ? '#111' : 'rgba(244,239,230,0.6)',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'all 180ms ease',
-                }}
+                style={{ width: 34, height: 34, borderRadius: '50%', flexShrink: 0, background: fav ? 'rgba(255,255,255,0.95)' : 'transparent', border: fav ? 'none' : '1px solid rgba(212,168,48,0.4)', color: fav ? '#111' : 'rgba(244,239,230,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 180ms ease' }}
               >
                 <HeartIcon filled={fav} />
               </button>
               <button
-                onClick={e => { e.stopPropagation(); if (!inCart) { const imgs = getImgs(selecao?.id, produto.id); addItem({ name: produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: produto.id }) } }}
-                style={{
-                  padding: '8px 16px', borderRadius: 999,
-                  background: 'transparent', border: '1px solid rgba(212,168,48,0.5)',
-                  color: inCart ? '#111' : 'var(--mundial-gold)',
-                  backgroundColor: inCart ? 'var(--mundial-gold)' : 'transparent',
-                  fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase',
-                  fontFamily: 'inherit', cursor: inCart ? 'default' : 'pointer',
-                  transition: 'background 200ms',
-                }}
+                onClick={e => { e.stopPropagation(); if (!inCart) { addItem({ name: produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: produto.id }) } }}
+                style={{ padding: '8px 16px', borderRadius: 999, background: 'transparent', border: '1px solid rgba(212,168,48,0.5)', color: inCart ? '#111' : 'var(--mundial-gold)', backgroundColor: inCart ? 'var(--mundial-gold)' : 'transparent', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'inherit', cursor: inCart ? 'default' : 'pointer', transition: 'background 200ms' }}
                 onMouseEnter={e => { if (!inCart) { const b = e.currentTarget; b.style.background = 'var(--mundial-gold)'; b.style.color = '#111' } }}
                 onMouseLeave={e => { if (!inCart) { const b = e.currentTarget; b.style.background = 'transparent'; b.style.color = 'var(--mundial-gold)' } }}
               >
@@ -345,9 +379,7 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
         <div className="serif" style={{ fontSize: 18, color: '#F4EFE6', lineHeight: 1.2 }}>{produto.nome}</div>
         <div className="serif" style={{ fontSize: 16, color: 'var(--mundial-gold)' }}>€{produto.preco}</div>
       </div>
-      <div style={{ fontSize: 12, color: 'rgba(244,239,230,0.45)', marginTop: 4, lineHeight: 1.5 }}>
-        {produto.desc}
-      </div>
+      <div style={{ fontSize: 12, color: 'rgba(244,239,230,0.45)', marginTop: 4, lineHeight: 1.5 }}>{produto.desc}</div>
     </div>
   )
 }
@@ -430,8 +462,10 @@ export function MundialPage() {
               color: 'rgba(244,239,230,0.7)', fontFamily: 'inherit',
             }}
           >
-            {selecao ? <FlagStrip cores={selecao.cores} dir={selecao.dir} /> : null}
-            {selecao ? selecao.nome : 'Escolher Seleção'}
+            {especial
+              ? <span style={{ width: 22, height: 15, borderRadius: 2, background: 'linear-gradient(135deg, var(--mundial-gold) 0%, #7a5c00 100%)', flexShrink: 0, display: 'block' }} />
+              : selecao ? <FlagStrip cores={selecao.cores} dir={selecao.dir} /> : null}
+            {especial ? "Edição Mundial '26" : selecao ? selecao.nome : 'Escolher Seleção'}
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ marginLeft: 4 }}>
               <path d={sidebarOpen ? 'M2 7l3-3 3 3' : 'M2 3l3 3 3-3'} />
             </svg>
@@ -451,7 +485,7 @@ export function MundialPage() {
 
           {selecao && (
             <button
-              onClick={() => setSelecao(null)}
+              onClick={() => { setSelecao(null); setSidebarOpen(false) }}
               style={{
                 width: '100%', marginBottom: 16,
                 background: 'none', border: '1px solid rgba(212,168,48,0.25)',
@@ -473,7 +507,7 @@ export function MundialPage() {
               return (
                 <button
                   key={s.id}
-                  onClick={() => { setSelecao(active ? null : s); setEspecial(false) }}
+                  onClick={() => { const next = active ? null : s; setSelecao(next); setEspecial(false); if (next) setSidebarOpen(false) }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 10,
                     background: active ? 'rgba(255,255,255,0.05)' : 'none',
@@ -504,7 +538,7 @@ export function MundialPage() {
               Especiais
             </div>
             <button
-              onClick={() => { setEspecial(e => !e); setSelecao(null) }}
+              onClick={() => { const next = !especial; setEspecial(next); setSelecao(null); if (next) setSidebarOpen(false) }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 10, width: '100%',
                 background: especial ? 'rgba(255,255,255,0.05)' : 'none',
@@ -548,7 +582,7 @@ export function MundialPage() {
         {/* Products */}
         {(!isMobile || !sidebarOpen) && (
         <main style={{ flex: 1, minWidth: 0, width: '100%' }}>
-          {selecao && (
+          {selecao && !isMobile && (
             <div style={{
               marginBottom: 32, padding: '14px 20px',
               background: 'rgba(255,255,255,0.04)',

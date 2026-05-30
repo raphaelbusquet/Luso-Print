@@ -248,6 +248,25 @@ export function ShopPage() {
           position: isMobile ? 'static' : 'sticky', top: 120,
           marginBottom: isMobile ? 24 : 0,
         }}>
+          {isMobile && (
+            <button
+              onClick={() => setFiltersOpen(false)}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                width: '100%', marginBottom: 20,
+                background: 'none', border: 'none', padding: '10px 0',
+                borderBottom: '1px solid var(--rule)',
+                cursor: 'pointer', fontFamily: 'inherit',
+                fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
+                color: 'var(--ink-soft)',
+              }}
+            >
+              <span>Filtros</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          )}
           {activeFilters > 0 && (
             <button
               onClick={() => { setSelUniversos([]); setSelColors([]); setSelTag('') }}
@@ -389,6 +408,21 @@ export function ShopPage() {
               </div>
             )}
           </FilterBlock>
+
+          {isMobile && (
+            <button
+              onClick={() => setFiltersOpen(false)}
+              style={{
+                marginTop: 28, width: '100%',
+                padding: '14px', borderRadius: 999,
+                background: 'var(--ink)', color: 'var(--paper)',
+                border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
+              }}
+            >
+              Ver tudo {filtered.length > 0 ? `(${filtered.length})` : ''} →
+            </button>
+          )}
         </aside>
         )}
 

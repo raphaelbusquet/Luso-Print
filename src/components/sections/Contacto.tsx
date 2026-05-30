@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 type Channel = 'email' | 'whatsapp' | 'instagram'
 
@@ -48,6 +49,7 @@ const CHANNEL_HREF: Record<Channel, string> = {
 }
 
 export function Contacto() {
+  const isMobile = useIsMobile()
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
   const [active, setActive] = useState<Channel>('email')
@@ -68,8 +70,8 @@ export function Contacto() {
   }
 
   return (
-    <section id="contacto" style={{ padding: '110px 0', background: 'var(--paper-2)', borderTop: '1px solid var(--rule)' }}>
-      <div className="shell" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.1fr)', gap: 80, alignItems: 'start' }}>
+    <section id="contacto" style={{ padding: isMobile ? '64px 0' : '110px 0', background: 'var(--paper-2)', borderTop: '1px solid var(--rule)' }}>
+      <div className="shell" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1.1fr)', gap: isMobile ? 40 : 80, alignItems: 'start' }}>
 
         {/* Left — copy */}
         <div>
@@ -133,7 +135,7 @@ export function Contacto() {
         </div>
 
         {/* Right — form or direct link */}
-        <div style={{ paddingTop: 56 }}>
+        <div style={{ paddingTop: isMobile ? 0 : 56 }}>
           {active === 'instagram' ? (
             <div style={{
               background: 'var(--paper)', border: '1px solid var(--rule)',
@@ -173,7 +175,7 @@ export function Contacto() {
           ) : (
             <form onSubmit={handleSend} style={{
               background: 'var(--paper)', border: '1px solid var(--rule)',
-              borderRadius: 4, padding: '40px',
+              borderRadius: 4, padding: isMobile ? '24px 20px' : '40px',
               display: 'flex', flexDirection: 'column', gap: 24,
             }}>
               <div style={{

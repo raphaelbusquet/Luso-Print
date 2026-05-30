@@ -196,6 +196,7 @@ export function Personalizacao() {
   const timer1Ref = useRef<ReturnType<typeof setTimeout> | null>(null)
   const timer2Ref = useRef<ReturnType<typeof setTimeout> | null>(null)
   const abortRef = useRef(false)
+  const previewRef = useRef<HTMLDivElement>(null)
 
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
@@ -322,6 +323,12 @@ export function Personalizacao() {
     clearTimers()
   }, [])
 
+  useEffect(() => {
+    if (view === 'done' && isMobile && previewRef.current) {
+      previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [view, isMobile])
+
   const btnLabel =
     isLoading        ? 'Gerando…' :
     view === 'done'  ? 'Gerar novamente' :
@@ -338,7 +345,7 @@ export function Personalizacao() {
       }}>
 
         {/* ── Left panel ── */}
-        <div style={{
+        <div ref={previewRef} style={{
           minHeight: isMobile ? 280 : 420, background: '#F1EBDD',
           position: 'relative', borderRadius: 2,
           overflow: 'hidden',
@@ -505,7 +512,7 @@ export function Personalizacao() {
           </p>
 
           <div style={{
-            background: 'var(--paper)', padding: 32, borderRadius: 4,
+            background: 'var(--paper)', padding: isMobile ? '20px 16px' : 32, borderRadius: 4,
             border: '1px solid var(--rule)',
           }}>
             <label style={{ display: 'block' }}>
@@ -589,7 +596,8 @@ export function Personalizacao() {
 
             <div style={{
               marginTop: 30, paddingTop: 24, borderTop: '1px solid var(--rule)',
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+              display: 'flex', flexDirection: isMobile ? 'column' : 'row',
+              alignItems: isMobile ? 'stretch' : 'center', justifyContent: 'space-between', gap: 12,
             }}>
               <div>
                 {/* Size selector */}
@@ -619,7 +627,7 @@ export function Personalizacao() {
                 </div>
                 <div className="kicker" style={{ marginTop: 4 }}>Letra inicial · {size} cm</div>
               </div>
-              <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ display: 'flex', gap: 10, flexDirection: isMobile ? 'column' : 'row' }}>
                 <button
                   type="button"
                   onClick={handleGenerate}

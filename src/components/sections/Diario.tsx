@@ -1,11 +1,17 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DIARIO } from '../../data'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 export function Diario() {
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
+  const [expanded, setExpanded] = useState(false)
+
+  const visible = isMobile ? (expanded ? DIARIO.slice(0, 3) : DIARIO.slice(0, 1)) : DIARIO.slice(0, 3)
 
   return (
-    <section id="diario" style={{ padding: '100px 0' }}>
+    <section id="diario" style={{ padding: isMobile ? '64px 0' : '100px 0' }}>
       <div className="shell">
         <div className="section-head">
           <div>
@@ -24,8 +30,8 @@ export function Diario() {
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 36 }}>
-          {DIARIO.slice(0, 3).map((d) => (
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: isMobile ? 28 : 36 }}>
+          {visible.map((d) => (
             <article
               key={d.id}
               onClick={() => navigate(`/diario/${d.id}`)}
@@ -80,6 +86,21 @@ export function Diario() {
             </article>
           ))}
         </div>
+
+        {isMobile && (
+          <button
+            onClick={() => setExpanded(e => !e)}
+            style={{
+              marginTop: 24, display: 'flex', alignItems: 'center', gap: 8,
+              background: 'none', border: '1px solid var(--rule)', borderRadius: 999,
+              padding: '10px 20px', cursor: 'pointer', fontFamily: 'inherit',
+              fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'var(--ink-soft)',
+            }}
+          >
+            {expanded ? 'Ver menos ↑' : 'Ver mais textos →'}
+          </button>
+        )}
       </div>
     </section>
   )

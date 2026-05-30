@@ -63,8 +63,8 @@ const COZINHA_PRODUCTS: ShopProduct[] = [
 
 // ─── Família (estatuas) ───────────────────────────────────────────────────────
 const FAMILIA_PRODUCTS: ShopProduct[] = [
-  { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 84, img: `${ap}/familia/estatua-familia-1.png`, imgs: i4('familia/estatua-familia', 4), color: 'Natural' },
-  { id: 'familia-estatua-fams2',   name: 'Estátua Família S2', universoId: 'mamaes', price: 78, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme' },
+  { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 84, img: `${ap}/familia/estatua-familia-1.png`, imgs: i4('familia/estatua-familia', 4), color: 'Natural', tag: 'PERSONALIZÁVEL' },
+  { id: 'familia-estatua-fams2',   name: 'Estátua Família S2', universoId: 'mamaes', price: 78, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme',   tag: 'PERSONALIZÁVEL' },
 ]
 
 const DECO_PRODUCTS: ShopProduct[] = [

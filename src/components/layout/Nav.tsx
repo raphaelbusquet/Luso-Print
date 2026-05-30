@@ -133,7 +133,7 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
               )}
             </button>
           )}
-          <button
+<button
             onClick={onOpenCart}
             style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', color: 'var(--ink)', background: 'none', border: 'none', padding: 0, fontFamily: 'inherit', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase' }}
           >

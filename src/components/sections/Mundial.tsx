@@ -78,100 +78,99 @@ function ProductShape({ forma }: { forma: Forma }) {
 
 function MundialCard({ item, index, onOpen }: { item: typeof items[0]; index: number; onOpen: () => void }) {
   const [hovered, setHovered] = useState(false)
+  const isMobile = useIsMobile()
 
+  /* ── Mobile: photo card, no flip ── */
+  if (isMobile) {
+    return (
+      <div>
+        <div
+          onClick={onOpen}
+          style={{
+            aspectRatio: '4/5', borderRadius: 3, position: 'relative', overflow: 'hidden',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.5)', cursor: 'pointer', background: '#0E0E0E',
+          }}
+        >
+          <img src={item.img} alt={item.nome} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'var(--mundial-gold)', opacity: 0.7, zIndex: 2 }} />
+          <div style={{
+            position: 'absolute', left: 0, right: 0, bottom: 0,
+            background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%)',
+            padding: '28px 10px 10px', zIndex: 1,
+            display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+          }}>
+            <div style={{
+              fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'var(--mundial-gold)', background: 'rgba(0,0,0,0.35)',
+              backdropFilter: 'blur(4px)', padding: '3px 8px', borderRadius: 999,
+            }}>
+              Edição limitada
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div className="serif" style={{ fontSize: 15, color: '#F4EFE6', lineHeight: 1.2 }}>{item.nome}</div>
+          <div className="serif" style={{ fontSize: 14, color: 'var(--mundial-gold)', flexShrink: 0 }}>€{item.preco}</div>
+        </div>
+      </div>
+    )
+  }
+
+  /* ── Desktop: flip card ── */
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* image area */}
       <div
         onClick={onOpen}
         style={{
-          aspectRatio: '4/5',
-          borderRadius: 3,
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
-          cursor: 'pointer',
+          aspectRatio: '4/5', borderRadius: 3, position: 'relative', overflow: 'hidden',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.45)', cursor: 'pointer',
         }}>
 
         {/* Front — coloured card */}
         <div style={{
-          position: 'absolute', inset: 0,
-          background: item.cor,
+          position: 'absolute', inset: 0, background: item.cor,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transform: hovered ? 'translateX(-100%)' : 'translateX(0)',
           transition: 'transform 420ms cubic-bezier(.4,0,.2,1)',
         }}>
           <ShieldWatermark />
           <ProductShape forma={item.forma} />
-          <div className="serif-it" style={{
-            position: 'absolute', top: 18, left: 22,
-            fontSize: 28, color: 'rgba(255,255,255,0.55)',
-          }}>
+          <div className="serif-it" style={{ position: 'absolute', top: 18, left: 22, fontSize: 28, color: 'rgba(255,255,255,0.55)' }}>
             0{index + 1}
           </div>
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0,
-            height: 2, background: 'var(--mundial-gold)', opacity: 0.7,
-          }} />
-          <div style={{
-            position: 'absolute', bottom: 14, right: 14,
-            fontSize: 8, letterSpacing: '0.28em', textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.65)',
-          }}>
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'var(--mundial-gold)', opacity: 0.7 }} />
+          <div style={{ position: 'absolute', bottom: 14, right: 14, fontSize: 8, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)' }}>
             Edição limitada
           </div>
         </div>
 
         {/* Back — reveal panel */}
         <div style={{
-          position: 'absolute', inset: 0,
-          background: '#0E0E0E',
+          position: 'absolute', inset: 0, background: '#0E0E0E',
           backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(218,41,28,0.12) 0%, transparent 55%), radial-gradient(circle at 70% 70%, rgba(4,106,56,0.12) 0%, transparent 55%)',
           transform: hovered ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform 420ms cubic-bezier(.4,0,.2,1)',
-          display: 'flex', flexDirection: 'column',
-          padding: '28px 24px',
-          justifyContent: 'space-between',
+          display: 'flex', flexDirection: 'column', padding: '28px 24px', justifyContent: 'space-between',
         }}>
-          {/* product photo */}
-          <div style={{
-            flex: 1, borderRadius: 2, overflow: 'hidden',
-            marginBottom: 20, position: 'relative',
-          }}>
-            <img
-              src={item.img}
-              alt={item.nome}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
+          <div style={{ flex: 1, borderRadius: 2, overflow: 'hidden', marginBottom: 20 }}>
+            <img src={item.img} alt={item.nome} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </div>
-
-          {/* info */}
           <div>
-            <div style={{
-              fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase',
-              color: 'var(--mundial-gold)', marginBottom: 8, opacity: 0.9,
-            }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--mundial-gold)', marginBottom: 8, opacity: 0.9 }}>
               Coleção Mundial · Edição limitada
             </div>
-            <div className="serif" style={{ fontSize: 22, color: '#F4EFE6', lineHeight: 1.15, marginBottom: 10 }}>
-              {item.nome}
-            </div>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: '0 0 18px', lineHeight: 1.6 }}>
-              {item.desc}
-            </p>
+            <div className="serif" style={{ fontSize: 22, color: '#F4EFE6', lineHeight: 1.15, marginBottom: 10 }}>{item.nome}</div>
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: '0 0 18px', lineHeight: 1.6 }}>{item.desc}</p>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span className="serif" style={{ fontSize: 22, color: 'var(--mundial-gold)' }}>€{item.preco}</span>
               <button style={{
-                padding: '9px 18px', borderRadius: 999,
-                background: 'transparent',
-                border: '1px solid rgba(212,168,48,0.5)',
-                color: 'var(--mundial-gold)',
+                padding: '9px 18px', borderRadius: 999, background: 'transparent',
+                border: '1px solid rgba(212,168,48,0.5)', color: 'var(--mundial-gold)',
                 fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase',
-                fontFamily: 'inherit', cursor: 'pointer',
-                transition: 'background 200ms, border-color 200ms',
+                fontFamily: 'inherit', cursor: 'pointer', transition: 'background 200ms, border-color 200ms',
               }}
                 onMouseEnter={e => { const b = e.currentTarget; b.style.background = 'var(--mundial-gold)'; b.style.color = '#111'; b.style.borderColor = 'var(--mundial-gold)' }}
                 onMouseLeave={e => { const b = e.currentTarget; b.style.background = 'transparent'; b.style.color = 'var(--mundial-gold)'; b.style.borderColor = 'rgba(212,168,48,0.5)' }}
@@ -183,7 +182,6 @@ function MundialCard({ item, index, onOpen }: { item: typeof items[0]; index: nu
         </div>
       </div>
 
-      {/* caption below */}
       <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <div className="serif" style={{ fontSize: 20, color: '#F4EFE6', lineHeight: 1.2 }}>{item.nome}</div>
         <div className="serif" style={{ fontSize: 18, color: 'var(--mundial-gold)' }}>€{item.preco}</div>

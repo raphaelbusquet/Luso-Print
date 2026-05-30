@@ -184,6 +184,14 @@ section { padding: 100px 0; }
 
   /* Newsletter / Contacto form layout */
   .lp-form-row { flex-direction: column !important; }
+
+  /* Buttons — smaller on mobile */
+  .btn {
+    padding: 11px 16px;
+    letter-spacing: 0.16em;
+    font-size: 10px;
+    white-space: nowrap;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {

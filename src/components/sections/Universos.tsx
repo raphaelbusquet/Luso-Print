@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UNIVERSOS } from '../../data'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 const layouts = [
   { col: 'span 4', row: 'span 2' },
@@ -16,6 +17,7 @@ const layouts = [
 
 export function Universos() {
   const [hovered, setHovered] = useState<string | null>(null)
+  const isMobile = useIsMobile()
 
   return (
     <section id="universos" style={{ padding: '100px 0 90px' }}>
@@ -89,28 +91,40 @@ export function Universos() {
                 }} />
 
                 <div style={{
-                  position: 'absolute', left: 22, right: 22, bottom: 22,
-                  color: '#fff', display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 16,
+                  position: 'absolute', left: 14, right: 14, bottom: 14,
+                  color: '#fff', display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 8,
                 }}>
                   <div>
-                    <div className="kicker" style={{ color: 'rgba(255,255,255,0.75)', marginBottom: 6 }}>
-                      Universo · {String(i + 1).padStart(2, '0')}
-                    </div>
+                    {!isMobile && (
+                      <div className="kicker" style={{ color: 'rgba(255,255,255,0.75)', marginBottom: 6 }}>
+                        Universo · {String(i + 1).padStart(2, '0')}
+                      </div>
+                    )}
                     <div className="serif" style={{
-                      fontSize: isTall ? 44 : 32,
+                      fontSize: isMobile ? 20 : (isTall ? 44 : 32),
                       lineHeight: 1,
                       letterSpacing: '-0.005em',
                     }}>
                       {u.nome}
                     </div>
                   </div>
-                  <div style={{
-                    fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-                    background: 'rgba(255,255,255,0.92)', color: 'var(--ink)',
-                    padding: '8px 12px', borderRadius: 999,
-                  }}>
-                    {u.cnt} peças
-                  </div>
+                  {isMobile ? (
+                    <div style={{
+                      fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
+                      background: 'rgba(255,255,255,0.88)', color: 'var(--ink)',
+                      padding: '4px 8px', borderRadius: 999, flexShrink: 0,
+                    }}>
+                      {u.cnt} pçs
+                    </div>
+                  ) : (
+                    <div style={{
+                      fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+                      background: 'rgba(255,255,255,0.92)', color: 'var(--ink)',
+                      padding: '8px 12px', borderRadius: 999, flexShrink: 0,
+                    }}>
+                      {u.cnt} peças
+                    </div>
+                  )}
                 </div>
 
                 <div style={{

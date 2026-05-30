@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 function generateCouponCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
@@ -9,6 +10,7 @@ function generateCouponCode(): string {
 }
 
 export function Newsletter() {
+  const isMobile = useIsMobile()
   const [email, setEmail] = useState('')
   const [agreed, setAgreed] = useState(true)
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
@@ -43,7 +45,7 @@ export function Newsletter() {
 
   return (
     <section style={{
-      padding: '100px 0',
+      padding: isMobile ? '64px 0' : '100px 0',
       background: 'var(--terracotta)',
       color: '#FBEDE2',
       position: 'relative', overflow: 'hidden',
@@ -61,8 +63,9 @@ export function Newsletter() {
 
       <div className="shell" style={{
         position: 'relative',
-        display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
-        gap: 60, alignItems: 'center',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1fr)',
+        gap: isMobile ? 36 : 60, alignItems: 'center',
       }}>
         <div>
           <span style={{
@@ -106,8 +109,8 @@ export function Newsletter() {
                 O seu correio
               </label>
               <div style={{
-                display: 'flex', gap: 10, alignItems: 'stretch',
-                borderBottom: '1px solid rgba(255,255,255,0.5)', paddingBottom: 8,
+                display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 10, alignItems: isMobile ? 'stretch' : 'stretch',
+                borderBottom: isMobile ? 'none' : '1px solid rgba(255,255,255,0.5)', paddingBottom: isMobile ? 0 : 8,
               }}>
                 <input
                   type="email"
@@ -117,7 +120,9 @@ export function Newsletter() {
                   required
                   style={{
                     flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                    color: '#FBEDE2', fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 22,
+                    borderBottom: isMobile ? '1px solid rgba(255,255,255,0.5)' : 'none',
+                    paddingBottom: isMobile ? 8 : 0,
+                    color: '#FBEDE2', fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: isMobile ? 18 : 22,
                   }}
                 />
                 <button
@@ -125,11 +130,11 @@ export function Newsletter() {
                   disabled={status === 'loading'}
                   style={{
                     background: '#FBEDE2', color: 'var(--terracotta)', border: 'none',
-                    padding: '10px 18px', borderRadius: 999,
+                    padding: '12px 18px', borderRadius: 999,
                     fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', fontWeight: 600,
                     cursor: status === 'loading' ? 'default' : 'pointer',
-                    minWidth: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                    transition: 'opacity 200ms',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                    transition: 'opacity 200ms', marginTop: isMobile ? 14 : 0,
                     opacity: status === 'loading' ? 0.75 : 1,
                   }}
                 >
@@ -163,8 +168,8 @@ export function Newsletter() {
               </div>
             </form>
           )}
-          <div style={{ display: 'flex', gap: 28, marginTop: 22, color: 'rgba(255,255,255,0.7)', fontSize: 12 }}>
-            <span>↳ 8.420 leitoras</span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: isMobile ? '10px 20px' : 28, marginTop: 22, color: 'rgba(255,255,255,0.7)', fontSize: 12 }}>
+            <span>↳ 200+ leitoras</span>
             <span>↳ Próxima edição: 12 Junho</span>
             <span>↳ Sem spam, sempre.</span>
           </div>

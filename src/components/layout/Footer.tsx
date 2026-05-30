@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 type FooterLink = { label: string; to: string; external?: boolean }
 
@@ -42,16 +43,18 @@ function FooterLink({ link }: { link: FooterLink }) {
 }
 
 export function Footer() {
+  const isMobile = useIsMobile()
+
   return (
-    <footer style={{ background: 'var(--ink)', color: 'var(--paper)', padding: '64px 0 22px' }}>
+    <footer style={{ background: 'var(--ink)', color: 'var(--paper)', padding: isMobile ? '48px 0 22px' : '64px 0 22px' }}>
       <div className="shell-wide">
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)',
-          gap: 60,
+          gridTemplateColumns: isMobile ? '1fr 1fr' : 'minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)',
+          gap: isMobile ? '40px 24px' : 60,
           alignItems: 'start',
         }}>
-          <div>
+          <div style={isMobile ? { gridColumn: 'span 2' } : {}}>
             <img
               src="/assets/brand/lusoprint-light.png"
               alt="Lusoprint"
