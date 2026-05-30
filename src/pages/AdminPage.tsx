@@ -147,7 +147,7 @@ export function AdminPage() {
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: 1140, margin: '0 auto', padding: '40px 32px' }}>
+      <div style={{ maxWidth: 1140, margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(12px, 3vw, 32px)' }}>
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 0, marginBottom: 36, borderBottom: '1px solid var(--rule)' }}>
@@ -239,28 +239,29 @@ export function AdminPage() {
                     padding: '14px 20px', textAlign: 'left',
                     fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase',
                     color: 'var(--ink-mute)', borderBottom: '1px solid var(--rule)',
-                    whiteSpace: 'nowrap', minWidth: 140,
+                    whiteSpace: 'nowrap', minWidth: 120,
+                    position: 'sticky', left: 0, zIndex: 2,
+                    background: 'rgba(246,243,238,0.97)',
                   }}>
                     Material
                   </th>
                   {VISUAL_COLORS.map(c => (
                     <th key={c.name} style={{
-                      padding: '10px 6px', textAlign: 'center',
+                      padding: '10px 6px', textAlign: 'center', verticalAlign: 'middle',
                       borderBottom: '1px solid var(--rule)', whiteSpace: 'nowrap',
                     }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
-                        <div style={{
-                          width: 22, height: 22, borderRadius: '50%', background: c.hex,
-                          border: c.name === 'branco' ? '1px solid rgba(43,39,34,0.15)' : 'none',
-                          boxShadow: '0 1px 4px rgba(43,39,34,0.14)',
-                        }} />
-                        <span style={{ fontSize: 9, letterSpacing: '0.08em', color: 'var(--ink-mute)', textTransform: 'capitalize' }}>
-                          {c.name}
-                        </span>
-                      </div>
+                      <div style={{
+                        width: 22, height: 22, borderRadius: '50%', background: c.hex,
+                        border: c.name === 'branco' ? '1px solid rgba(43,39,34,0.15)' : 'none',
+                        boxShadow: '0 1px 4px rgba(43,39,34,0.14)',
+                        margin: '0 auto 5px',
+                      }} />
+                      <span style={{ fontSize: 9, letterSpacing: '0.08em', color: 'var(--ink-mute)', textTransform: 'capitalize', display: 'block' }}>
+                        {c.name}
+                      </span>
                     </th>
                   ))}
-                  <th style={{ padding: '10px 8px', borderBottom: '1px solid var(--rule)', whiteSpace: 'nowrap' }}>
+                  <th style={{ padding: '10px 8px', borderBottom: '1px solid var(--rule)', whiteSpace: 'nowrap', textAlign: 'center' }}>
                     <span style={{ fontSize: 9, letterSpacing: '0.08em', color: 'var(--ink-mute)', textTransform: 'uppercase' }}>Linha</span>
                   </th>
                 </tr>
@@ -272,6 +273,8 @@ export function AdminPage() {
                       padding: '11px 20px', fontSize: 12, color: 'var(--ink)',
                       borderBottom: '1px solid var(--rule)', fontWeight: 500,
                       whiteSpace: 'nowrap', letterSpacing: '0.02em',
+                      position: 'sticky', left: 0, zIndex: 1,
+                      background: idx % 2 === 0 ? 'var(--paper)' : 'rgb(244,241,237)',
                     }}>
                       {mat}
                     </td>
@@ -289,7 +292,7 @@ export function AdminPage() {
                               border: isDirty
                                 ? '2px dashed var(--terracotta)'
                                 : avail ? '1.5px solid rgba(60,160,80,0.45)' : '1.5px solid rgba(201,130,110,0.5)',
-                              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                               transition: 'all 160ms',
                             }}
                             aria-label={`${mat} ${c.name}: ${avail ? 'disponível' : 'indisponível'}`}
@@ -316,7 +319,7 @@ export function AdminPage() {
                               border: anyDirty
                                 ? '2px dashed var(--terracotta)'
                                 : allAvail ? '1.5px solid rgba(60,160,80,0.45)' : '1.5px solid rgba(201,130,110,0.5)',
-                              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                               transition: 'all 160ms',
                             }}
                           >
