@@ -198,6 +198,7 @@ export function Mundial() {
     id: item.id, name: item.nome, price: item.preco,
     img: item.img, imgs: item.imgs,
     tag: 'EDIÇÃO LIMITADA', universoId: 'mundial', color: item.cor,
+    dominantColors: ['vermelho', 'verde'],
   })
 
   return (

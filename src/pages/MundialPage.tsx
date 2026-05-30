@@ -402,6 +402,7 @@ export function MundialPage() {
       img: imgs?.[0] ?? '', imgs,
       tag: 'EDIÇÃO LIMITADA',
       universoId: 'mundial', color: selecao?.cor1 ?? p.corDefault,
+      dominantColors: ['vermelho', 'verde'],
     }
   }
 
