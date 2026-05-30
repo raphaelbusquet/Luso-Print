@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { UNIVERSOS } from '../data'
-import { ALL_SHOP_PRODUCTS, COLOR_OPTIONS } from '../data/shop'
+import { ALL_SHOP_PRODUCTS, VISUAL_COLORS } from '../data/shop'
 import { useFavorites } from '../context/FavoritesContext'
 import { useCart } from '../context/CartContext'
 import { Announce } from '../components/layout/Announce'
@@ -168,7 +168,7 @@ export function ShopPage() {
 
   const filtered = ALL_SHOP_PRODUCTS.filter(p => {
     const uOk = selUniversos.length === 0 || selUniversos.includes(p.universoId)
-    const cOk = selColors.length === 0 || selColors.includes(p.color)
+    const cOk = selColors.length === 0 || p.dominantColors.some(c => selColors.includes(c))
     const tOk = selTag === '' || p.tag === selTag
     return uOk && cOk && tOk
   })
@@ -377,8 +377,8 @@ export function ShopPage() {
           </FilterBlock>
 
           <FilterBlock title="Cor">
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-              {COLOR_OPTIONS.map(c => {
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {VISUAL_COLORS.map(c => {
                 const active = selColors.includes(c.name)
                 return (
                   <button
@@ -386,15 +386,13 @@ export function ShopPage() {
                     onClick={() => toggleC(c.name)}
                     title={c.name}
                     style={{
-                      width: 30, height: 30, borderRadius: '50%',
+                      width: 26, height: 26, borderRadius: '50%',
                       background: c.hex,
-                      border: '2px solid transparent',
                       outline: active ? '2px solid var(--ink)' : '2px solid transparent',
                       outlineOffset: 2,
-                      cursor: 'pointer',
                       transition: 'outline 160ms',
-                      boxShadow: '0 1px 4px rgba(43,39,34,0.14)',
-                      padding: 0,
+                      boxShadow: c.name === 'branco' ? 'inset 0 0 0 1px rgba(43,39,34,0.18)' : '0 1px 3px rgba(43,39,34,0.10)',
+                      border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0,
                     }}
                     aria-label={c.name}
                     aria-pressed={active}
@@ -402,11 +400,13 @@ export function ShopPage() {
                 )
               })}
             </div>
-            {selColors.length > 0 && (
-              <div style={{ marginTop: 10, fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.04em' }}>
-                {selColors[0]}
-              </div>
-            )}
+            <div style={{ marginTop: 10, height: 14 }}>
+              {selColors.length > 0 && (
+                <span style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--ink-soft)', textTransform: 'capitalize' }}>
+                  {selColors[0]}
+                </span>
+              )}
+            </div>
           </FilterBlock>
 
           {isMobile && (
