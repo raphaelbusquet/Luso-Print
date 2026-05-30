@@ -335,6 +335,11 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                   <Link to="/perfil" onClick={() => setMenuOpen(false)} style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>
                     Perfil
                   </Link>
+                  {user.email === 'raphaelbusquet@outlook.com' && (
+                    <Link to="/admin" onClick={() => setMenuOpen(false)} style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>
+                      Admin
+                    </Link>
+                  )}
                   <button onClick={() => { handleSignOut(); setMenuOpen(false) }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontFamily: 'inherit' }}>
                     Sair
                   </button>
