@@ -28,7 +28,7 @@ export type DiarioPost = {
 
 export const PRODUCTS: Product[] = [
   { id: 'arco',              name: 'Candeeiro Arco',       collection: 'Sala',          price: 68, img: '/assets/products/arch-lamp.png',                                       tag: 'NOVO' },
-  { id: 'estatua-familia',   name: 'Estátua Toda Família', collection: 'Decoração',     price: 27, img: '/assets/products/familia/estatua-familia-1.png',                       tag: 'EDIÇÃO LIMITADA' },
+  { id: 'estatua-familia',   name: 'Estátua Toda Família', collection: 'Decoração',     price: 26, img: '/assets/products/familia/estatua-familia-1.png',                       tag: 'EDIÇÃO LIMITADA' },
   { id: 'suporte-vinho',     name: 'Suporte Vinho',        collection: 'Cozinha',       price: 38, img: '/assets/products/cozinha-real/suporte-vinho-1.png' },
   { id: 'boleira-geometric', name: 'Boleira Geometric',    collection: 'Cozinha',       price: 48, img: '/assets/products/cozinha-real/boleira-geometrica-1.png',               tag: 'NOVO' },
   { id: 'escrita-sophia',    name: 'Escrita Sophia',       collection: 'Bebés',         price: 38, img: '/assets/products/bebe-crianca/escrita-sophia-1.png',                   tag: 'PERSONALIZÁVEL' },
