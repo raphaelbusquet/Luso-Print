@@ -79,36 +79,36 @@ const SALA_PRODUCTS: ShopProduct[] = [
   { id: 'sala-conjunto-arco',       name: 'Conjunto Arco',              universoId: 'sala', price: 62, img: `${ap}/sala/conjunto-arco-1.png`,        imgs: i4('sala/conjunto-arco', 4),       tag: 'NOVO',           color: 'Creme' },
   { id: 'sala-conjunto-linea',      name: 'Conjunto Linea',             universoId: 'sala', price: 58, img: `${ap}/sala/conjunto-linea-1.png`,       imgs: i4('sala/conjunto-linea', 4),      color: 'Sage' },
   { id: 'sala-porta-chaves-aurora', name: 'Porta-chaves Aurora',        universoId: 'sala', price: 22, img: `${ap}/sala/porta-chaves-aurora-1.png`,  imgs: i4('sala/porta-chaves-aurora', 4), color: 'Olive' },
-  { id: 'sala-trio-serena',         name: 'Trio Serena',                universoId: 'sala', price: 74, img: `${ap}/sala/trio-serena-1.png`,          imgs: i4('sala/trio-serena', 4),         tag: 'EDIÇÃO LIMITADA', color: 'Terracota' },
+  { id: 'sala-trio-serena',         name: 'Trio Serena',                universoId: 'sala', price: 53, img: `${ap}/sala/trio-serena-1.png`,          imgs: i4('sala/trio-serena', 4),         tag: 'EDIÇÃO LIMITADA', color: 'Terracota' },
   { id: 'sala-vaso-onda',           name: 'Vaso Onda',                  universoId: 'sala', price: 44, img: `${ap}/sala/vaso-onda-1.png`,            imgs: i4('sala/vaso-onda', 4),           color: 'Azul-cinza' },
   { id: 'sala-vaso-portal',         name: 'Vaso Portal',                universoId: 'sala', price: 52, img: `${ap}/sala/vaso-portal-1.png`,          imgs: i4('sala/vaso-portal', 4),         color: 'Natural' },
 ]
 
 // ─── Escritório ───────────────────────────────────────────────────────────────
 const ESCRIT_PRODUCTS: ShopProduct[] = [
-  { id: 'escrit-stand-headphone',   name: 'Stand Headphone',          universoId: 'escrit', price: 38, img: `${ap}/escrit/stand-headphone-1.png`,    imgs: i4('escrit/stand-headphone', 4),    tag: 'NOVO', color: 'Natural' },
-  { id: 'escrit-suporte-ipad-tab',  name: 'Suporte iPad & Tablet',    universoId: 'escrit', price: 44, img: `${ap}/escrit/suporte-ipad-tablet-1.png`, imgs: i4('escrit/suporte-ipad-tablet', 4), color: 'Creme' },
-  { id: 'escrit-porta-can-agenda',  name: 'Porta-canetas & Agenda',   universoId: 'escrit', price: 28, img: `${ap}/escrit/porta-canetas-agenda-1.png`, imgs: i4('escrit/porta-canetas-agenda', 3), color: 'Sage' },
+  { id: 'escrit-stand-headphone',   name: 'Stand Headphone',          universoId: 'escrit', price: 32, img: `${ap}/escrit/stand-headphone-1.png`,    imgs: i4('escrit/stand-headphone', 4),    tag: 'NOVO', color: 'Natural' },
+  { id: 'escrit-suporte-ipad-tab',  name: 'Suporte iPad & Tablet',    universoId: 'escrit', price: 15, img: `${ap}/escrit/suporte-ipad-tablet-1.png`, imgs: i4('escrit/suporte-ipad-tablet', 4), color: 'Creme' },
+  { id: 'escrit-porta-can-agenda',  name: 'Porta-canetas & Agenda',   universoId: 'escrit', price: 22, img: `${ap}/escrit/porta-canetas-agenda-1.png`, imgs: i4('escrit/porta-canetas-agenda', 3), color: 'Sage' },
   { id: 'escrit-porta-can-no',      name: 'Porta-canetas Nó',         universoId: 'escrit', price: 24, img: `${ap}/escrit/porta-canetas-no-1.png`,    imgs: i4('escrit/porta-canetas-no', 4),   color: 'Olive' },
   { id: 'escrit-porta-treco-basic', name: 'Porta-treco Basic',        universoId: 'escrit', price: 18, img: `${ap}/escrit/porta-treco-basic-1.png`,   imgs: i4('escrit/porta-treco-basic', 3),  color: 'Terracota' },
-  { id: 'escrit-suporte-ipad',      name: 'Suporte iPad',             universoId: 'escrit', price: 36, img: `${ap}/escrit/suporte-ipad-1.png`,        imgs: i4('escrit/suporte-ipad', 4),       color: 'Azul-cinza' },
-  { id: 'escrit-suporte-telemovel', name: 'Suporte Telemóvel',        universoId: 'escrit', price: 22, img: `${ap}/escrit/suporte-telemovel-1.png`,   imgs: i4('escrit/suporte-telemovel', 4),  color: 'Natural' },
+  { id: 'escrit-suporte-ipad',      name: 'Suporte iPad',             universoId: 'escrit', price: 14, img: `${ap}/escrit/suporte-ipad-1.png`,        imgs: i4('escrit/suporte-ipad', 4),       color: 'Azul-cinza' },
+  { id: 'escrit-suporte-telemovel', name: 'Suporte Telemóvel',        universoId: 'escrit', price: 12, img: `${ap}/escrit/suporte-telemovel-1.png`,   imgs: i4('escrit/suporte-telemovel', 4),  color: 'Natural' },
 ]
 
 // ─── Organização ──────────────────────────────────────────────────────────────
 const ORGANIZ_PRODUCTS: ShopProduct[] = [
-  { id: 'organiz-aparador-balloon', name: 'Aparador de Livros Balloon',  universoId: 'organiz', price: 42, img: `${ap}/organiz/aparador-livros-balloon-1.png`, imgs: i4('organiz/aparador-livros-balloon', 4), color: 'Natural' },
-  { id: 'organiz-aparador-nuvem',   name: 'Aparador de Livros Nuvem',    universoId: 'organiz', price: 38, img: `${ap}/organiz/aparador-livros-nuvem-1.png`,   imgs: i4('organiz/aparador-livros-nuvem', 4),   color: 'Creme' },
-  { id: 'organiz-capitonne',        name: 'Organizador Capitonné',       universoId: 'organiz', price: 46, img: `${ap}/organiz/organizador-capitonne-1.png`,    imgs: i4('organiz/organizador-capitonne', 4),   tag: 'EDIÇÃO LIMITADA', color: 'Sage' },
-  { id: 'organiz-cintos',           name: 'Organizador Slim para Cintos',universoId: 'organiz', price: 32, img: `${ap}/organiz/organizador-cintos-1.png`,       imgs: i4('organiz/organizador-cintos', 4),      color: 'Olive' },
-  { id: 'organiz-vertical-luxe',    name: 'Organizador Vertical Luxe',   universoId: 'organiz', price: 48, img: `${ap}/organiz/organizador-vertical-luxe-1.png`,imgs: i4('organiz/organizador-vertical-luxe', 4),color: 'Terracota' },
+  { id: 'organiz-aparador-balloon', name: 'Aparador de Livros Balloon',  universoId: 'organiz', price: 14, img: `${ap}/organiz/aparador-livros-balloon-1.png`, imgs: i4('organiz/aparador-livros-balloon', 4), color: 'Natural' },
+  { id: 'organiz-aparador-nuvem',   name: 'Aparador de Livros Nuvem',    universoId: 'organiz', price: 16, img: `${ap}/organiz/aparador-livros-nuvem-1.png`,   imgs: i4('organiz/aparador-livros-nuvem', 4),   color: 'Creme' },
+  { id: 'organiz-capitonne',        name: 'Organizador Capitonné',       universoId: 'organiz', price: 25, img: `${ap}/organiz/organizador-capitonne-1.png`,    imgs: i4('organiz/organizador-capitonne', 4),   tag: 'EDIÇÃO LIMITADA', color: 'Sage' },
+  { id: 'organiz-cintos',           name: 'Organizador Slim para Cintos',universoId: 'organiz', price: 12, img: `${ap}/organiz/organizador-cintos-1.png`,       imgs: i4('organiz/organizador-cintos', 4),      color: 'Olive' },
+  { id: 'organiz-vertical-luxe',    name: 'Organizador Vertical Luxe',   universoId: 'organiz', price: 32, img: `${ap}/organiz/organizador-vertical-luxe-1.png`,imgs: i4('organiz/organizador-vertical-luxe', 4),color: 'Terracota' },
   { id: 'organiz-cha-ondine',       name: 'Organizador de Chá Ondine',   universoId: 'organiz', price: 34, img: `${ap}/organiz/organizador-cha-ondine-1.png`,   imgs: i4('organiz/organizador-cha-ondine', 4),  color: 'Azul-cinza' },
 ]
 
 // ─── Quarto ───────────────────────────────────────────────────────────────────
 const QUARTO_PRODUCTS: ShopProduct[] = [
-  { id: 'quarto-oculos-elefante',   name: 'Aparador de Óculos Elefante', universoId: 'quarto', price: 28, img: `${ap}/quarto/aparador-oculos-elefante-1.png`, imgs: i4('quarto/aparador-oculos-elefante', 4), color: 'Natural' },
-  { id: 'quarto-porta-joias-folha', name: 'Bandeja Porta-Joias Folha',   universoId: 'quarto', price: 36, img: `${ap}/quarto/bandeja-porta-joias-folha-1.png`,imgs: i4('quarto/bandeja-porta-joias-folha', 4),color: 'Creme' },
+  { id: 'quarto-oculos-elefante',   name: 'Aparador de Óculos Elefante', universoId: 'quarto', price: 22, img: `${ap}/quarto/aparador-oculos-elefante-1.png`, imgs: i4('quarto/aparador-oculos-elefante', 4), color: 'Natural' },
+  { id: 'quarto-porta-joias-folha', name: 'Bandeja Porta-Joias Folha',   universoId: 'quarto', price: 8, img: `${ap}/quarto/bandeja-porta-joias-folha-1.png`,imgs: i4('quarto/bandeja-porta-joias-folha', 4),color: 'Creme' },
   { id: 'quarto-escultura-sintonia',name: 'Escultura Sintonia',           universoId: 'quarto', price: 72, img: `${ap}/quarto/escultura-sintonia-1.png`,       imgs: i4('quarto/escultura-sintonia', 4),       tag: 'EDIÇÃO LIMITADA', color: 'Sage' },
   { id: 'quarto-organizador-lume',  name: 'Organizador Lume',             universoId: 'quarto', price: 38, img: `${ap}/quarto/organizador-lume-1.png`,         imgs: i4('quarto/organizador-lume', 4),         color: 'Olive' },
   { id: 'quarto-aparador-cabana',   name: 'Aparador de Livros Cabana',    universoId: 'quarto', price: 34, img: `${ap}/quarto/aparador-livros-cabana-1.png`,    imgs: i4('quarto/aparador-livros-cabana', 4),   color: 'Terracota' },
