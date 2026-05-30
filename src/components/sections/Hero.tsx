@@ -1,5 +1,6 @@
 import { useState, useEffect, CSSProperties } from 'react'
 import { HeroShapes } from './HeroShapes'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 type Slide = {
   id: string
@@ -78,6 +79,7 @@ const arrowBtn = (t: Slide['theme']): CSSProperties => ({
 export function Hero() {
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
+  const isMobile = useIsMobile()
   const total = SLIDES.length
   const slide = SLIDES[idx]
   const t = slide.theme
@@ -110,11 +112,11 @@ export function Hero() {
       <div className="shell-wide" style={{
         position: 'relative', zIndex: 10,
         display: 'grid',
-        gridTemplateColumns: 'minmax(0, 1.25fr) minmax(0, 0.75fr)',
-        gap: 80,
+        gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1.25fr) minmax(0, 0.75fr)',
+        gap: isMobile ? 32 : 80,
         alignItems: 'center',
-        minHeight: '74vh',
-        padding: '60px 0 50px',
+        minHeight: isMobile ? 'auto' : '74vh',
+        padding: isMobile ? '40px 0 32px' : '60px 0 50px',
       }}>
         <div key={'L' + idx} style={{ paddingBottom: 10, position: 'relative', animation: 'lp-fadein 700ms cubic-bezier(.2,.7,.2,1)' }}>
           <div style={{ display: 'flex', gap: 18, alignItems: 'center', marginBottom: 30, flexWrap: 'wrap' }}>
@@ -125,7 +127,7 @@ export function Hero() {
 
           <h1 className="serif" style={{
             margin: 0,
-            fontSize: 'clamp(60px, 8.6vw, 136px)',
+            fontSize: isMobile ? 'clamp(48px, 13vw, 72px)' : 'clamp(60px, 8.6vw, 136px)',
             lineHeight: 0.94,
             letterSpacing: '-0.018em',
             fontWeight: 400,
@@ -135,7 +137,7 @@ export function Hero() {
             <em style={{ fontWeight: 400, fontStyle: 'italic', color: t.accent }}>{slide.italic}</em>
           </h1>
 
-          <p className="lede" style={{ maxWidth: 520, marginTop: 30, color: t.muted, fontSize: 28, lineHeight: 1.45 }}>
+          <p className="lede" style={{ maxWidth: 520, marginTop: 20, color: t.muted, fontSize: isMobile ? 18 : 28, lineHeight: 1.45 }}>
             {slide.lede}
           </p>
 
@@ -172,9 +174,9 @@ export function Hero() {
         <div key={'R' + idx} style={{
           position: 'relative',
           width: '100%',
-          maxWidth: 460,
-          justifySelf: 'end',
-          aspectRatio: '0.86 / 1',
+          maxWidth: isMobile ? '100%' : 460,
+          justifySelf: isMobile ? 'stretch' : 'end',
+          aspectRatio: isMobile ? '4/3' : '0.86 / 1',
           animation: 'lp-fadein 800ms cubic-bezier(.2,.7,.2,1)',
         }}>
           <div style={{
@@ -202,41 +204,66 @@ export function Hero() {
 
       <div className="shell-wide" style={{
         position: 'relative', zIndex: 10,
-        display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr)',
-        alignItems: 'center', gap: 24,
-        padding: '20px 0 24px',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr auto' : 'minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr)',
+        alignItems: 'center', gap: 16,
+        padding: '16px 0 20px',
         borderTop: `1px solid ${t.rule}`,
       }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-          <span className="serif" style={{ fontStyle: 'italic', fontSize: 40, color: t.fg, lineHeight: 1 }}>
+          <span className="serif" style={{ fontStyle: 'italic', fontSize: isMobile ? 28 : 40, color: t.fg, lineHeight: 1 }}>
             0{idx + 1}
           </span>
-          <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>
-            / 0{total} · {slide.id === 'mundial' ? 'Coleção Mundial' : slide.id === 'estacoes' ? 'Estações' : 'Personalização'}
-          </span>
+          {!isMobile && (
+            <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>
+              / 0{total} · {slide.id === 'mundial' ? 'Coleção Mundial' : slide.id === 'estacoes' ? 'Estações' : 'Personalização'}
+            </span>
+          )}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {SLIDES.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={() => go(i)}
-              aria-label={`Ir para slide ${i + 1}`}
-              style={{
-                width: i === idx ? 42 : 10, height: 10, padding: 0,
-                background: i === idx ? t.accent : t.rule,
-                border: 'none', borderRadius: 999,
-                cursor: 'pointer',
-                transition: 'all 360ms cubic-bezier(.2,.7,.2,1)',
-              }}
-            />
-          ))}
-        </div>
+        {!isMobile && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {SLIDES.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => go(i)}
+                aria-label={`Ir para slide ${i + 1}`}
+                style={{
+                  width: i === idx ? 42 : 10, height: 10, padding: 0,
+                  background: i === idx ? t.accent : t.rule,
+                  border: 'none', borderRadius: 999,
+                  cursor: 'pointer',
+                  transition: 'all 360ms cubic-bezier(.2,.7,.2,1)',
+                }}
+              />
+            ))}
+          </div>
+        )}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 18 }}>
-          <span style={{ letterSpacing: '0.28em', textTransform: 'uppercase', color: t.muted, fontSize: 10 }}>
-            {paused ? 'Pausado' : 'Auto'}
-          </span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: isMobile ? 10 : 18 }}>
+          {isMobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {SLIDES.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => go(i)}
+                  aria-label={`Ir para slide ${i + 1}`}
+                  style={{
+                    width: i === idx ? 28 : 8, height: 8, padding: 0,
+                    background: i === idx ? t.accent : t.rule,
+                    border: 'none', borderRadius: 999,
+                    cursor: 'pointer',
+                    transition: 'all 360ms cubic-bezier(.2,.7,.2,1)',
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          {!isMobile && (
+            <span style={{ letterSpacing: '0.28em', textTransform: 'uppercase', color: t.muted, fontSize: 10 }}>
+              {paused ? 'Pausado' : 'Auto'}
+            </span>
+          )}
           <button onClick={() => go(idx - 1)} aria-label="Anterior" style={arrowBtn(t)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M15 6l-6 6 6 6" />

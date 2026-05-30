@@ -149,6 +149,62 @@ section { padding: 100px 0; }
   letter-spacing: -0.01em;
 }
 
+/* ---------- Mobile ---------- */
+@media (max-width: 767px) {
+  section { padding: 60px 0; }
+  .shell      { width: min(1360px, 92vw); }
+  .shell-wide { width: 92vw; }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-head h2 { font-size: clamp(32px, 8vw, 52px); }
+
+  .lede { font-size: 16px; }
+
+  /* Universos — collapse the 12-col grid to 2-col */
+  #universos .shell > div:last-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: 160px !important;
+  }
+  #universos .shell > div:last-child > a {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    min-height: 140px !important;
+  }
+
+  /* Diario — 1 col on mobile */
+  #diario .shell > div:last-child {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  /* Newsletter / Contacto form layout */
+  .lp-form-row { flex-direction: column !important; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  section { padding: 80px 0; }
+  .section-head h2 { font-size: clamp(36px, 5vw, 62px); }
+
+  /* Universos — 3 cols on tablet */
+  #universos .shell > div:last-child {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+  #universos .shell > div:last-child > a {
+    grid-column: span 2 !important;
+    grid-row: span 1 !important;
+  }
+
+  /* Diario — 2 col on tablet */
+  #diario .shell > div:last-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 /* ---------- Hover surface ---------- */
 .surface { background: var(--linen); border-radius: 4px; overflow: hidden; position: relative; }
 

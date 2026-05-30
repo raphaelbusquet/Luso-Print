@@ -10,6 +10,7 @@ import { AuthModal } from '../components/ui/AuthModal'
 import { CartDrawer } from '../components/ui/CartDrawer'
 import { FavoritesDrawer } from '../components/ui/FavoritesDrawer'
 import { ProductModal } from '../components/ui/ProductModal'
+import { useIsMobile } from '../hooks/useIsMobile'
 import type { ShopProduct } from '../data/shop'
 
 const TAG_COLOR: Record<string, string> = {
@@ -145,9 +146,11 @@ export function ShopPage() {
   const { universoId } = useParams<{ universoId?: string }>()
   const [searchParams] = useSearchParams()
   const { count: cartCount } = useCart()
+  const isMobile = useIsMobile()
   const [authOpen, setAuthOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [favsOpen, setFavsOpen] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ShopProduct | null>(null)
 
   const [selUniversos, setSelUniversos] = useState<string[]>(
@@ -184,7 +187,7 @@ export function ShopPage() {
       />
 
       {/* Page header */}
-      <div style={{ borderBottom: '1px solid var(--rule)', padding: '28px 0' }}>
+      <div style={{ borderBottom: '1px solid var(--rule)', padding: isMobile ? '16px 0' : '28px 0' }}>
         <div className="shell-wide" style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
@@ -212,13 +215,38 @@ export function ShopPage() {
         </div>
       </div>
 
+      {/* Mobile filter toggle */}
+      {isMobile && (
+        <div className="shell-wide" style={{ padding: '16px 0 0' }}>
+          <button
+            onClick={() => setFiltersOpen(o => !o)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              background: 'none', border: '1px solid var(--rule)', borderRadius: 999,
+              padding: '9px 18px', cursor: 'pointer',
+              fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'var(--ink-soft)', fontFamily: 'inherit',
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="8" y1="12" x2="20" y2="12" />
+              <line x1="12" y1="18" x2="20" y2="18" />
+            </svg>
+            Filtros {activeFilters > 0 ? `(${activeFilters})` : ''}
+          </button>
+        </div>
+      )}
+
       {/* Body */}
-      <div className="shell-wide" style={{ padding: '48px 0 120px', display: 'flex', gap: 52, alignItems: 'flex-start' }}>
+      <div className="shell-wide" style={{ padding: isMobile ? '20px 0 80px' : '48px 0 120px', display: 'flex', gap: 52, alignItems: 'flex-start' }}>
 
         {/* Sidebar */}
+        {(!isMobile || filtersOpen) && (
         <aside style={{
-          width: 210, flexShrink: 0,
-          position: 'sticky', top: 120,
+          width: isMobile ? '100%' : 210, flexShrink: 0,
+          position: isMobile ? 'static' : 'sticky', top: 120,
+          marginBottom: isMobile ? 24 : 0,
         }}>
           {activeFilters > 0 && (
             <button
@@ -362,9 +390,11 @@ export function ShopPage() {
             )}
           </FilterBlock>
         </aside>
+        )}
 
         {/* Products */}
-        <main style={{ flex: 1, minWidth: 0 }}>
+        {(!isMobile || !filtersOpen) && (
+        <main style={{ flex: 1, minWidth: 0, width: '100%' }}>
           {filtered.length === 0 ? (
             <div style={{ paddingTop: 80, textAlign: 'center' }}>
               <p className="serif" style={{ fontSize: 24, fontStyle: 'italic', color: 'var(--ink-soft)' }}>
@@ -384,13 +414,14 @@ export function ShopPage() {
           ) : (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-              gap: '36px 24px',
+              gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))',
+              gap: isMobile ? '24px 14px' : '36px 24px',
             }}>
               {filtered.map(p => <ShopCard key={p.id} product={p} onOpen={() => setSelectedProduct(p)} />)}
             </div>
           )}
         </main>
+        )}
       </div>
 
       {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}

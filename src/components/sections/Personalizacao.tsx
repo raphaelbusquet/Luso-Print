@@ -177,9 +177,12 @@ function LoadingDots({ label }: { label: string }) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
+import { useIsMobile } from '../../hooks/useIsMobile'
+
 type ViewState = 'photo' | 'css' | 'loading' | 'finalising' | 'last' | 'done' | 'error'
 
 export function Personalizacao() {
+  const isMobile = useIsMobile()
   const [name, setName] = useState('')
   const [letraIdx, setLetraIdx] = useState(5)
   const [nomeIdx, setNomeIdx] = useState(2)
@@ -328,13 +331,15 @@ export function Personalizacao() {
   return (
     <section id="personal" style={{ padding: '40px 0 100px', background: 'var(--linen)' }}>
       <div className="shell" style={{
-        display: 'grid', gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 1fr)',
-        gap: 70, alignItems: 'stretch',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1.05fr) minmax(0, 1fr)',
+        gap: isMobile ? 32 : 70,
+        alignItems: 'stretch',
       }}>
 
         {/* ── Left panel ── */}
         <div style={{
-          minHeight: 420, background: '#F1EBDD',
+          minHeight: isMobile ? 280 : 420, background: '#F1EBDD',
           position: 'relative', borderRadius: 2,
           overflow: 'hidden',
           boxShadow: '0 30px 80px -50px rgba(43,39,34,0.45)',

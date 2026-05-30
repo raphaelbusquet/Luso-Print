@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useIsMobile } from '../hooks/useIsMobile'
 import { Announce } from '../components/layout/Announce'
 import { Nav } from '../components/layout/Nav'
 import { Footer } from '../components/layout/Footer'
@@ -353,12 +354,14 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
 
 export function MundialPage() {
   const { count: cartCount } = useCart()
+  const isMobile = useIsMobile()
   const [authOpen, setAuthOpen]         = useState(false)
   const [cartOpen, setCartOpen]         = useState(false)
   const [favsOpen, setFavsOpen]         = useState(false)
   const [selecao, setSelecao]           = useState<Selecao | null>(SELECOES[0])
   const [especial, setEspecial]         = useState(false)
   const [modalProduct, setModalProduct] = useState<ShopProduct | null>(null)
+  const [sidebarOpen, setSidebarOpen]   = useState(false)
 
   const toShopProduct = (p: Produto): ShopProduct => {
     const imgs = getImgs(selecao?.id, p.id) ?? undefined
@@ -414,11 +417,34 @@ export function MundialPage() {
         </div>
       </div>
 
+      {/* Mobile selection toggle */}
+      {isMobile && (
+        <div className="shell-wide" style={{ padding: '16px 0 0' }}>
+          <button
+            onClick={() => setSidebarOpen(o => !o)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              background: 'none', border: '1px solid rgba(212,168,48,0.3)', borderRadius: 999,
+              padding: '9px 18px', cursor: 'pointer',
+              fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'rgba(244,239,230,0.7)', fontFamily: 'inherit',
+            }}
+          >
+            {selecao ? <FlagStrip cores={selecao.cores} dir={selecao.dir} /> : null}
+            {selecao ? selecao.nome : 'Escolher Seleção'}
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ marginLeft: 4 }}>
+              <path d={sidebarOpen ? 'M2 7l3-3 3 3' : 'M2 3l3 3 3-3'} />
+            </svg>
+          </button>
+        </div>
+      )}
+
       {/* Body */}
-      <div className="shell-wide" style={{ padding: '48px 0 120px', display: 'flex', gap: 52, alignItems: 'flex-start' }}>
+      <div className="shell-wide" style={{ padding: isMobile ? '16px 0 80px' : '48px 0 120px', display: 'flex', gap: 52, alignItems: 'flex-start' }}>
 
         {/* Sidebar */}
-        <aside style={{ width: 210, flexShrink: 0, position: 'sticky', top: 120 }}>
+        {(!isMobile || sidebarOpen) && (
+        <aside style={{ width: isMobile ? '100%' : 210, flexShrink: 0, position: isMobile ? 'static' : 'sticky', top: 120, marginBottom: isMobile ? 20 : 0 }}>
           <div style={{ fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(244,239,230,0.35)', fontWeight: 500, marginBottom: 14 }}>
             Seleção
           </div>
@@ -517,9 +543,11 @@ export function MundialPage() {
             </a>
           </div>
         </aside>
+        )}
 
         {/* Products */}
-        <main style={{ flex: 1, minWidth: 0 }}>
+        {(!isMobile || !sidebarOpen) && (
+        <main style={{ flex: 1, minWidth: 0, width: '100%' }}>
           {selecao && (
             <div style={{
               marginBottom: 32, padding: '14px 20px',
@@ -550,19 +578,20 @@ export function MundialPage() {
           )}
 
           {especial ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '36px 24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))', gap: isMobile ? '24px 14px' : '36px 24px' }}>
               {ESPECIAIS.map((p, i) => (
                 <ProdutoCard key={p.id} produto={p} selecao={null} index={i} onOpen={() => setModalProduct(toShopProduct(p))} />
               ))}
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '36px 24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))', gap: isMobile ? '24px 14px' : '36px 24px' }}>
               {PRODUTOS.map((p, i) => (
                 <ProdutoCard key={p.id} produto={p} selecao={selecao} index={i} onOpen={() => setModalProduct(toShopProduct(p))} />
               ))}
             </div>
           )}
         </main>
+        )}
       </div>
 
       <Footer />

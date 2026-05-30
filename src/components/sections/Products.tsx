@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { PRODUCTS } from '../../data'
 import { ProductCard } from '../ui/ProductCard'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 const TABS = ['Tudo', 'Sala', 'Escritório', 'Cozinha', 'Crianças', 'Decoração']
 
 export function Products() {
   const [tab, setTab] = useState('Tudo')
+  const isMobile = useIsMobile()
   const filtered = (tab === 'Tudo' ? PRODUCTS : PRODUCTS.filter(p => p.collection === tab)).slice(0, 8)
 
   return (
@@ -14,8 +16,8 @@ export function Products() {
         <div className="section-head">
           <div>
             <span className="kicker">03 — Coleção em destaque</span>
-            <h2 style={{ fontSize: 88 }}>
-              <em style={{ fontStyle: 'italic', fontSize: 88 }}>Estações</em> —<br />
+            <h2 style={{ fontSize: 'clamp(36px, 7vw, 88px)' }}>
+              <em style={{ fontStyle: 'italic', fontSize: 'clamp(36px, 7vw, 88px)' }}>Estações</em> —<br />
               objetos para se viver.
             </h2>
           </div>
@@ -27,7 +29,7 @@ export function Products() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 6, marginBottom: 48, borderBottom: '1px solid var(--rule)' }}>
+        <div style={{ display: 'flex', gap: 6, marginBottom: 48, borderBottom: '1px solid var(--rule)', overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
           {TABS.map(t => (
             <button
               key={t}
@@ -52,16 +54,16 @@ export function Products() {
           </span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 28, gridAutoRows: 'auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))', gap: isMobile ? 16 : 28, gridAutoRows: 'auto' }}>
           {filtered.map((p, i) => (
             <div
               key={p.id}
               style={{
-                gridColumn: i === 0 ? 'span 2' : 'span 1',
-                gridRow: i === 0 ? 'span 2' : 'span 1',
+                gridColumn: (!isMobile && i === 0) ? 'span 2' : 'span 1',
+                gridRow: (!isMobile && i === 0) ? 'span 2' : 'span 1',
               }}
             >
-              <ProductCard product={p} big={i === 0} />
+              <ProductCard product={p} big={!isMobile && i === 0} />
             </div>
           ))}
         </div>

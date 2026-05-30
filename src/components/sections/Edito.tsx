@@ -1,31 +1,37 @@
-const imgBox = {
-  width: 440,
-  height: 330,
-  borderRadius: 2,
-  backgroundColor: '#D9D5C9',
-  backgroundSize: 'cover' as const,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-}
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 export function Edito() {
+  const isMobile = useIsMobile()
+
+  const imgBox = {
+    width: isMobile ? '100%' : 440,
+    height: isMobile ? 220 : 330,
+    borderRadius: 2,
+    backgroundColor: '#D9D5C9',
+    backgroundSize: 'cover' as const,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }
+
   return (
     <section id="atelier" style={{
-      padding: '100px 0 80px',
+      padding: isMobile ? '60px 0 40px' : '100px 0 80px',
       background: 'var(--paper-2)',
       borderTop: '1px solid var(--rule)',
       borderBottom: '1px solid var(--rule)',
     }}>
       <div className="shell-wide" style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(0, auto) minmax(0, 1fr) minmax(0, auto)',
-        gap: 56,
+        gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, auto) minmax(0, 1fr) minmax(0, auto)',
+        gap: isMobile ? 32 : 56,
         alignItems: 'center',
       }}>
+        {!isMobile && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/deco/candeeiro-fluxo-1.png)' }} />
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/familia/estatua-fams2-1.png)', marginLeft: 30 }} />
         </div>
+        )}
 
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -53,8 +59,8 @@ export function Edito() {
           </p>
 
           <div style={{
-            display: 'flex', justifyContent: 'center', gap: 36,
-            marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--rule)',
+            display: 'flex', justifyContent: 'center', gap: isMobile ? 14 : 36, flexWrap: 'wrap',
+            marginTop: 40, paddingTop: 28, borderTop: '1px solid var(--rule)',
             fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)',
           }}>
             <span>Conexão</span><span style={{ opacity: 0.4 }}>·</span>
@@ -64,10 +70,12 @@ export function Edito() {
           </div>
         </div>
 
+        {!isMobile && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/sala/conjunto-arco-1.png)', marginRight: 30 }} />
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/quarto/bandeja-porta-joias-folha-1.png)' }} />
         </div>
+        )}
       </div>
 
       <div style={{

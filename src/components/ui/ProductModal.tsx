@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
 import { useCart } from '../../context/CartContext'
 import { UNIVERSOS } from '../../data'
+import { useIsMobile } from '../../hooks/useIsMobile'
 import type { ShopProduct } from '../../data/shop'
 
 type Props = {
@@ -83,6 +84,7 @@ function FamilyConfig({ value, onChange }: {
 export function ProductModal({ product: p, onClose }: Props) {
   const { isFav, toggle } = useFavorites()
   const { addItem, items } = useCart()
+  const isMobile = useIsMobile()
   const [activeImg, setActiveImg] = useState(0)
   const [qty, setQty] = useState(1)
   const [qtyModified, setQtyModified] = useState(false)
@@ -152,23 +154,27 @@ export function ProductModal({ product: p, onClose }: Props) {
       {/* Modal — outer div handles centering, inner handles animation */}
       <div style={{
         position: 'fixed', zIndex: 301,
-        top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 'min(960px, 96vw)',
-        height: 'min(600px, 92vh)',
+        top: isMobile ? 0 : '50%',
+        left: isMobile ? 0 : '50%',
+        right: isMobile ? 0 : undefined,
+        bottom: isMobile ? 0 : undefined,
+        transform: isMobile ? 'none' : 'translate(-50%, -50%)',
+        width: isMobile ? '100%' : 'min(960px, 96vw)',
+        height: isMobile ? '100%' : 'min(600px, 92vh)',
       }}>
       <div style={{
         width: '100%', height: '100%',
         background: 'var(--paper)',
-        borderRadius: 6,
+        borderRadius: isMobile ? 0 : 6,
         overflow: 'hidden',
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         boxShadow: '0 32px 80px -12px rgba(43,39,34,0.35)',
         animation: 'modal-in 260ms cubic-bezier(.2,.7,.2,1)',
       }}>
 
         {/* Left — photos */}
-        <div style={{ width: '54%', flexShrink: 0, display: 'flex', flexDirection: 'column', background: 'var(--linen)' }}>
+        <div style={{ width: isMobile ? '100%' : '54%', flexShrink: 0, display: 'flex', flexDirection: 'column', background: 'var(--linen)', ...(isMobile ? { height: '42%', flexShrink: 0 } : {}) }}>
           {/* Main photo */}
           <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
             <div style={{
@@ -204,7 +210,7 @@ export function ProductModal({ product: p, onClose }: Props) {
 
         {/* Right — info */}
         <div style={{
-          flex: 1, padding: '24px 30px', overflowY: 'auto',
+          flex: 1, padding: isMobile ? '16px 20px 24px' : '24px 30px', overflowY: 'auto',
           display: 'flex', flexDirection: 'column',
         }}>
           {/* Close */}

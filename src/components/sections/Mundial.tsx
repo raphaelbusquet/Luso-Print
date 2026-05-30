@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ProductModal } from '../ui/ProductModal'
+import { useIsMobile } from '../../hooks/useIsMobile'
 import type { ShopProduct } from '../../data/shop'
 
 type Forma = 'lata' | 'cromos' | 'chaveiro' | 'petisqueira'
@@ -193,6 +194,7 @@ function MundialCard({ item, index, onOpen }: { item: typeof items[0]; index: nu
 
 export function Mundial() {
   const [modalProduct, setModalProduct] = useState<ShopProduct | null>(null)
+  const isMobile = useIsMobile()
 
   const toShopProduct = (item: typeof items[0]): ShopProduct => ({
     id: item.id, name: item.nome, price: item.preco,
@@ -265,14 +267,16 @@ export function Mundial() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 22 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))', gap: isMobile ? 14 : 22 }}>
           {items.map((it, i) => <MundialCard key={i} item={it} index={i} onOpen={() => setModalProduct(toShopProduct(it))} />)}
         </div>
 
         <div style={{
-          marginTop: 80, paddingTop: 40,
+          marginTop: isMobile ? 40 : 80, paddingTop: 40,
           borderTop: '1px solid rgba(212,168,48,0.2)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40,
+          display: 'flex', flexDirection: isMobile ? 'column' : 'row',
+          alignItems: isMobile ? 'flex-start' : 'center',
+          justifyContent: 'space-between', gap: isMobile ? 20 : 40,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ width: 20, height: 20, background: 'var(--mundial-red)',   borderRadius: '50%', boxShadow: '0 0 12px rgba(218,41,28,0.6)' }} />
