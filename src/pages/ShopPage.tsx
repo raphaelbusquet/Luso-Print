@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { UNIVERSOS } from '../data'
 import { ALL_SHOP_PRODUCTS, VISUAL_COLORS } from '../data/shop'
@@ -159,6 +159,14 @@ export function ShopPage() {
   )
   const [selColors, setSelColors] = useState<string[]>([])
   const [selTag, setSelTag] = useState<string>(searchParams.get('tag') ?? '')
+
+  useEffect(() => {
+    const produtoId = searchParams.get('produto')
+    if (produtoId) {
+      const found = ALL_SHOP_PRODUCTS.find(p => p.id === produtoId)
+      if (found) setSelectedProduct(found)
+    }
+  }, [])
 
   const toggleU = (id: string) =>
     setSelUniversos(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])

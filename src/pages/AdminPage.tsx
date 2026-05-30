@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { useMaterials } from '../context/MaterialsContext'
 import { MATERIALS } from '../data/materials'
 import { VISUAL_COLORS } from '../data/shop'
+import { OrdersAdmin } from '../components/admin/OrdersAdmin'
 
 const ADMIN_EMAIL = 'raphaelbusquet@outlook.com'
 
@@ -12,6 +13,7 @@ type User = { id: string; email?: string }
 export function AdminPage() {
   const [user, setUser] = useState<User | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
+  const [tab, setTab] = useState<'materials' | 'orders'>('orders')
   const { rows, setAvailable, loading } = useMaterials()
   const [pending, setPending] = useState<Record<string, boolean>>({})
   const [saving, setSaving] = useState(false)
@@ -138,6 +140,29 @@ export function AdminPage() {
       {/* Content */}
       <div style={{ maxWidth: 1140, margin: '0 auto', padding: '40px 32px' }}>
 
+        {/* Tabs */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 36, borderBottom: '1px solid var(--rule)' }}>
+          {(['orders', 'materials'] as const).map(t => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              style={{
+                padding: '12px 24px', border: 'none', background: 'transparent',
+                cursor: 'pointer', fontFamily: 'inherit',
+                fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: tab === t ? 'var(--ink)' : 'var(--ink-mute)',
+                borderBottom: tab === t ? '2px solid var(--ink)' : '2px solid transparent',
+                marginBottom: -1, transition: 'color 150ms',
+              }}
+            >
+              {t === 'materials' ? 'Materiais' : 'Pedidos'}
+            </button>
+          ))}
+        </div>
+
+        {tab === 'orders' && <OrdersAdmin />}
+
+        {tab === 'materials' && (<>
         {/* Header */}
         <div style={{ marginBottom: 36, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div>
@@ -289,6 +314,7 @@ export function AdminPage() {
             {saving ? 'A guardar…' : pendingCount > 0 ? `Guardar alterações (${pendingCount})` : 'Guardar alterações'}
           </button>
         </div>
+        </>)}
       </div>
     </div>
   )

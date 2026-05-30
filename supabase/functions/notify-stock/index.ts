@@ -51,7 +51,7 @@ Deno.serve(async (req) => {
         reply_to: 'geral@lusoprint.com',
         to: [n.email],
         subject: `${productName} voltou ao stock`,
-        text: `Olá,\n\n${productName} na cor ${colorLabel} que pediu para ser notificado voltou ao stock na Lusoprint.\n\nVer produtos: https://lusoprint.com/loja\n\n—\nLusoprint · Portugal\nhttps://lusoprint.com`,
+        text: `Olá,\n\n${productName} na cor ${colorLabel} que pediu para ser notificado voltou ao stock na Lusoprint.\n\nVer produto: https://lusoprint.com/loja?produto=${n.product_id}\n\n—\nLusoprint · Portugal\nhttps://lusoprint.com`,
         html: `
           <div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;padding:48px 24px;color:#2b2722">
             <div style="font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:#a09488;margin-bottom:32px">Lusoprint</div>
@@ -61,9 +61,9 @@ Deno.serve(async (req) => {
               <strong style="color:#2b2722">${colorLabel}</strong>
               que pediu para ser notificado voltou ao stock.
             </p>
-            <a href="https://lusoprint.com/loja"
+            <a href="https://lusoprint.com/loja?produto=${n.product_id}"
               style="display:inline-block;padding:13px 28px;background:#2b2722;color:#fff;text-decoration:none;border-radius:999px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase">
-              Ver produtos
+              Ver produto
             </a>
             <hr style="border:none;border-top:1px solid #e8e0d8;margin:40px 0 20px">
             <p style="font-size:11px;color:#c4b8ae;margin:0">Lusoprint · Portugal · <a href="https://lusoprint.com" style="color:#c4b8ae">lusoprint.com</a></p>
