@@ -46,7 +46,7 @@ const SLIDES: Slide[] = [
     ctaSecondary: { label: 'Ver lookbook', href: '#mundial' },
     image: '/assets/products/mundial/portugal/chaveiro-1.png',
     imagePosition: 'center 82%',
-    caption: { eyebrow: 'Pré-venda aberta', title: 'Chaveiro Portugal · FIFA 26', sub: 'Edição limitada · € 8' },
+    caption: { eyebrow: 'Pré-venda aberta', title: 'Chaveiro Portugal · FIFA 26', sub: 'Edição limitada · € 5' },
     captionBg: 'rgba(244,239,230,0.55)',
     theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     flagDots: true,

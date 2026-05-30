@@ -142,12 +142,12 @@ function getImgs(selecaoId: string | undefined, produtoId: string): string[] | n
 const PRODUTOS: Produto[] = [
   { id: 'porta-lata',   nome: 'Porta Lata Seleção',  preco: 18, desc: 'Mantém a lata fresca durante o jogo. PLA reciclável.',            corDefault: 'var(--mundial-red)',   forma: 'lata'        },
   { id: 'porta-cromos', nome: 'Porta Cromos Seleção', preco: 16, desc: 'Álbum organizador para a coleção completa. 4 bolsos por página.', corDefault: 'var(--mundial-green)', forma: 'cromos'      },
-  { id: 'chaveiro',     nome: 'Chaveiro FIFA 26',     preco: 8,  desc: 'Chaveiro "26" com taça FIFA em impressão 3D. Nas cores da tua seleção.', corDefault: '#1A1A1A', forma: 'chaveiro', fixedColor: true },
+  { id: 'chaveiro',     nome: 'Chaveiro FIFA 26',     preco: 5,  desc: 'Chaveiro "26" com taça FIFA em impressão 3D. Nas cores da tua seleção.', corDefault: '#1A1A1A', forma: 'chaveiro', fixedColor: true },
   { id: 'petisqueira',  nome: 'Petisqueira Seleção',  preco: 16, desc: 'Bandeja divisória para petiscos. 4 compartimentos.',              corDefault: 'var(--mundial-green)', forma: 'petisqueira' },
 ]
 
 const ESPECIAIS: Produto[] = [
-  { id: 'chaveiro-taca',    nome: 'Chaveiro Taça Mundial', preco: 8,  desc: 'Taça FIFA em miniatura. Edição especial Mundial 2026.',      corDefault: '#111', forma: 'chaveiro'    },
+  { id: 'chaveiro-taca',    nome: 'Chaveiro Taça Mundial', preco: 7,  desc: 'Taça FIFA em miniatura. Edição especial Mundial 2026.',      corDefault: '#111', forma: 'chaveiro'    },
   { id: 'petisqueira-2026', nome: 'Petisqueira Taça',       preco: 16, desc: 'Bandeja preta para petiscos. Edição especial Mundial 2026.', corDefault: '#111', forma: 'petisqueira' },
 ]
 
