@@ -140,6 +140,7 @@ function FilterBlock({ title, children }: { title: string; children: React.React
 const TAG_LABELS: Record<string, string> = {
   'NOVO':            'Novidades',
   'EDIÇÃO LIMITADA': 'Edição Limitada',
+  'PERSONALIZÁVEL':  'Personalizáveis',
 }
 
 export function ShopPage() {

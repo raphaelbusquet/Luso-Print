@@ -27,6 +27,8 @@ function HeartIcon({ filled }: { filled: boolean }) {
   )
 }
 
+const NOME_IDS = new Set(['bebes-heitor-dino', 'bebes-cecilia', 'bebes-arco-iris', 'bebes-escrita-sophia', 'bebes-porta-maternidade'])
+
 const IDADES = ['Bebé (0–2)', 'Pequenino (3–6)', 'Criança (7–12)', 'Adolescente (13+)']
 
 function FamilyConfig({ value, onChange }: {
@@ -107,16 +109,20 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [qty, setQty] = useState(1)
   const [qtyModified, setQtyModified] = useState(false)
   const [familyConfig, setFamilyConfig] = useState({ pai: false, mae: false, criancas: [] as string[] })
+  const [childName, setChildName] = useState('')
   const swipeStartX = useRef<number | null>(null)
 
   const isFamilyProduct = p?.id === 'familia-estatua-familia' || p?.id === 'familia-estatua-fams2'
+  const isNameProduct = p ? NOME_IDS.has(p.id) : false
   const familyNotConfigured = isFamilyProduct && !familyConfig.pai && !familyConfig.mae && familyConfig.criancas.length === 0
+  const nameNotProvided = isNameProduct && childName.trim() === ''
 
   useEffect(() => {
     setActiveImg(0)
     setQty(1)
     setQtyModified(false)
     setFamilyConfig({ pai: true, mae: true, criancas: [] })
+    setChildName('')
   }, [p?.id])
 
   useEffect(() => {
@@ -144,7 +150,7 @@ export function ProductModal({ product: p, onClose }: Props) {
   const photos = p.imgs ?? [p.img, p.img, p.img, p.img]
 
   const handleAdd = () => {
-    if (btnDisabled) return
+    if (familyNotConfigured || nameNotProvided || btnDisabled) return
     let note: string | undefined
     if (isFamilyProduct) {
       const membros = [
@@ -153,6 +159,9 @@ export function ProductModal({ product: p, onClose }: Props) {
         ...familyConfig.criancas.map((id, i) => `Criança ${i + 1}: ${id}`),
       ].filter(Boolean).join(' · ')
       note = membros || undefined
+    }
+    if (isNameProduct && childName.trim()) {
+      note = `Nome: ${childName.trim()}`
     }
     addItem({ name: p.name, price: p.price, img: p.img, productId: p.id, note }, qty)
     setQtyModified(false)
@@ -335,6 +344,41 @@ export function ProductModal({ product: p, onClose }: Props) {
             ))}
           </div>
 
+          {/* Name field for personalizable products */}
+          {isNameProduct && (
+            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 14, marginBottom: 14 }}>
+              <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
+                Nome da criança
+              </div>
+              <input
+                type="text"
+                value={childName}
+                onChange={e => setChildName(e.target.value)}
+                placeholder="Ex: Heitor, Maria, João…"
+                style={{
+                  width: '100%', padding: '10px 14px',
+                  border: '1px solid var(--rule)', borderRadius: 4,
+                  fontSize: 13, color: 'var(--ink)', background: 'var(--paper)',
+                  fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
+                  transition: 'border-color 160ms',
+                }}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--terracotta)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--rule)')}
+              />
+              {nameNotProvided && (
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  marginTop: 8, fontSize: 11, color: 'var(--terracotta)', lineHeight: 1.4,
+                }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0 }}>
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  Indique o nome antes de adicionar ao cesto.
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Family configurator */}
           {isFamilyProduct && (
             <FamilyConfig value={familyConfig} onChange={v => { setFamilyConfig(v); setQtyModified(true) }} />
@@ -385,12 +429,12 @@ export function ProductModal({ product: p, onClose }: Props) {
             <div style={{ display: 'flex', gap: 12 }}>
             <button
               onClick={handleAdd}
-              disabled={familyNotConfigured}
+              disabled={familyNotConfigured || nameNotProvided}
               style={{
                 flex: 1, padding: '15px 20px',
-                background: familyNotConfigured ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
-                color: familyNotConfigured ? 'var(--ink-mute)' : '#fff', border: 'none',
-                cursor: familyNotConfigured || btnDisabled ? 'default' : 'pointer',
+                background: (familyNotConfigured || nameNotProvided) ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
+                color: (familyNotConfigured || nameNotProvided) ? 'var(--ink-mute)' : '#fff', border: 'none',
+                cursor: (familyNotConfigured || nameNotProvided) || btnDisabled ? 'default' : 'pointer',
                 borderRadius: 999,
                 fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
                 fontFamily: 'inherit',
