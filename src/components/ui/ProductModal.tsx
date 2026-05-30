@@ -5,6 +5,8 @@ import { UNIVERSOS } from '../../data'
 import { useIsMobile } from '../../hooks/useIsMobile'
 import { VISUAL_COLORS } from '../../data/shop'
 import type { ShopProduct } from '../../data/shop'
+import { useMaterials } from '../../context/MaterialsContext'
+import { supabase } from '../../lib/supabase'
 
 const COLOR_HEX: Record<string, string> = Object.fromEntries(VISUAL_COLORS.map(c => [c.name, c.hex]))
 
@@ -104,9 +106,11 @@ function FamilyConfig({ value, onChange }: {
   )
 }
 
+
 export function ProductModal({ product: p, onClose }: Props) {
   const { isFav, toggle } = useFavorites()
   const { addItem, items } = useCart()
+  const { isColorAvailable } = useMaterials()
   const isMobile = useIsMobile()
   const [activeImg, setActiveImg] = useState(0)
   const [qty, setQty] = useState(1)
@@ -114,12 +118,16 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [familyConfig, setFamilyConfig] = useState({ pai: false, mae: false, criancas: [] as string[] })
   const [childName, setChildName] = useState('')
   const [selectedColor, setSelectedColor] = useState<string>('')
+  const [notifyState, setNotifyState] = useState<'idle' | 'open' | 'sending' | 'done'>('idle')
+  const [notifyEmail, setNotifyEmail] = useState('')
   const swipeStartX = useRef<number | null>(null)
 
   const isFamilyProduct = p?.id === 'familia-estatua-familia' || p?.id === 'familia-estatua-fams2'
   const isNameProduct = p ? NOME_IDS.has(p.id) : false
   const familyNotConfigured = isFamilyProduct && !familyConfig.pai && !familyConfig.mae && familyConfig.criancas.length === 0
   const nameNotProvided = isNameProduct && childName.trim() === ''
+  const selectedColorOption = p?.colorOptions?.find(c => c.color === selectedColor)
+  const colorUnavailable = selectedColorOption ? !isColorAvailable(selectedColor, selectedColorOption.materials) : false
 
   useEffect(() => {
     setActiveImg(0)
@@ -127,7 +135,9 @@ export function ProductModal({ product: p, onClose }: Props) {
     setQtyModified(false)
     setFamilyConfig({ pai: true, mae: true, criancas: [] })
     setChildName('')
-    setSelectedColor(p?.colorOptions?.[0] ?? '')
+    setSelectedColor(p?.colorOptions?.[0]?.color ?? '')
+    setNotifyState('idle')
+    setNotifyEmail('')
   }, [p?.id])
 
   useEffect(() => {
@@ -154,7 +164,7 @@ export function ProductModal({ product: p, onClose }: Props) {
   const inCart = items.some(i => i.productId === p.id)
   const btnDisabled = inCart && !qtyModified
   const needsValidation = !inCart || qtyModified
-  const addBlocked = needsValidation && (familyNotConfigured || nameNotProvided)
+  const addBlocked = colorUnavailable || (needsValidation && (familyNotConfigured || nameNotProvided))
   const universo = UNIVERSOS.find(u => u.id === p.universoId)
   const photos = p.imgs ?? [p.img, p.img, p.img, p.img]
 
@@ -346,24 +356,28 @@ export function ProductModal({ product: p, onClose }: Props) {
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {p.colorOptions.map(c => {
-                  const hex = COLOR_HEX[c] ?? '#C8B89A'
-                  const isActive = selectedColor === c
+                  const hex = COLOR_HEX[c.color] ?? '#C8B89A'
+                  const isActive = selectedColor === c.color
+                  const avail = isColorAvailable(c.color, c.materials)
                   return (
                     <button
-                      key={c}
-                      onClick={() => { setSelectedColor(c); setQtyModified(true) }}
-                      title={c}
+                      key={c.color}
+                      onClick={() => { setSelectedColor(c.color); setQtyModified(true); setNotifyState('idle'); setNotifyEmail('') }}
+                      title={avail ? c.color : `${c.color} — indisponível`}
                       style={{
                         width: 28, height: 28, borderRadius: '50%',
                         background: hex,
                         outline: isActive ? '2px solid var(--ink)' : '2px solid transparent',
                         outlineOffset: 2,
-                        border: c === 'branco' ? '1px solid rgba(43,39,34,0.18)' : 'none',
-                        cursor: 'pointer', padding: 0,
-                        transition: 'outline 160ms',
+                        border: c.color === 'branco' ? '1px solid rgba(43,39,34,0.18)' : 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        transition: 'outline 160ms, opacity 160ms',
                         boxShadow: '0 1px 3px rgba(43,39,34,0.10)',
+                        opacity: avail ? 1 : 0.35,
+                        position: 'relative',
                       }}
-                      aria-label={c}
+                      aria-label={c.color}
                       aria-pressed={isActive}
                     />
                   )
@@ -375,7 +389,7 @@ export function ProductModal({ product: p, onClose }: Props) {
           {/* Details list */}
           <div style={{ borderTop: '1px solid var(--rule)', marginBottom: 20 }}>
             {[
-              ['Material', 'PLA reciclável'],
+              ['Material', 'PLA Matte'],
               ['Acabamento', 'Lixado suave'],
               ['Entrega', '5–10 dias úteis'],
             ].map(([label, val]) => (
@@ -473,44 +487,136 @@ export function ProductModal({ product: p, onClose }: Props) {
               </div>
             )}
             <div style={{ display: 'flex', gap: 12 }}>
-            <button
-              onClick={handleAdd}
-              disabled={addBlocked}
-              style={{
-                flex: 1, padding: '15px 20px',
-                background: addBlocked ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
-                color: addBlocked ? 'var(--ink-mute)' : '#fff', border: 'none',
-                cursor: addBlocked || btnDisabled ? 'default' : 'pointer',
-                borderRadius: 999,
-                fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
-                fontFamily: 'inherit',
-                transition: 'background 200ms ease',
-              }}
-            >
-              {btnDisabled ? 'No cesto ✓' : `Adicionar ao cesto — €${p.price * qty}`}
-            </button>
-
-            <button
-              onClick={() => toggle(p.id)}
-              style={{
-                width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
-                background: fav ? 'var(--ink)' : 'transparent',
-                border: fav ? 'none' : '1px solid var(--rule)',
-                cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: fav ? '#fff' : 'var(--ink)',
-                transition: 'all 180ms ease',
-              }}
-              onMouseEnter={e => {
-                if (!fav) (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--ink)'
-              }}
-              onMouseLeave={e => {
-                if (!fav) (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--rule)'
-              }}
-              aria-label={fav ? 'Remover dos favoritos' : 'Guardar nos favoritos'}
-            >
-              <HeartIcon filled={fav} />
-            </button>
+              <div style={{ flex: 1 }}>
+                {colorUnavailable ? (
+                  notifyState === 'done' ? (
+                    <div style={{
+                      flex: 1, padding: '15px 20px', borderRadius: 999,
+                      background: 'rgba(60,160,80,0.08)', border: '1px solid rgba(60,160,80,0.3)',
+                      fontSize: 11, letterSpacing: '0.16em', color: 'rgb(50,140,70)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      Notificação registada ✓
+                    </div>
+                  ) : notifyState === 'open' || notifyState === 'sending' ? (
+                    <div style={{ display: 'flex', gap: 8, flex: 1 }}>
+                      <input
+                        type="email"
+                        value={notifyEmail}
+                        onChange={e => setNotifyEmail(e.target.value)}
+                        onKeyDown={async e => {
+                          if (e.key === 'Escape') { setNotifyState('idle'); return }
+                          if (e.key === 'Enter' && notifyEmail.trim() && selectedColorOption) {
+                            setNotifyState('sending')
+                            for (const mat of selectedColorOption.materials) {
+                              await supabase.from('stock_notifications').insert({ email: notifyEmail.trim(), material: mat, color: selectedColor, product_id: p.id, product_name: p.name })
+                            }
+                            setNotifyState('done')
+                          }
+                        }}
+                        placeholder="O seu email"
+                        autoFocus
+                        style={{
+                          flex: 1, padding: '0 16px', height: 52,
+                          border: '1px solid var(--rule)', borderRadius: 999,
+                          fontSize: 13, color: 'var(--ink)', background: 'var(--paper)',
+                          fontFamily: 'inherit', outline: 'none',
+                        }}
+                        onFocus={e => (e.currentTarget.style.borderColor = 'var(--terracotta)')}
+                        onBlur={e => (e.currentTarget.style.borderColor = 'var(--rule)')}
+                      />
+                      <button
+                        onClick={async () => {
+                          if (!notifyEmail.trim() || !selectedColorOption) return
+                          setNotifyState('sending')
+                          for (const mat of selectedColorOption.materials) {
+                            await supabase.from('stock_notifications').insert({ email: notifyEmail.trim(), material: mat, color: selectedColor, product_id: p.id, product_name: p.name })
+                          }
+                          setNotifyState('done')
+                        }}
+                        disabled={notifyState === 'sending' || !notifyEmail.trim()}
+                        style={{
+                          padding: '0 20px', height: 52, flexShrink: 0,
+                          background: 'var(--ink)', color: '#fff',
+                          border: 'none', borderRadius: 999, cursor: 'pointer',
+                          fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase',
+                          fontFamily: 'inherit',
+                        }}
+                      >
+                        {notifyState === 'sending' ? '…' : 'OK'}
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: 8, flex: 1 }}>
+                      <button
+                        disabled
+                        style={{
+                          flex: 1, padding: '15px 20px', whiteSpace: 'nowrap',
+                          background: 'var(--rule)', color: 'var(--ink-mute)', border: 'none',
+                          cursor: 'not-allowed', borderRadius: 999,
+                          fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
+                          fontFamily: 'inherit',
+                        }}
+                      >
+                        Cor sem stock
+                      </button>
+                      <button
+                        onClick={() => setNotifyState('open')}
+                        style={{
+                          padding: '0 16px', height: 52, flexShrink: 0,
+                          background: 'transparent', border: '1px solid var(--rule)',
+                          borderRadius: 999, cursor: 'pointer',
+                          fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase',
+                          color: 'var(--ink-soft)', fontFamily: 'inherit', whiteSpace: 'nowrap',
+                          transition: 'border-color 160ms, color 160ms',
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--ink)'; e.currentTarget.style.color = 'var(--ink)' }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rule)'; e.currentTarget.style.color = 'var(--ink-soft)' }}
+                      >
+                        Notificar
+                      </button>
+                    </div>
+                  )
+                ) : (
+                  <button
+                    onClick={handleAdd}
+                    disabled={addBlocked}
+                    style={{
+                      width: '100%', padding: '15px 20px',
+                      background: addBlocked ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
+                      color: addBlocked ? 'var(--ink-mute)' : '#fff', border: 'none',
+                      cursor: addBlocked || btnDisabled ? 'default' : 'pointer',
+                      borderRadius: 999,
+                      fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
+                      fontFamily: 'inherit',
+                      transition: 'background 200ms ease',
+                    }}
+                  >
+                    {btnDisabled ? 'No cesto ✓' : `Adicionar ao cesto — €${p.price * qty}`}
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={() => toggle(p.id)}
+                style={{
+                  width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+                  background: fav ? 'var(--ink)' : 'transparent',
+                  border: fav ? 'none' : '1px solid var(--rule)',
+                  cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: fav ? '#fff' : 'var(--ink)',
+                  transition: 'all 180ms ease',
+                }}
+                onMouseEnter={e => {
+                  if (!fav) (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--ink)'
+                }}
+                onMouseLeave={e => {
+                  if (!fav) (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--rule)'
+                }}
+                aria-label={fav ? 'Remover dos favoritos' : 'Guardar nos favoritos'}
+              >
+                <HeartIcon filled={fav} />
+              </button>
             </div>
           </div>
         </div>

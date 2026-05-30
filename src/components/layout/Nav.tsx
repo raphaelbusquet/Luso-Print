@@ -217,6 +217,22 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                   >
                     Imagens Geradas
                   </Link>
+                  {user.email === 'raphaelbusquet@outlook.com' && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setDropdownOpen(false)}
+                      style={{
+                        display: 'block', width: '100%', padding: '12px 16px',
+                        fontSize: 11, letterSpacing: '0.18em',
+                        textTransform: 'uppercase', color: 'var(--ink-soft)',
+                        transition: 'color 150ms', borderBottom: '1px solid var(--rule)',
+                      }}
+                      onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
+                      onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
+                    >
+                      Admin
+                    </Link>
+                  )}
                   <button
                     onClick={handleSignOut}
                     style={{

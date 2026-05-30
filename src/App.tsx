@@ -24,6 +24,8 @@ import { DiarioPostPage } from './pages/DiarioPostPage'
 import { TermosPage } from './pages/TermosPage'
 import { MundialPage } from './pages/MundialPage'
 import { CookieBanner } from './components/ui/CookieBanner'
+import { MaterialsProvider } from './context/MaterialsContext'
+import { AdminPage } from './pages/AdminPage'
 
 function HomePage() {
   const [authOpen, setAuthOpen] = useState(false)
@@ -69,6 +71,7 @@ function AppInner() {
       <Route path="/diario/:id" element={<DiarioPostPage />} />
       <Route path="/termos" element={<TermosPage />} />
       <Route path="/mundial" element={<MundialPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
     <CookieBanner />
 </>
@@ -77,10 +80,12 @@ function AppInner() {
 
 export function App() {
   return (
-    <CartProvider>
-      <FavoritesProvider>
-        <AppInner />
-      </FavoritesProvider>
-    </CartProvider>
+    <MaterialsProvider>
+      <CartProvider>
+        <FavoritesProvider>
+          <AppInner />
+        </FavoritesProvider>
+      </CartProvider>
+    </MaterialsProvider>
   )
 }
