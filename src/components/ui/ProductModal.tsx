@@ -127,9 +127,11 @@ export function ProductModal({ product: p, onClose }: Props) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape')      { onClose(); return }
-      if (e.key === 'ArrowRight')  setActiveImg(i => (i + 1) % 4)
-      if (e.key === 'ArrowLeft')   setActiveImg(i => (i + 3) % 4)
+      if (e.key === 'Escape') { onClose(); return }
+      const tag = (e.target as HTMLElement).tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
+      if (e.key === 'ArrowRight') setActiveImg(i => (i + 1) % 4)
+      if (e.key === 'ArrowLeft')  setActiveImg(i => (i + 3) % 4)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -146,11 +148,13 @@ export function ProductModal({ product: p, onClose }: Props) {
   const fav = isFav(p.id)
   const inCart = items.some(i => i.productId === p.id)
   const btnDisabled = inCart && !qtyModified
+  const needsValidation = !inCart || qtyModified
+  const addBlocked = needsValidation && (familyNotConfigured || nameNotProvided)
   const universo = UNIVERSOS.find(u => u.id === p.universoId)
   const photos = p.imgs ?? [p.img, p.img, p.img, p.img]
 
   const handleAdd = () => {
-    if (familyNotConfigured || nameNotProvided || btnDisabled) return
+    if (addBlocked || btnDisabled) return
     let note: string | undefined
     if (isFamilyProduct) {
       const membros = [
@@ -353,7 +357,7 @@ export function ProductModal({ product: p, onClose }: Props) {
               <input
                 type="text"
                 value={childName}
-                onChange={e => setChildName(e.target.value)}
+                onChange={e => { setChildName(e.target.value); setQtyModified(true) }}
                 placeholder="Ex: Heitor, Maria, João…"
                 style={{
                   width: '100%', padding: '10px 14px',
@@ -365,7 +369,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                 onFocus={e => (e.currentTarget.style.borderColor = 'var(--terracotta)')}
                 onBlur={e => (e.currentTarget.style.borderColor = 'var(--rule)')}
               />
-              {nameNotProvided && (
+              {nameNotProvided && needsValidation && (
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: 6,
                   marginTop: 8, fontSize: 11, color: 'var(--terracotta)', lineHeight: 1.4,
@@ -429,12 +433,12 @@ export function ProductModal({ product: p, onClose }: Props) {
             <div style={{ display: 'flex', gap: 12 }}>
             <button
               onClick={handleAdd}
-              disabled={familyNotConfigured || nameNotProvided}
+              disabled={addBlocked}
               style={{
                 flex: 1, padding: '15px 20px',
-                background: (familyNotConfigured || nameNotProvided) ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
-                color: (familyNotConfigured || nameNotProvided) ? 'var(--ink-mute)' : '#fff', border: 'none',
-                cursor: (familyNotConfigured || nameNotProvided) || btnDisabled ? 'default' : 'pointer',
+                background: addBlocked ? 'var(--rule)' : btnDisabled ? 'var(--terracotta)' : 'var(--ink)',
+                color: addBlocked ? 'var(--ink-mute)' : '#fff', border: 'none',
+                cursor: addBlocked || btnDisabled ? 'default' : 'pointer',
                 borderRadius: 999,
                 fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
                 fontFamily: 'inherit',
