@@ -407,6 +407,9 @@ export function ShopPage() {
                 </span>
               )}
             </div>
+            <div style={{ marginTop: 10, fontSize: 10, color: 'var(--ink-mute)', fontStyle: 'italic', lineHeight: 1.5 }}>
+              Clique novamente na cor para desselecionar e ver todas as cores.
+            </div>
           </FilterBlock>
 
           {isMobile && (
