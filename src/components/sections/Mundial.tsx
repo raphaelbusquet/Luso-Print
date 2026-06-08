@@ -195,7 +195,7 @@ export function Mundial() {
   const isMobile = useIsMobile()
 
   const toShopProduct = (item: typeof items[0]): ShopProduct => ({
-    id: item.id, name: item.nome, price: item.preco,
+    id: `${item.id}-portugal`, name: `${item.nome} — Portugal`, price: item.preco,
     img: item.img, imgs: item.imgs,
     tag: 'EDIÇÃO LIMITADA', universoId: 'mundial', color: item.cor,
     dominantColors: ['vermelho', 'verde'],

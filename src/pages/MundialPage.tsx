@@ -206,7 +206,8 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
   const { addItem, items } = useCart()
   const { isFav, toggle } = useFavorites()
   const isMobile = useIsMobile()
-  const inCart = items.some(i => i.productId === produto.id)
+  const selecaoProductId = selecao ? `${produto.id}-${selecao.id}` : produto.id
+  const inCart = items.some(i => i.productId === selecaoProductId)
   const fav = isFav(produto.id)
   const bg = (!produto.fixedColor && selecao) ? selecao.cores[index % selecao.cores.length] : produto.corDefault
   const dark = isLightColor(bg)
@@ -246,7 +247,7 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6 }}>
               <button
-                onClick={e => { e.stopPropagation(); if (!inCart) { addItem({ name: produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: produto.id }) } }}
+                onClick={e => { e.stopPropagation(); if (!inCart) { addItem({ name: selecao ? `${produto.nome} — ${selecao.nome}` : produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: selecaoProductId }) } }}
                 style={{
                   flex: 1, padding: '7px 10px', borderRadius: 999,
                   background: inCart ? 'var(--mundial-gold)' : 'rgba(212,168,48,0.2)',
@@ -363,7 +364,7 @@ function ProdutoCard({ produto, selecao, index, onOpen }: { produto: Produto; se
                 <HeartIcon filled={fav} />
               </button>
               <button
-                onClick={e => { e.stopPropagation(); if (!inCart) { addItem({ name: produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: produto.id }) } }}
+                onClick={e => { e.stopPropagation(); if (!inCart) { addItem({ name: selecao ? `${produto.nome} — ${selecao.nome}` : produto.nome, price: produto.preco, img: imgs?.[0] ?? '', productId: selecaoProductId }) } }}
                 style={{ padding: '8px 16px', borderRadius: 999, background: 'transparent', border: '1px solid rgba(212,168,48,0.5)', color: inCart ? '#111' : 'var(--mundial-gold)', backgroundColor: inCart ? 'var(--mundial-gold)' : 'transparent', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'inherit', cursor: inCart ? 'default' : 'pointer', transition: 'background 200ms' }}
                 onMouseEnter={e => { if (!inCart) { const b = e.currentTarget; b.style.background = 'var(--mundial-gold)'; b.style.color = '#111' } }}
                 onMouseLeave={e => { if (!inCart) { const b = e.currentTarget; b.style.background = 'transparent'; b.style.color = 'var(--mundial-gold)' } }}
@@ -398,7 +399,7 @@ export function MundialPage() {
   const toShopProduct = (p: Produto): ShopProduct => {
     const imgs = getImgs(selecao?.id, p.id) ?? undefined
     return {
-      id: p.id, name: p.nome, price: p.preco,
+      id: selecao ? `${p.id}-${selecao.id}` : p.id, name: selecao ? `${p.nome} — ${selecao.nome}` : p.nome, price: p.preco,
       img: imgs?.[0] ?? '', imgs,
       tag: 'EDIÇÃO LIMITADA',
       universoId: 'mundial', color: selecao?.cor1 ?? p.corDefault,
