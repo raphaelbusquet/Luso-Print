@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useCart } from '../../context/CartContext'
 import { ALL_SHOP_PRODUCTS } from '../../data/shop'
-import { MUNDIAL_PRODUCTS } from '../../data/mundial'
 import { ProductModal } from './ProductModal'
 import type { ShopProduct } from '../../data/shop'
 
@@ -47,9 +46,12 @@ export function CartDrawer({ open, onClose }: Props) {
       const noteLine = item.note ? `\n   ${item.note}` : ''
       return `${i + 1}. "${item.name}" — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${noteLine}`
     })
+    const petReminder = items.some(item => item.productId?.startsWith('pets-quadro-busto-'))
+      ? '\n\nPersonalização dos quadros Pets: vou enviar nesta conversa uma fotografia nítida e o nome de cada pet.'
+      : ''
     const couponLine = couponCode ? `\nCupão: ${couponCode}` : ''
     const text = encodeURIComponent(
-      `Olá! Gostaria de encomendar:\n\n${lines.join('\n')}${savings}${couponLine}\n\nTotal: €${finalTotal}`
+      `Olá! Gostaria de encomendar:\n\n${lines.join('\n')}${savings}${couponLine}\n\nTotal: €${finalTotal}${petReminder}`
     )
     await markCouponUsed()
     window.open(`https://wa.me/351939158345?text=${text}`, '_blank')
@@ -57,7 +59,7 @@ export function CartDrawer({ open, onClose }: Props) {
 
   const openProduct = (productId?: string) => {
     if (!productId) return
-    const p = [...ALL_SHOP_PRODUCTS, ...MUNDIAL_PRODUCTS].find(x => x.id === productId)
+    const p = ALL_SHOP_PRODUCTS.find(x => x.id === productId)
     if (p) setSelectedProduct(p)
   }
 

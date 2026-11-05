@@ -71,10 +71,12 @@ export function Universos() {
                 {/* product photo */}
                 <div style={{
                   position: 'absolute', inset: 0,
-                  background: `url(${u.img}) center/cover no-repeat`,
+                  background: (u.id === 'quarto' || u.id === 'pets')
+                    ? `var(--cream) url(${u.img}) center / contain no-repeat`
+                    : `url(${u.img}) center/cover no-repeat`,
                   opacity: isH ? 0.92 : 0.82,
                   filter: 'saturate(1.05)',
-                  transform: isH ? 'scale(1.04)' : 'scale(1)',
+                  transform: isH && u.id !== 'quarto' && u.id !== 'pets' ? 'scale(1.04)' : 'scale(1)',
                   transition: 'transform 900ms cubic-bezier(.2,.7,.2,1), opacity 600ms ease',
                 }} />
                 {/* brand-palette translucent veil */}

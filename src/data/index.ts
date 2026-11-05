@@ -50,13 +50,13 @@ export const PRODUCTS: Product[] = [
 ]
 
 export const UNIVERSOS: Universo[] = [
-  { id: 'mamaes',     nome: 'Família',         cnt: 2,  img: '/assets/products/familia/estatua-fams2-1.png',                   hue: 'var(--terracotta)', overlay: 'rgba(201,130,110,0.32)' },
-  { id: 'bebes',      nome: 'Bebés & Crianças',cnt: 10, img: '/assets/products/bebe-crianca/letreiro-heitor-dino-1.png',        hue: 'var(--cream)',      overlay: 'rgba(217,206,188,0.30)' },
-  { id: 'brinquedos', nome: 'Brinquedos',      cnt: 6,  img: '/assets/products/brinquedos/arco-sensorial-1.png',                hue: 'var(--terracotta)', overlay: 'rgba(201,130,110,0.28)' },
-  { id: 'cozinha',    nome: 'Cozinha',          cnt: 8,  img: '/assets/products/cozinha-real/boleira-geometrica-1.png',          hue: 'var(--blue-gray)',  overlay: 'rgba(168,180,179,0.36)' },
+  { id: 'mamaes',     nome: 'Família',         cnt: 3,  img: '/assets/products/familia/estatua-fams2-1.png',                   hue: 'var(--terracotta)', overlay: 'rgba(201,130,110,0.32)' },
+  { id: 'pets', nome: 'Pets', cnt: 4, img: '/assets/products/pets/capa-universo-pets.png', hue: 'var(--cream)', overlay: 'rgba(217,206,188,0.24)' },
+  { id: 'bebes',      nome: 'Bebés & Crianças',cnt: 18, img: '/assets/products/bebe-crianca/bubble-layers-1.jpg',        hue: 'var(--cream)',      overlay: 'rgba(217,206,188,0.30)' },
+  { id: 'cozinha',    nome: 'Cozinha',          cnt: 8,  img: '/assets/products/cozinha-real/mini-adega-1.png',          hue: 'var(--blue-gray)',  overlay: 'rgba(168,180,179,0.36)' },
   { id: 'sala',       nome: 'Sala',             cnt: 7,  img: '/assets/products/sala/vaso-portal-1.png',                         hue: 'var(--linen)',      overlay: 'rgba(232,225,210,0.30)' },
-  { id: 'quarto',     nome: 'Quarto',           cnt: 5,  img: '/assets/products/quarto/bandeja-porta-joias-folha-1.png',         hue: 'var(--cream)',      overlay: 'rgba(217,206,188,0.32)' },
-  { id: 'escrit',     nome: 'Escritório',       cnt: 7,  img: '/assets/products/escrit/stand-headphone-1.png',                   hue: 'var(--olive)',      overlay: 'rgba(141,146,116,0.38)' },
+  { id: 'quarto',     nome: 'Quarto',           cnt: 5,  img: '/assets/products/quarto/capa-quarto.png',         hue: 'var(--cream)',      overlay: 'rgba(217,206,188,0.32)' },
+  { id: 'escrit',     nome: 'Escritório',       cnt: 7,  img: '/assets/products/escrit/capa-escritorio.png',                   hue: 'var(--olive)',      overlay: 'rgba(141,146,116,0.38)' },
   { id: 'organiz',    nome: 'Organização',      cnt: 6,  img: '/assets/products/organiz/aparador-livros-balloon-1.png',          hue: 'var(--olive)',      overlay: 'rgba(141,146,116,0.30)' },
   { id: 'deco',       nome: 'Decoração',        cnt: 5,  img: '/assets/products/deco/candeeiro-fluxo-1.png',                     hue: 'var(--terracotta)', overlay: 'rgba(201,130,110,0.32)' },
 ]
@@ -117,7 +117,7 @@ A diferença entre uma secretária onde te sentes bem e uma onde lutas para te c
   {
     id: 'quarto-refugio',
     ttl: 'A bandeja de folha e o ritual de fim de dia que mereces.',
-    cat: 'Interiores', date: 'Novembro 2025', img: '/assets/products/quarto/bandeja-porta-joias-folha-1.png',
+    cat: 'Interiores', date: 'Novembro 2025', img: '/assets/products/quarto/capa-quarto.png',
     lead: 'Tirar as joias antes de dormir é um gesto pequeno. A bandeja certa transforma-o num ritual.',
     body: `Há momentos do dia que são invisíveis — não porque não aconteçam, mas porque os fazemos tão mecanicamente que deixámos de os notar. Tirar o anel antes de deitar. Pousar os brincos na mesinha de cabeceira. Retirar o fio que usámos o dia todo. São gestos de segundos que, com o objeto certo, se tornam a pausa que o final do dia merece.
 

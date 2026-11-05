@@ -1,8 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import { ALL_SHOP_PRODUCTS } from '../data/shop'
-import { MUNDIAL_PRODUCTS } from '../data/mundial'
 
-const VALID_IDS = new Set([...ALL_SHOP_PRODUCTS, ...MUNDIAL_PRODUCTS].map(p => p.id))
+const VALID_IDS = new Set(ALL_SHOP_PRODUCTS.map(p => p.id))
 
 type FavCtx = {
   isFav: (id: string) => boolean

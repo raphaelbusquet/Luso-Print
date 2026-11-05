@@ -15,7 +15,7 @@ export function Diario() {
       <div className="shell">
         <div className="section-head">
           <div>
-            <span className="kicker">05 — DIÁRIO</span>
+            <span className="kicker">04 — DIÁRIO</span>
             <h2>
               Pequenas <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>histórias</em><br />
               da nossa casa.

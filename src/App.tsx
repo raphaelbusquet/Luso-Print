@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
 import { CartProvider, useCart } from './context/CartContext'
 import { FavoritesProvider } from './context/FavoritesContext'
@@ -9,8 +9,9 @@ import { Footer } from './components/layout/Footer'
 import { Hero } from './components/sections/Hero'
 import { Universos } from './components/sections/Universos'
 import { Edito } from './components/sections/Edito'
-import { Mundial } from './components/sections/Mundial'
-import { Personalizacao } from './components/sections/Personalizacao'
+import { Empresas } from './components/sections/Empresas'
+import { EmpresasPage } from './pages/EmpresasPage'
+import { NatalPage } from './pages/NatalPage'
 import { Diario } from './components/sections/Diario'
 import { Newsletter } from './components/sections/Newsletter'
 import { Contacto } from './components/sections/Contacto'
@@ -22,7 +23,6 @@ import { ProfilePage } from './pages/ProfilePage'
 import { DiarioPage } from './pages/DiarioPage'
 import { DiarioPostPage } from './pages/DiarioPostPage'
 import { TermosPage } from './pages/TermosPage'
-import { MundialPage } from './pages/MundialPage'
 import { CookieBanner } from './components/ui/CookieBanner'
 import { MaterialsProvider } from './context/MaterialsContext'
 import { AdminPage } from './pages/AdminPage'
@@ -45,8 +45,7 @@ function HomePage() {
       <Hero />
       <Universos />
       <Edito />
-      <Personalizacao />
-      <Mundial />
+      <Empresas />
       <Diario />
       <Newsletter />
       <Contacto />
@@ -65,12 +64,14 @@ function AppInner() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/loja" element={<ShopPage />} />
+      <Route path="/loja/brinquedos" element={<Navigate to="/loja/bebes" replace />} />
       <Route path="/loja/:universoId" element={<ShopPage />} />
       <Route path="/perfil" element={<ProfilePage />} />
       <Route path="/diario" element={<DiarioPage />} />
       <Route path="/diario/:id" element={<DiarioPostPage />} />
       <Route path="/termos" element={<TermosPage />} />
-      <Route path="/mundial" element={<MundialPage />} />
+      <Route path="/natal" element={<NatalPage />} />
+      <Route path="/empresas" element={<EmpresasPage />} />
       <Route path="/admin" element={<AdminPage />} />
     </Routes>
     <CookieBanner />

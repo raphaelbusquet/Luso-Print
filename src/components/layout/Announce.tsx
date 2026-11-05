@@ -11,7 +11,7 @@ export function Announce() {
         padding: '7px 16px', textAlign: 'center', fontWeight: 400,
         whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
       }}>
-        Envios grátis ≥ €60 · Mundial disponível
+        Envios grátis ≥ €60
       </div>
     )
   }
@@ -24,7 +24,7 @@ export function Announce() {
     }}>
       <div className="shell-wide" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ opacity: 0.6 }}>LISBOA · PORTUGAL</span>
-        <span>Envios gratuitos em encomendas acima de €60 — Edição Mundial disponível</span>
+        <span>Envios gratuitos em encomendas acima de €60</span>
         <span style={{ opacity: 0.6, display: 'flex', gap: 18 }}>
           <span></span>
           <span style={{ opacity: 0.4 }}>·</span>

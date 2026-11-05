@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
 import { ALL_SHOP_PRODUCTS } from '../../data/shop'
-import { MUNDIAL_PRODUCTS } from '../../data/mundial'
 import { ProductModal } from './ProductModal'
 import type { ShopProduct } from '../../data/shop'
 
@@ -23,7 +22,7 @@ export function FavoritesDrawer({ open, onClose }: Props) {
   const [removed, setRemoved] = useState<string | null>(null)
   const [selectedProduct, setSelectedProduct] = useState<ShopProduct | null>(null)
 
-  const items = [...ALL_SHOP_PRODUCTS, ...MUNDIAL_PRODUCTS].filter(p => favIds.includes(p.id))
+  const items = ALL_SHOP_PRODUCTS.filter(p => favIds.includes(p.id))
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && !selectedProduct) onClose() }
@@ -140,7 +139,7 @@ export function FavoritesDrawer({ open, onClose }: Props) {
                       {item.name}
                     </div>
                     <div style={{ fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.06em' }}>
-                      €{item.price}
+                      {item.quoteOnly ? 'Sob consulta' : item.comingSoon ? 'Em breve' : `€${item.price}`}
                     </div>
                   </div>
 

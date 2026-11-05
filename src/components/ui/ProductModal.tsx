@@ -1,3 +1,4 @@
+import { PetFrameModal } from './PetFrameModal'
 import { useState, useEffect, useRef } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
 import { useCart } from '../../context/CartContext'
@@ -32,7 +33,7 @@ function HeartIcon({ filled }: { filled: boolean }) {
   )
 }
 
-const NOME_IDS = new Set(['bebes-heitor-dino', 'bebes-cecilia', 'bebes-arco-iris', 'bebes-escrita-sophia', 'bebes-porta-maternidade'])
+const NOME_IDS = new Set(['bebes-bubble-layers', 'bebes-letreiro-mesa-daniel', 'bebes-heitor-dino', 'bebes-cecilia', 'bebes-arco-iris', 'bebes-escrita-sophia', 'bebes-porta-maternidade'])
 
 const IDADES = ['Bebé (0–2)', 'Pequenino (3–6)', 'Criança (7–12)', 'Adolescente (13+)']
 
@@ -117,6 +118,8 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [qtyModified, setQtyModified] = useState(false)
   const [familyConfig, setFamilyConfig] = useState({ pai: false, mae: false, criancas: [] as string[] })
   const [childName, setChildName] = useState('')
+  const [bubbleStyle, setBubbleStyle] = useState<'simple' | 'themed'>('simple')
+  const [customTheme, setCustomTheme] = useState('')
   const [selectedColor, setSelectedColor] = useState<string>('')
   const [notifyState, setNotifyState] = useState<'idle' | 'open' | 'sending' | 'done'>('idle')
   const [notifyEmail, setNotifyEmail] = useState('')
@@ -135,6 +138,8 @@ export function ProductModal({ product: p, onClose }: Props) {
     setQtyModified(false)
     setFamilyConfig({ pai: true, mae: true, criancas: [] })
     setChildName('')
+    setCustomTheme('')
+    setBubbleStyle('simple')
     setSelectedColor(p?.colorOptions?.[0]?.color ?? '')
     setNotifyState('idle')
     setNotifyEmail('')
@@ -145,12 +150,13 @@ export function ProductModal({ product: p, onClose }: Props) {
       if (e.key === 'Escape') { onClose(); return }
       const tag = (e.target as HTMLElement).tagName
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
-      if (e.key === 'ArrowRight') setActiveImg(i => (i + 1) % 4)
-      if (e.key === 'ArrowLeft')  setActiveImg(i => (i + 3) % 4)
+      const total = p?.imgs?.length || 4
+      if (e.key === 'ArrowRight') setActiveImg(i => (i + 1) % total)
+      if (e.key === 'ArrowLeft') setActiveImg(i => (i + total - 1) % total)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
+  }, [onClose, p?.imgs?.length])
 
   useEffect(() => {
     if (p) document.body.style.overflow = 'hidden'
@@ -160,6 +166,25 @@ export function ProductModal({ product: p, onClose }: Props) {
 
   if (!p) return null
 
+  if (p.universoId === 'pets') return <PetFrameModal key={p.id} product={p} onClose={onClose} />
+
+  if (p.comingSoon || p.quoteOnly) return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(43,39,34,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div role="dialog" aria-modal="true" aria-label={p.name} onClick={e => e.stopPropagation()} style={{ position: 'relative', background: 'var(--paper)', padding: 28, width: '100%', maxWidth: 480, maxHeight: '90vh', overflowY: 'auto', borderRadius: 8 }}>
+        <button type="button" onClick={onClose} aria-label="Fechar" style={{ position: 'absolute', top: 12, right: 12, cursor: 'pointer', padding: 8 }}>✕</button>
+        <img src={p.img} alt={p.quoteOnly ? p.name : "Fotografias em breve"} style={{ display: 'block', width: '100%', maxHeight: 260, objectFit: 'contain' }} />
+        <span className="kicker">{p.universoId === 'pets' ? 'PETS' : 'FAMÍLIA'} · PERSONALIZÁVEL</span>
+        <h2 className="serif" style={{ fontWeight: 400, fontSize: 34 }}>{p.name}</h2>
+        <p style={{ color: 'var(--ink-soft)', lineHeight: 1.7 }}>{p.description}</p>
+        {p.quoteOnly ? (
+          <a href={`https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre ${p.name}, para cão ou gato.`)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid">Pedir informações →</a>
+        ) : <p style={{ fontSize: 13, color: 'var(--ink-mute)' }}>Fotografias, opções e preço disponíveis em breve.</p>}
+      </div>
+    </div>
+  )
+
+  const isBubble = p.id === 'bebes-bubble-layers'
+  const unitPrice = isBubble && bubbleStyle === 'themed' ? 45 : p.price
   const fav = isFav(p.id)
   const inCart = items.some(i => i.productId === p.id)
   const btnDisabled = inCart && !qtyModified
@@ -182,10 +207,16 @@ export function ProductModal({ product: p, onClose }: Props) {
     if (isNameProduct && childName.trim()) {
       note = `Nome: ${childName.trim()}`
     }
+    if (isBubble) {
+      note = `${note} · Versão: ${bubbleStyle === 'themed' ? 'Tema personalizado (+€15)' : 'Escrita simples — valor dependente do nome, a confirmar'}`
+    }
+    if (isBubble && bubbleStyle === 'themed' && customTheme.trim()) {
+      note = `${note ? `${note} · ` : ''}Tema e cores: ${customTheme.trim()}`
+    }
     if (selectedColor && p.colorOptions && p.colorOptions.length > 1) {
       note = note ? `${note} · Cor: ${selectedColor}` : `Cor: ${selectedColor}`
     }
-    addItem({ name: p.name, price: p.price, img: p.img, productId: p.id, note }, qty)
+    addItem({ name: p.name, price: unitPrice, img: p.img, productId: p.id, note }, qty)
     setQtyModified(false)
   }
 
@@ -336,7 +367,7 @@ export function ProductModal({ product: p, onClose }: Props) {
 
           {/* Price + tag inline */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '8px 0 20px' }}>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>€{p.price}</div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{isBubble && bubbleStyle === 'simple' ? 'Desde ' : ''}€{unitPrice}</div>
             {p.tag && (
               <span style={{
                 background: TAG_COLOR[p.tag] ?? 'rgba(43,39,34,0.55)',
@@ -347,6 +378,27 @@ export function ProductModal({ product: p, onClose }: Props) {
               </span>
             )}
           </div>
+
+          {p.description && (
+            <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-soft)', margin: '0 0 20px' }}>
+              {p.description}
+            </p>
+          )}
+
+          {isBubble && (
+            <fieldset style={{ border: '1px solid var(--rule)', borderRadius: 4, padding: 14, margin: '0 0 20px' }}>
+              <legend style={{ fontSize: 12 }}>Escolha a versão</legend>
+              {(['simple', 'themed'] as const).map(option => (
+                <label key={option} style={{ display: 'flex', gap: 8, marginBottom: 10, fontSize: 14, cursor: 'pointer' }}>
+                  <input type="radio" name="bubble-style" checked={bubbleStyle === option} onChange={() => { setBubbleStyle(option); setQtyModified(true) }} />
+                  {option === 'simple' ? 'Escrita simples — a partir de €30' : 'Com tema personalizado — €45 (+€15)'}
+                </label>
+              ))}
+              <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
+                O valor da escrita simples depende do nome da criança e será confirmado antes de finalizar a encomenda. A versão com tema personalizado custa €45.
+              </p>
+            </fieldset>
+          )}
 
           {/* Color picker */}
           {p.colorOptions && p.colorOptions.length > 1 && (
@@ -439,6 +491,19 @@ export function ProductModal({ product: p, onClose }: Props) {
             </div>
           )}
 
+          {isBubble && bubbleStyle === 'themed' && (
+            <label style={{ display: 'block', marginBottom: 20, fontSize: 12, color: 'var(--ink-soft)' }}>
+              Tema e cores desejados
+              <textarea
+                value={customTheme}
+                onChange={e => { setCustomTheme(e.target.value); setQtyModified(true) }}
+                placeholder="Ex.: fazendinha em verde e bege, unicórnio em tons pastel, princesas…"
+                rows={3}
+                style={{ display: 'block', width: '100%', marginTop: 8, padding: '10px 14px', border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', fontSize: 13, color: 'var(--ink)', background: 'var(--paper)', resize: 'vertical' }}
+              />
+            </label>
+          )}
+
           {/* Family configurator */}
           {isFamilyProduct && (
             <FamilyConfig value={familyConfig} onChange={v => { setFamilyConfig(v); setQtyModified(true) }} />
@@ -481,7 +546,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                 </div>
                 {qty > 1 && (
                   <span style={{ fontSize: 13, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-                    €{(p.price * qty).toFixed(2).replace('.00', '')} total
+                    €{(unitPrice * qty).toFixed(2).replace('.00', '')} total
                   </span>
                 )}
               </div>
@@ -592,7 +657,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                       transition: 'background 200ms ease',
                     }}
                   >
-                    {btnDisabled ? 'No cesto ✓' : `Adicionar ao cesto — €${p.price * qty}`}
+                    {btnDisabled ? 'No cesto ✓' : `Adicionar ao cesto — €${unitPrice * qty}`}
                   </button>
                 )}
               </div>

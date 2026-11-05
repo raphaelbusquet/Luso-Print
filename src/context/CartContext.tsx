@@ -36,7 +36,15 @@ const CartContext = createContext<CartCtx | null>(null)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {
-    try { return JSON.parse(localStorage.getItem('lp_cart') ?? '[]') }
+    try {
+      const stored: CartItem[] = JSON.parse(localStorage.getItem('lp_cart') ?? '[]')
+      return stored
+        .filter(item => !item.img?.startsWith('/assets/products/mundial/'))
+        .map(item => item.productId === 'natal-bola-vazada-pack-10' ? { ...item, price: 10 } : item)
+        .map(item => item.productId === 'natal-arvore-vela-15' ? { ...item, price: 6.49 } : item)
+        .map(item => item.productId === 'natal-placa-feliz-natal' ? { ...item, price: 8.49 } : item)
+        .map(item => item.productId === 'natal-porta-retrato-arvore-15' ? { ...item, price: 8 } : item.productId === 'natal-porta-retrato-arvore-9' ? { ...item, price: 6 } : item)
+    }
     catch { return [] }
   })
   const [couponCode, setCouponCode] = useState<string | null>(() =>

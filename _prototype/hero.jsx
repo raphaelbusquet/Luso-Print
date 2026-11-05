@@ -1,5 +1,5 @@
 /* Hero — clean editorial carousel
-   3 slides: Estações · Coleção Copa · Personalização */
+   2 slides: Estações · Personalização */
 
 const SLIDES = [
 {
@@ -15,21 +15,6 @@ const SLIDES = [
   caption: { eyebrow: 'Em destaque', title: 'Aparador de Livros', sub: 'Coleção Decor · desde €30' },
   theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
   shapes: 'estacoes'
-},
-{
-  id: 'copa',
-  eyebrow: 'EDIÇÃO LIMITADA · JUNHO E JULHO 2026',
-  badge: 'Em pré-venda — apenas 30 peças',
-  titleLines: ['Coleção'],
-  italic: 'Copa \u201926.',
-  lede: 'Peças criadas para celebrar cada jogo, cada encontro e cada momento vivido em conjunto.',
-  ctaPrimary: { label: 'Descobrir a coleção', href: '#copa' },
-  ctaSecondary: { label: 'Ver lookbook', href: '#copa' },
-  image: 'assets/products/copa-monster.png',
-  caption: { eyebrow: 'Pré-venda aberta', title: 'Copo Monster Copa', sub: 'Edição limitada · € 25' },
-  theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
-  flagDots: true,
-  shapes: 'copa'
 },
 {
   id: 'personal',
@@ -126,17 +111,7 @@ const Hero = () => {
             }}>{slide.ctaSecondary.label}</a>
           </div>
 
-          {/* Copa-specific flag-dots indicator */}
-          {slide.flagDots &&
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 32 }}>
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--copa-green)' }}></span>
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--copa-yellow)' }}></span>
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--copa-blue)' }}></span>
-              <span style={{ marginLeft: 8, fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: t.muted }}>
-                Lançamento · 12 Junho
-              </span>
-            </div>
-          }
+
         </div>
 
         {/* Right — single clean image */}
@@ -184,7 +159,7 @@ const Hero = () => {
             0{idx + 1}
           </span>
           <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: "13px" }}>
-            / 0{total} · {slide.id === 'copa' ? 'Coleção Copa' : slide.id === 'estacoes' ? 'Estações' : 'Personalização'}
+            / 0{total} · {slide.id === 'estacoes' ? 'Estações' : 'Personalização'}
           </span>
         </div>
 
@@ -327,59 +302,6 @@ const HeroShapes = ({ variant, idx }) => {
           width: 1, height: 110,
           background: 'var(--olive)', opacity: 0.45
         }}></div>
-      </Wrap>
-    );
-  }
-
-  if (variant === 'copa') {
-    return (
-      <Wrap>
-        {/* blue-gray big circle — left */}
-        <div style={{
-          ...baseAnim(80, { x: '-40px', y: '20px', s: 0.6 }, { o: 0.5 }),
-          top: '12%', left: '-120px',
-          width: 360, height: 360, borderRadius: '50%',
-          background: 'var(--blue-gray)', opacity: 0.5
-        }}></div>
-
-        {/* small terracotta circle */}
-        <div style={{
-          ...baseAnim(220, { x: '20px', y: '-30px', s: 0.4 }),
-          top: '8%', left: '38%',
-          width: 56, height: 56, borderRadius: '50%',
-          background: 'var(--terracotta)', opacity: 0.85,
-          animationName: 'lp-shape-in, lp-float-b',
-          animationDuration: '1100ms, 7s',
-          animationDelay: '220ms, 1.3s',
-          animationIterationCount: '1, infinite',
-          animationTimingFunction: 'cubic-bezier(.22,.8,.2,1), ease-in-out'
-        }}></div>
-
-        {/* olive ring */}
-        <svg viewBox="0 0 200 200" width="240" height="240" style={{
-          ...baseAnim(340, { x: '40px', y: '40px', s: 0.6, r: '-20deg' }, { o: 0.7 }),
-          bottom: '-60px', right: '20%'
-        }}>
-          <circle cx="100" cy="100" r="88" fill="none"
-            stroke="var(--olive)" strokeWidth="1.5" opacity="0.7" strokeDasharray="2 6" />
-        </svg>
-
-        {/* cream stripe — top right */}
-        <div style={{
-          ...baseAnim(160, { x: '60px', y: '-20px', s: 0.7, r: '14deg' }, { r: '18deg' }),
-          top: '-30px', right: '-20px',
-          width: 280, height: 110,
-          background: 'var(--cream)', opacity: 0.65,
-          transform: 'rotate(18deg)'
-        }}></div>
-
-        {/* sage triangle */}
-        <svg viewBox="0 0 100 100" width="120" height="120" style={{
-          ...baseAnim(460, { x: '0', y: '40px', s: 0.5, r: '40deg' }, { r: '-12deg' }),
-          bottom: '18%', left: '40%'
-        }}>
-          <polygon points="50,8 92,86 8,86" fill="var(--sage)" opacity="0.8" />
-        </svg>
       </Wrap>
     );
   }

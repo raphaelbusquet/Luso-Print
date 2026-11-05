@@ -6,12 +6,12 @@ type FooterLink = { label: string; to: string; external?: boolean }
 const FOOTER_COLS: [string, FooterLink[]][] = [
   ['Loja', [
     { label: 'Novidades',       to: '/loja?tag=NOVO' },
-    { label: 'Personalização',  to: '/#personal' },
-    { label: 'Edição limitada', to: '/#mundial' },
+    { label: 'Para empresas',   to: '/empresas' },
     { label: 'Diário',          to: '/diario' },
   ]],
   ['Universos', [
     { label: 'Família',          to: '/loja/mamaes' },
+    { label: 'Pets',             to: '/loja/pets' },
     { label: 'Bebés & Crianças', to: '/loja/bebes' },
     { label: 'Escritório', to: '/loja/escrit' },
     { label: 'Cozinha',    to: '/loja/cozinha' },

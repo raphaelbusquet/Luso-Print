@@ -121,7 +121,7 @@ export function Newsletter() {
       }}>
         <div>
           <span style={{ fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>
-            06 — NEWSLETTER LUSOPRINT
+            05 — NEWSLETTER LUSOPRINT
           </span>
           <h2 className="serif" style={{ fontSize: 'clamp(36px, 5vw, 72px)', lineHeight: 1.05, letterSpacing: '-0.01em', margin: '18px 0 22px', color: '#FBEDE2', fontWeight: 400 }}>
             Registe-se na nossa<br />

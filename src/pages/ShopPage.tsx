@@ -52,8 +52,8 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
       >
         <div style={{
           position: 'absolute', inset: 0,
-          background: `url(${p.img}) center/cover no-repeat`,
-          transform: hover ? 'scale(1.04)' : 'scale(1)',
+          background: `url(${p.img}) center/${p.universoId === 'pets' ? 'contain' : 'cover'} no-repeat`,
+          transform: hover && p.universoId !== 'pets' ? 'scale(1.04)' : 'scale(1)',
           transition: 'transform 900ms cubic-bezier(.2,.7,.2,1)',
           filter: 'saturate(0.93)',
         }} />
@@ -96,6 +96,7 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
           <button
             onClick={e => {
               e.stopPropagation()
+              if (p.quoteOnly || p.comingSoon || p.id === 'bebes-bubble-layers') { onOpen(); return }
               if (inCart) return
               addItem({ name: p.name, price: p.price, img: p.img, productId: p.id })
             }}
@@ -110,14 +111,14 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
               transition: 'background 200ms ease',
             }}
           >
-            {inCart ? 'No cesto ✓' : `Adicionar — €${p.price}`}
+            {p.quoteOnly ? 'Ver detalhes' : p.comingSoon ? 'Saber mais' : p.id === 'bebes-bubble-layers' ? 'Escolher versão' : inCart ? 'No cesto ✓' : `Adicionar — €${p.price}`}
           </button>
         </div>
       </div>
 
       <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
         <div className="serif" style={{ fontSize: 17, lineHeight: 1.2 }}>{p.name}</div>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>€{p.price}</div>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>{p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : `${p.id === 'bebes-bubble-layers' ? 'Desde ' : ''}€${p.price}`}</div>
       </div>
     </div>
   )

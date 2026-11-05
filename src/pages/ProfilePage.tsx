@@ -271,10 +271,10 @@ export function ProfilePage() {
                 Ainda sem imagens geradas.
               </p>
               <Link
-                to="/#personal"
+                to="/loja/bebes"
                 style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--terracotta)' }}
               >
-                Personalizar agora →
+                Explorar letreiros →
               </Link>
             </div>
           ) : (

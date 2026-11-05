@@ -72,54 +72,6 @@ export function HeroShapes({ variant, idx }: Props) {
     )
   }
 
-  if (variant === 'mundial') {
-    return (
-      <div key={'shapes-' + idx} aria-hidden="true" style={wrap}>
-        <div style={{
-          ...baseAnim(80, { x: '-40px', y: '20px', s: '0.6' }, { o: 0.5 }),
-          top: '12%', left: '-120px',
-          width: 360, height: 360, borderRadius: '50%',
-          background: 'var(--blue-gray)', opacity: 0.5,
-        }} />
-
-        <div style={{
-          ...baseAnim(220, { x: '20px', y: '-30px', s: '0.4' }),
-          top: '8%', left: '38%',
-          width: 56, height: 56, borderRadius: '50%',
-          background: 'var(--cream)', opacity: 0.55,
-          animationName: 'lp-shape-in, lp-float-b',
-          animationDuration: '1100ms, 7s',
-          animationDelay: '220ms, 1.3s',
-          animationIterationCount: '1, infinite',
-          animationTimingFunction: 'cubic-bezier(.22,.8,.2,1), ease-in-out',
-        }} />
-
-        <svg viewBox="0 0 200 200" width="240" height="240" style={{
-          ...baseAnim(340, { x: '40px', y: '40px', s: '0.6', r: '-20deg' }, { o: 0.7 }),
-          bottom: '-60px', right: '20%',
-        }}>
-          <circle cx="100" cy="100" r="88" fill="none"
-            stroke="var(--olive)" strokeWidth="1.5" opacity="0.7" strokeDasharray="2 6" />
-        </svg>
-
-        <div style={{
-          ...baseAnim(160, { x: '60px', y: '-20px', s: '0.7', r: '14deg' }, { r: '18deg' }),
-          top: '-30px', right: '-20px',
-          width: 280, height: 110,
-          background: 'var(--cream)', opacity: 0.65,
-          transform: 'rotate(18deg)',
-        }} />
-
-        <svg viewBox="0 0 100 100" width="120" height="120" style={{
-          ...baseAnim(460, { x: '0', y: '40px', s: '0.5', r: '40deg' }, { r: '-12deg' }),
-          bottom: '18%', left: '40%',
-        }}>
-          <polygon points="50,8 92,86 8,86" fill="var(--sage)" opacity="0.8" />
-        </svg>
-      </div>
-    )
-  }
-
   if (variant === 'personal') {
     return (
       <div key={'shapes-' + idx} aria-hidden="true" style={wrap}>

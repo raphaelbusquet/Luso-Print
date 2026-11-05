@@ -1,3 +1,4 @@
+import { PET_FRAME_OPTIONS } from './pets'
 import type { ColorOption } from './materials'
 
 export type { ColorOption }
@@ -5,6 +6,10 @@ export type { ColorOption }
 export type ShopProduct = {
   id: string
   name: string
+  petCount?: number
+  quoteOnly?: boolean
+  comingSoon?: boolean
+  description?: string
   universoId: string
   price: number
   img: string
@@ -58,6 +63,8 @@ const co = (colors: string[], materials: string[]): ColorOption[] =>
 
 // ─── Bebés ────────────────────────────────────────────────────────────────────
 const BEBES_PRODUCTS: ShopProduct[] = [
+  { id: 'bebes-bubble-layers', name: 'Escrita Bubble Layers', description: 'Letras arredondadas cheias de cor e personalidade, criadas para tornar cada nome especial. Personalizável com o nome, as cores e o tema que o cliente desejar — fazendinha, unicórnio, princesas, dinossauros ou outra ideia à sua escolha. Escrita simples a partir de €30, com valor dependente do nome da criança. A versão com tema personalizado custa €45, um acréscimo de €15 face ao valor base.', universoId: 'bebes', price: 30, img: `${ap}/bebe-crianca/bubble-layers-1.jpg`, imgs: [`${ap}/bebe-crianca/bubble-layers-1.jpg`, `${ap}/bebe-crianca/bubble-layers-2.jpg`, `${ap}/bebe-crianca/bubble-layers-3.png`, `${ap}/bebe-crianca/bubble-layers-4.png`], tag: 'PERSONALIZÁVEL', color: 'Terracota', dominantColors: ['rosa', 'lilás', 'azul', 'amarelo'] },
+  { id: 'bebes-letreiro-mesa-daniel', name: 'Letreiro de Mesa Daniel', description: 'Um nome que ganha forma e cor. Letreiro de mesa personalizado com inicial e nome em destaque, pensado para dar um toque especial à cómoda, à secretária ou à prateleira do quarto dos mais pequenos.', universoId: 'bebes', price: 29, img: `${ap}/bebe-crianca/letreiro-mesa-daniel-1.png`, imgs: Array.from({ length: 3 }, (_, i) => `${ap}/bebe-crianca/letreiro-mesa-daniel-${i + 1}.png`), tag: 'PERSONALIZÁVEL', color: 'Azul-cinza', dominantColors: ['azul', 'branco'], colorOptions: co(['verde', 'azul', 'amarelo', 'rosa', 'lilás'], ['PLA Mate']) },
   { id: 'bebes-heitor-dino',       name: 'Letreiro Heitor Dino',   universoId: 'bebes', price: 36, img: `${ap}/bebe-crianca/letreiro-heitor-dino-1.png`,  imgs: i4('bebe-crianca/letreiro-heitor-dino', 4),  tag: 'PERSONALIZÁVEL', color: 'Natural',    dominantColors: ['verde'],           colorOptions: co(['verde', 'azul', 'amarelo', 'rosa', 'lilás'], ['PLA Mate']) },
   { id: 'bebes-cecilia',           name: 'Letreiro Cecília',       universoId: 'bebes', price: 44, img: `${ap}/bebe-crianca/letreiro-cecilia-1.png`,       imgs: i4('bebe-crianca/letreiro-cecilia', 4),       tag: 'PERSONALIZÁVEL', color: 'Creme',      dominantColors: ['rosa', 'branco'],  colorOptions: co(['rosa', 'lilás'], ['PLA Mate']) },
   { id: 'bebes-arco-iris',         name: 'Letreiro Arco-íris',     universoId: 'bebes', price: 42, img: `${ap}/bebe-crianca/letreiro-arco-iris-1.png`,     imgs: i4('bebe-crianca/letreiro-arco-iris', 4),     tag: 'PERSONALIZÁVEL', color: 'Sage',       dominantColors: ['rosa', 'azul', 'amarelo', 'branco'] },
@@ -88,7 +95,8 @@ const COZINHA_PRODUCTS: ShopProduct[] = [
 
 // ─── Família ──────────────────────────────────────────────────────────────────
 const FAMILIA_PRODUCTS: ShopProduct[] = [
-  { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 26, img: `${ap}/familia/estatua-familia-1.png`, imgs: i4('familia/estatua-familia', 4), color: 'Natural', tag: 'PERSONALIZÁVEL', dominantColors: ['branco'], colorOptions: co(['branco', 'preto', 'cinza'], ['PLA Mate']) },
+  { id: 'familia-funko', name: 'Sua Família em Funko', description: 'A sua família numa versão cheia de personalidade. Em breve, descubra os detalhes desta peça personalizada.', comingSoon: true, universoId: 'mamaes', price: 0, img: `${ap}/familia/familia-funko-em-breve.svg`, tag: 'PERSONALIZÁVEL', color: 'Natural', dominantColors: [] },
+  { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 26, img: `${ap}/familia/estatua-toda-familia-capa.png`, imgs: [`${ap}/familia/estatua-toda-familia-capa.png`, ...i4('familia/estatua-familia', 4)], color: 'Natural', tag: 'PERSONALIZÁVEL', dominantColors: ['branco'], colorOptions: co(['branco', 'preto', 'cinza'], ['PLA Mate']) },
   { id: 'familia-estatua-fams2',   name: 'Estátua Família S2',   universoId: 'mamaes', price: 32, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme',   tag: 'PERSONALIZÁVEL', dominantColors: ['branco'], colorOptions: co(['branco', 'preto', 'cinza'], ['PLA Mate']) },
 ]
 
@@ -142,24 +150,38 @@ const QUARTO_PRODUCTS: ShopProduct[] = [
 
 // ─── Brinquedos ───────────────────────────────────────────────────────────────
 const BRINQUEDOS_PRODUCTS: ShopProduct[] = [
-  { id: 'brinq-arco-sensorial',     name: 'Arco Sensorial Montessori',    universoId: 'brinquedos', price: 28, img: `${ap}/brinquedos/arco-sensorial-1.png`,         imgs: i4('brinquedos/arco-sensorial', 4),         tag: 'NOVO', color: 'Natural',    dominantColors: ['vermelho', 'laranja', 'amarelo', 'verde', 'azul'] },
-  { id: 'brinq-cubo-sensorial',     name: 'Cubo Sensorial Infantil',      universoId: 'brinquedos', price: 8,  img: `${ap}/brinquedos/cubo-sensorial-1.png`,         imgs: i4('brinquedos/cubo-sensorial', 4),         color: 'Creme',      dominantColors: ['rosa'],  colorOptions: co(['rosa', 'azul', 'amarelo', 'verde'], ['PLA Mate']) },
-  { id: 'brinq-plaquinhas-abelhas', name: 'Kit Plaquinhas Abelhinhas',    universoId: 'brinquedos', price: 10, img: `${ap}/brinquedos/kit-plaquinhas-abelhas-1.png`,  imgs: i4('brinquedos/kit-plaquinhas-abelhas', 4),  color: 'Sage',       dominantColors: ['branco'] },
-  { id: 'brinq-plaquinhas-patrol',  name: 'Kit Plaquinhas Patrulha Pata', universoId: 'brinquedos', price: 14, img: `${ap}/brinquedos/kit-plaquinhas-patrulha-1.png`, imgs: i4('brinquedos/kit-plaquinhas-patrulha', 4), color: 'Olive',      dominantColors: ['branco'] },
-  { id: 'brinq-dino-articulado',    name: 'Dino Articulado',              universoId: 'brinquedos', price: 8,  img: `${ap}/brinquedos/dino-articulado-1.png`,        imgs: i4('brinquedos/dino-articulado', 4),        color: 'Terracota',  dominantColors: ['rosa'],  colorOptions: co(['rosa', 'azul', 'amarelo', 'verde'], ['PLA Mate']) },
-  { id: 'brinq-lagartixa',          name: 'Lagartixa Articulada',         universoId: 'brinquedos', price: 7,  img: `${ap}/brinquedos/lagartixa-articulada-1.png`,   imgs: i4('brinquedos/lagartixa-articulada', 4),   color: 'Azul-cinza', dominantColors: ['azul', 'rosa'], colorOptions: co(['azul', 'rosa', 'verde', 'amarelo', 'cinza'], ['PLA Mate']) },
+  { id: 'brinq-arco-sensorial',     name: 'Arco Sensorial Montessori',    universoId: 'bebes', price: 28, img: `${ap}/brinquedos/arco-sensorial-1.png`,         imgs: i4('brinquedos/arco-sensorial', 4),         tag: 'NOVO', color: 'Natural',    dominantColors: ['vermelho', 'laranja', 'amarelo', 'verde', 'azul'] },
+  { id: 'brinq-cubo-sensorial',     name: 'Cubo Sensorial Infantil',      universoId: 'bebes', price: 8,  img: `${ap}/brinquedos/cubo-sensorial-1.png`,         imgs: i4('brinquedos/cubo-sensorial', 4),         color: 'Creme',      dominantColors: ['rosa'],  colorOptions: co(['rosa', 'azul', 'amarelo', 'verde'], ['PLA Mate']) },
+  { id: 'brinq-plaquinhas-abelhas', name: 'Kit Plaquinhas Abelhinhas',    universoId: 'bebes', price: 10, img: `${ap}/brinquedos/kit-plaquinhas-abelhas-1.png`,  imgs: i4('brinquedos/kit-plaquinhas-abelhas', 4),  color: 'Sage',       dominantColors: ['branco'] },
+  { id: 'brinq-plaquinhas-patrol',  name: 'Kit Plaquinhas Patrulha Pata', universoId: 'bebes', price: 14, img: `${ap}/brinquedos/kit-plaquinhas-patrulha-1.png`, imgs: i4('brinquedos/kit-plaquinhas-patrulha', 4), color: 'Olive',      dominantColors: ['branco'] },
+  { id: 'brinq-dino-articulado',    name: 'Dino Articulado',              universoId: 'bebes', price: 8,  img: `${ap}/brinquedos/dino-articulado-1.png`,        imgs: i4('brinquedos/dino-articulado', 4),        color: 'Terracota',  dominantColors: ['rosa'],  colorOptions: co(['rosa', 'azul', 'amarelo', 'verde'], ['PLA Mate']) },
+  { id: 'brinq-lagartixa',          name: 'Lagartixa Articulada',         universoId: 'bebes', price: 7,  img: `${ap}/brinquedos/lagartixa-articulada-1.png`,   imgs: i4('brinquedos/lagartixa-articulada', 4),   color: 'Azul-cinza', dominantColors: ['azul', 'rosa'], colorOptions: co(['azul', 'rosa', 'verde', 'amarelo', 'cinza'], ['PLA Mate']) },
 ]
+
+const PETS_PRODUCTS: ShopProduct[] = PET_FRAME_OPTIONS.map(option => ({
+  id: `pets-quadro-busto-${option.count}`,
+  name: `Quadro com ${option.count} ${option.count === 1 ? 'Pet' : 'Pets'}`,
+  description: `Há companheiros que fazem parte da família. Um quadro com ${option.count === 1 ? 'busto em relevo do seu cão ou gato' : `os bustos em relevo dos seus ${option.count} pets, cães ou gatos`}, pensado para dar um lugar especial a esse carinho na decoração da sua casa. Uma peça personalizada para celebrar ${option.count === 1 ? 'o seu melhor amigo' : 'os seus melhores amigos'} ou oferecer a quem partilha a vida com animais.`,
+  petCount: option.count,
+  universoId: 'pets',
+  price: [19, 32, 40, 49][option.count - 1],
+  img: option.images[0],
+  imgs: option.images,
+  tag: 'PERSONALIZÁVEL',
+  color: 'Creme',
+  dominantColors: ['branco', 'bege', 'preto'],
+}))
 
 export const SHOP_PRODUCTS: Record<string, ShopProduct[]> = {
   mamaes:      FAMILIA_PRODUCTS,
-  bebes:       [...BEBES_PRODUCTS, ...CRIANCAS_PRODUCTS],
+  pets:        PETS_PRODUCTS,
+  bebes:       [...BEBES_PRODUCTS, ...CRIANCAS_PRODUCTS, ...BRINQUEDOS_PRODUCTS],
   cozinha:     COZINHA_PRODUCTS,
   sala:        SALA_PRODUCTS,
   escrit:      ESCRIT_PRODUCTS,
   organiz:     ORGANIZ_PRODUCTS,
   quarto:      QUARTO_PRODUCTS,
   deco:        DECO_PRODUCTS,
-  brinquedos:  BRINQUEDOS_PRODUCTS,
 }
 
 export const ALL_SHOP_PRODUCTS: ShopProduct[] = Object.values(SHOP_PRODUCTS).flat()

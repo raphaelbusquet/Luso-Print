@@ -12,15 +12,26 @@ type Slide = {
   ctaPrimary: { label: string; href: string }
   ctaSecondary: { label: string; href: string }
   image: string
-  imagePosition?: string
   caption: { eyebrow: string; title: string; sub: string }
-  captionBg?: string
   theme: { bg: string; fg: string; muted: string; rule: string; accent: string }
-  flagDots?: boolean
   shapes: string
 }
 
 const SLIDES: Slide[] = [
+  {
+    id: 'natal',
+    eyebrow: 'NATAL · PEQUENOS GESTOS, GRANDES AFETOS',
+    badge: 'Um Natal com a sua marca',
+    titleLines: ['Neste Natal,'],
+    italic: 'ofereça com alma.',
+    lede: 'Dê um toque especial à sua casa e aos seus presentes. Conte-nos a sua ideia e vamos dar forma a um Natal mais seu.',
+    ctaPrimary: { label: 'Descobrir o Natal', href: '/natal' },
+    ctaSecondary: { label: 'Ver produtos de Natal', href: '/natal#produtos-natal' },
+    image: '/assets/products/natal/placa-feliz-natal-2.png',
+    caption: { eyebrow: 'Coleção de Natal', title: 'Placa Feliz Natal', sub: 'Para decorar e oferecer · €8,49' },
+    theme: { bg: 'var(--linen)', fg: '#304737', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
+    shapes: 'estacoes',
+  },
   {
     id: 'estacoes',
     eyebrow: 'EDIÇÃO N.º 1 · VERÃO 2026',
@@ -30,39 +41,22 @@ const SLIDES: Slide[] = [
     lede: 'Decoração feita com calma e intenção, para casas que valorizam beleza nos pequenos detalhes.',
     ctaPrimary: { label: 'Explorar universos', href: '#universos' },
     ctaSecondary: { label: 'Conheça o atelier', href: '#atelier' },
-    image: '/assets/products/sala/trio-serena-1.png',
-    caption: { eyebrow: 'Em destaque', title: 'Trio Serena', sub: 'Coleção Sala · desde €23' },
+    image: '/assets/products/deco/candeeiro-fluxo-hero.png',
+    caption: { eyebrow: 'Em destaque', title: 'Candeeiro Fluxo', sub: 'Coleção Decoração · €35' },
     theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     shapes: 'estacoes',
   },
   {
-    id: 'mundial',
-    eyebrow: 'EDIÇÃO LIMITADA · JUNHO E JULHO 2026',
-    badge: 'Em pré-venda — apenas 30 peças',
-    titleLines: ['Coleção'],
-    italic: "Mundial '26.",
-    lede: 'Peças criadas para celebrar cada jogo, cada encontro e cada momento vivido em conjunto.',
-    ctaPrimary: { label: 'Descobrir a coleção', href: '#mundial' },
-    ctaSecondary: { label: 'Ver lookbook', href: '#mundial' },
-    image: '/assets/products/mundial/portugal/chaveiro-1.png',
-    imagePosition: 'center 82%',
-    caption: { eyebrow: 'Pré-venda aberta', title: 'Chaveiro Portugal · FIFA 26', sub: 'Edição limitada · € 5' },
-    captionBg: 'rgba(244,239,230,0.55)',
-    theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
-    flagDots: true,
-    shapes: 'mundial',
-  },
-  {
-    id: 'personal',
-    eyebrow: 'PERSONALIZAÇÃO · FEITO À MÃO',
-    badge: 'Nome, tipografia e cor',
-    titleLines: ['O nome'],
-    italic: 'de quem se ama.',
-    lede: 'Peças únicas inspiradas na magia dos pequenos detalhes e no amor presente em cada nome.',
-    ctaPrimary: { label: 'Começar a personalizar', href: '#personal' },
-    ctaSecondary: { label: 'Como funciona', href: '#personal' },
-    image: '/assets/products/bebe-crianca/letreiro-heitor-dino-3.png',
-    caption: { eyebrow: 'Em destaque', title: 'Letreiro Heitor Dino', sub: 'Personalizado · desde €38' },
+    id: 'empresas',
+    eyebrow: 'PARA EMPRESAS · FEITO À MEDIDA',
+    badge: 'A sua marca ganha forma',
+    titleLines: ['Da Luso'],
+    italic: 'para sua empresa.',
+    lede: 'Brindes personalizados, chaveiros multifuncionais e peças com NFC para aproximar a sua marca dos seus clientes.',
+    ctaPrimary: { label: 'Descobrir as soluções', href: '/empresas' },
+    ctaSecondary: { label: 'Saber mais', href: '#empresas' },
+    image: '/assets/empresas/placa-luso-nfc-atual-1.png',
+    caption: { eyebrow: 'Para a sua marca', title: 'Projetos à medida', sub: 'Orçamento sob consulta' },
     theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     shapes: 'personal',
   },
@@ -159,16 +153,7 @@ export function Hero() {
             </a>
           </div>
 
-          {slide.flagDots && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 32 }}>
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--mundial-green)' }} />
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--mundial-gold)' }} />
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--mundial-red)' }} />
-              <span style={{ marginLeft: 8, fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: t.muted }}>
-                Lançamento · 12 Junho
-              </span>
-            </div>
-          )}
+
         </div>
 
         <div key={'R' + idx} style={{
@@ -181,7 +166,7 @@ export function Hero() {
         }}>
           <div style={{
             position: 'absolute', inset: 0,
-            background: `#E6E0D3 url(${slide.image}) ${slide.imagePosition ?? 'center'}/cover no-repeat`,
+            background: `#E6E0D3 url(${slide.image}) center/cover no-repeat`,
             borderRadius: 12,
             boxShadow: '0 30px 80px -40px rgba(43,39,34,0.35)',
             overflow: 'hidden',
@@ -189,11 +174,10 @@ export function Hero() {
 
           <div style={{
             position: 'absolute', left: 18, bottom: 18,
-            background: slide.captionBg ?? t.bg, color: t.fg,
+            background: t.bg, color: t.fg,
             padding: '14px 18px',
             borderLeft: `2px solid ${t.accent}`,
             maxWidth: 240,
-            backdropFilter: slide.captionBg ? 'blur(6px)' : undefined,
           }}>
             <div className="kicker" style={{ color: t.accent, marginBottom: 4 }}>{slide.caption.eyebrow}</div>
             <div className="serif" style={{ fontSize: 20, lineHeight: 1.15, color: t.fg }}>{slide.caption.title}</div>
@@ -216,7 +200,7 @@ export function Hero() {
           </span>
           {!isMobile && (
             <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>
-              / 0{total} · {slide.id === 'mundial' ? 'Coleção Mundial' : slide.id === 'estacoes' ? 'Estações' : 'Personalização'}
+              / 0{total} · {slide.id === 'natal' ? 'Natal' : slide.id === 'estacoes' ? 'Estações' : 'Para empresas'}
             </span>
           )}
         </div>
