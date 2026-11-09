@@ -242,3 +242,25 @@ section { padding: 100px 0; }
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: none; }
 }
+
+/* Product details stay discoverable on touch screens and keyboard focus. */
+.catalog-details {
+  position: absolute; left: 12px; right: 12px; bottom: 12px;
+  display: block; padding: 11px 14px; border: 0; border-radius: 999px;
+  background: var(--ink); color: #fff; text-align: center;
+  font-family: var(--sans); font-size: 10px; letter-spacing: .2em;
+  text-transform: uppercase; cursor: pointer;
+  opacity: 0; transform: translateY(8px); transition: all 220ms ease;
+}
+.catalog-card:hover .catalog-details, .catalog-card:focus-within .catalog-details {
+  opacity: 1; transform: translateY(0);
+}
+@media (hover: none), (pointer: coarse) {
+  .catalog-details { opacity: 1; transform: none; }
+}
+
+.language-selector { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; letter-spacing: .04em; }
+.language-selector select { font: inherit; color: inherit; background: transparent; border: 0; cursor: pointer; padding: 4px 2px; max-width: 110px; }
+.language-selector option { color: #2B2722; background: #F4EFE6; }
+.language-selector select:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; }
+@media (max-width: 767px) { .language-selector { margin-left: 10px; font-size: 10px; } }

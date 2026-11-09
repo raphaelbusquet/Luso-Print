@@ -1,3 +1,4 @@
+import { translate as t } from './i18n/translate'
 import { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ScrollToTop } from './components/ScrollToTop'
@@ -44,13 +45,13 @@ function HomePage() {
       />
       <Hero />
       <Universos />
-      <Edito />
       <Empresas />
+      <Edito />
       <Diario />
       <Newsletter />
       <Contacto />
       <Footer />
-      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
     </div>

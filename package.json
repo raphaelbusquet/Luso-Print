@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "npm run i18n:build && tsc && vite build",
+    "preview": "vite preview",
+    "i18n:build": "node scripts/build-translations.cjs",
+    "i18n:test": "node scripts/test-translations.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",

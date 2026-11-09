@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState, useEffect, useRef, CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { NAV_LINKS } from '../../data'
@@ -24,7 +25,7 @@ function ProfileIcon() {
 
 export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: NavProps) {
   const { count: favCount } = useFavorites()
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile(1100)
   const [scrolled, setScrolled] = useState(false)
   const [user, setUser] = useState<User | null>(null)
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -82,17 +83,17 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
         <Link to="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <img
             src="/assets/brand/lusoprint-thin.png"
-            alt="Lusoprint"
+            alt={t("Lusoprint")}
             style={{ height: isMobile ? 60 : 90, width: 'auto', maxWidth: 'none', flexShrink: 0, display: 'block', filter: 'invert(1) opacity(0.75)' }}
           />
         </Link>
 
-        {!isMobile && (
+        {t(!isMobile && (
           <nav style={{
-            display: 'flex', justifyContent: 'center', gap: 30, flexShrink: 1,
+            display: 'flex', justifyContent: 'center', gap: 'clamp(14px, 2vw, 30px)', flexShrink: 1,
             letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink)', fontSize: 12,
           }}>
-            {NAV_LINKS.map(([label, href]) => (
+            {t(NAV_LINKS.map(([label, href]) => (
               <a
                 key={label}
                 href={href}
@@ -100,18 +101,18 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--terracotta)')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink)')}
               >
-                {label}
+                {t(label)}
               </a>
-            ))}
+            )))}
           </nav>
-        )}
+        ))}
 
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
           gap: isMobile ? 14 : 18, fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase',
           color: 'var(--ink-soft)', flexShrink: 0,
         }}>
-          {!isMobile && (
+          {t(!isMobile && (
             <button
               onClick={onOpenFavorites}
               style={{
@@ -120,41 +121,39 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                 fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase',
                 color: 'var(--ink-soft)', fontFamily: 'inherit',
               }}
-            >
-              Favoritos
-              {favCount > 0 && (
+            >{t("Favoritos")}{t(favCount > 0 && (
                 <span style={{
                   background: 'var(--terracotta)', color: '#fff', width: 20, height: 20,
                   borderRadius: '50%', display: 'inline-flex', alignItems: 'center',
                   justifyContent: 'center', fontSize: 10, letterSpacing: 0,
                 }}>
-                  {favCount}
+                  {t(favCount)}
                 </span>
-              )}
+              ))}
             </button>
-          )}
+          ))}
 <button
             onClick={onOpenCart}
             style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', color: 'var(--ink)', background: 'none', border: 'none', padding: 0, fontFamily: 'inherit', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase' }}
           >
-            {isMobile ? (
+            {t(isMobile ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 01-8 0" />
               </svg>
-            ) : 'Cesto'}
-            {cartCount > 0 && (
+            ) : 'Cesto')}
+            {t(cartCount > 0 && (
               <span style={{
                 background: 'var(--terracotta)', color: '#fff', width: 20, height: 20,
                 borderRadius: '50%', display: 'inline-flex', alignItems: 'center',
                 justifyContent: 'center', fontSize: 10, letterSpacing: 0,
               }}>
-                {cartCount}
+                {t(cartCount)}
               </span>
-            )}
+            ))}
           </button>
-          {!isMobile && (user ? (
+          {t(!isMobile && (user ? (
             <div ref={dropdownRef} style={{ position: 'relative' }}>
               <button
                 onClick={() => setDropdownOpen(o => !o)}
@@ -167,12 +166,12 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                 }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'var(--terracotta)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'var(--ink)')}
-                aria-label="Perfil"
+                aria-label={t("Perfil")}
               >
                 <ProfileIcon />
               </button>
 
-              {dropdownOpen && (
+              {t(dropdownOpen && (
                 <div style={{
                   position: 'absolute', top: 'calc(100% + 10px)', right: 0,
                   background: 'var(--paper)', border: '1px solid var(--rule)',
@@ -200,9 +199,7 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                     }}
                     onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
                     onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-                  >
-                    Editar perfil
-                  </Link>
+                  >{t("Editar perfil")}</Link>
                   <Link
                     to="/perfil#imagens-geradas"
                     onClick={() => setDropdownOpen(false)}
@@ -214,10 +211,8 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                     }}
                     onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
                     onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-                  >
-                    Imagens Geradas
-                  </Link>
-                  {user.email === 'raphaelbusquet@outlook.com' && (
+                  >{t("Imagens Geradas")}</Link>
+                  {t(user.email === 'raphaelbusquet@outlook.com' && (
                     <Link
                       to="/admin"
                       onClick={() => setDropdownOpen(false)}
@@ -229,10 +224,8 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                       }}
                       onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
                       onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-                    >
-                      Admin
-                    </Link>
-                  )}
+                    >{t("Admin")}</Link>
+                  ))}
                   <button
                     onClick={handleSignOut}
                     style={{
@@ -244,29 +237,25 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                     }}
                     onMouseEnter={e => (e.currentTarget.style.color = 'var(--terracotta)')}
                     onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink-soft)')}
-                  >
-                    Sair
-                  </button>
+                  >{t("Sair")}</button>
                 </div>
-              )}
+              ))}
             </div>
           ) : (
             <button
               onClick={onOpenAuth}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontFamily: 'inherit' }}
-            >
-              Entrar
-            </button>
-          ))}
+            >{t("Entrar")}</button>
+          )))}
 
-          {isMobile && (
+          {t(isMobile && (
             <button
               onClick={() => setMenuOpen(o => !o)}
               style={{
                 background: 'none', border: 'none', padding: '4px', cursor: 'pointer',
                 display: 'flex', flexDirection: 'column', gap: 5, alignItems: 'center', justifyContent: 'center',
               }}
-              aria-label="Menu"
+              aria-label={t("Menu")}
             >
               <span style={{
                 display: 'block', width: 22, height: 1.5, background: 'var(--ink)',
@@ -284,11 +273,11 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                 transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
               }} />
             </button>
-          )}
+          ))}
         </div>
       </div>
 
-      {isMobile && menuOpen && (
+      {t(isMobile && menuOpen && (
         <div style={{
           background: 'rgba(244,239,230,0.97)', backdropFilter: 'blur(12px)',
           borderTop: '1px solid var(--rule)',
@@ -296,7 +285,7 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
           animation: 'lp-fadein 200ms ease',
         }}>
           <div className="shell-wide" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {NAV_LINKS.map(([label, href]) => (
+            {t(NAV_LINKS.map(([label, href]) => (
               <a
                 key={label}
                 href={href}
@@ -308,9 +297,9 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                   color: 'var(--ink)',
                 }}
               >
-                {label}
+                {t(label)}
               </a>
-            ))}
+            )))}
             <div style={{ marginTop: 20, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
               <button
                 onClick={() => { onOpenFavorites(); setMenuOpen(false) }}
@@ -320,39 +309,29 @@ export function Nav({ onOpenAuth, onOpenCart, onOpenFavorites, cartCount = 0 }: 
                   fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase',
                   color: 'var(--ink-soft)', fontFamily: 'inherit',
                 }}
-              >
-                Favoritos
-                {favCount > 0 && (
+              >{t("Favoritos")}{t(favCount > 0 && (
                   <span style={{
                     background: 'var(--terracotta)', color: '#fff', width: 20, height: 20,
                     borderRadius: '50%', display: 'inline-flex', alignItems: 'center',
                     justifyContent: 'center', fontSize: 10, letterSpacing: 0,
-                  }}>{favCount}</span>
-                )}
+                  }}>{t(favCount)}</span>
+                ))}
               </button>
-              {user ? (
+              {t(user ? (
                 <>
-                  <Link to="/perfil" onClick={() => setMenuOpen(false)} style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>
-                    Perfil
-                  </Link>
-                  {user.email === 'raphaelbusquet@outlook.com' && (
-                    <Link to="/admin" onClick={() => setMenuOpen(false)} style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>
-                      Admin
-                    </Link>
-                  )}
-                  <button onClick={() => { handleSignOut(); setMenuOpen(false) }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontFamily: 'inherit' }}>
-                    Sair
-                  </button>
+                  <Link to="/perfil" onClick={() => setMenuOpen(false)} style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>{t("Perfil")}</Link>
+                  {t(user.email === 'raphaelbusquet@outlook.com' && (
+                    <Link to="/admin" onClick={() => setMenuOpen(false)} style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>{t("Admin")}</Link>
+                  ))}
+                  <button onClick={() => { handleSignOut(); setMenuOpen(false) }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontFamily: 'inherit' }}>{t("Sair")}</button>
                 </>
               ) : (
-                <button onClick={() => { onOpenAuth(); setMenuOpen(false) }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontFamily: 'inherit' }}>
-                  Entrar
-                </button>
-              )}
+                <button onClick={() => { onOpenAuth(); setMenuOpen(false) }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontFamily: 'inherit' }}>{t("Entrar")}</button>
+              ))}
             </div>
           </div>
         </div>
-      )}
+      ))}
     </header>
   )
 }

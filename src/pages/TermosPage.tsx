@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Announce } from '../components/layout/Announce'
@@ -113,12 +114,10 @@ export function TermosPage() {
             style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-soft)', transition: 'color 160ms' }}
             onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
             onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-          >
-            ← Início
-          </Link>
+          >{t("← Início")}</Link>
           <div style={{ textAlign: 'center' }}>
-            <div className="kicker" style={{ marginBottom: 4 }}>Lusoprint</div>
-            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>Informação Legal</div>
+            <div className="kicker" style={{ marginBottom: 4 }}>{t("Lusoprint")}</div>
+            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>{t("Informação Legal")}</div>
           </div>
           <div style={{ width: 80 }} />
         </div>
@@ -128,7 +127,7 @@ export function TermosPage() {
 
         {/* Sidebar nav */}
         <div style={{ width: 180, flexShrink: 0, position: 'sticky', top: 120 }}>
-          {sections.map(s => (
+          {t(sections.map(s => (
             <button
               key={s.id}
               onClick={() => setActive(s.id as 'termos' | 'privacidade')}
@@ -142,37 +141,35 @@ export function TermosPage() {
                 transition: 'color 160ms',
               }}
             >
-              {s.title}
+              {t(s.title)}
             </button>
-          ))}
+          )))}
         </div>
 
         {/* Content */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="serif" style={{ margin: '0 0 40px', fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 400 }}>
-            {section.title}
+            {t(section.title)}
           </h1>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            {section.content.map(item => (
+            {t(section.content.map(item => (
               <div key={item.heading}>
                 <h3 style={{ margin: '0 0 10px', fontSize: 13, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--ink-soft)', fontWeight: 500 }}>
-                  {item.heading}
+                  {t(item.heading)}
                 </h3>
                 <p style={{ margin: 0, fontSize: 15, lineHeight: 1.8, color: 'var(--ink-soft)' }}>
-                  {item.text}
+                  {t(item.text)}
                 </p>
               </div>
-            ))}
+            )))}
           </div>
-          <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid var(--rule)', fontSize: 12, color: 'var(--ink-mute)' }}>
-            Última actualização: Maio 2026 · Questões: geral@lusoprint.pt
-          </div>
+          <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid var(--rule)', fontSize: 12, color: 'var(--ink-mute)' }}>{t("Última actualização: Maio 2026 · Questões: geral@lusoprint.pt")}</div>
         </div>
       </div>
 
       <Footer />
 
-      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
     </div>

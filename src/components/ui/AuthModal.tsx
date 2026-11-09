@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
 
@@ -95,57 +96,46 @@ export function AuthModal({ onClose }: Props) {
         <button
           onClick={onClose}
           style={{ position: 'absolute', top: 18, right: 18, background: 'none', border: 'none', padding: 4, cursor: 'pointer', color: 'var(--ink-mute)', fontSize: 18, lineHeight: 1 }}
-          aria-label="Fechar"
-        >×</button>
+          aria-label={t("Fechar")}
+        >{t("×")}</button>
 
         {/* Verify email screen */}
-        {view === 'verify' && (
+        {t(view === 'verify' && (
           <div style={{ textAlign: 'center', padding: '16px 0 8px' }}>
-            <div style={{ fontSize: 48, marginBottom: 24 }}>✉️</div>
-            <h2 className="serif" style={{ margin: '0 0 16px', fontSize: 32, fontWeight: 400, lineHeight: 1.1 }}>
-              Verifique<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>o seu e-mail.</em>
+            <div style={{ fontSize: 48, marginBottom: 24 }}>{t("✉️")}</div>
+            <h2 className="serif" style={{ margin: '0 0 16px', fontSize: 32, fontWeight: 400, lineHeight: 1.1 }}>{t("Verifique")}<br />
+              <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("o seu e-mail.")}</em>
             </h2>
-            <p style={{ color: 'var(--ink-soft)', fontSize: 15, lineHeight: 1.7, margin: '0 0 32px' }}>
-              Enviámos um link de confirmação para <strong style={{ color: 'var(--ink)' }}>{email}</strong>.<br />
-              Clique no link para ativar a sua conta.
-            </p>
-            <p style={{ fontSize: 12, color: 'var(--ink-mute)', lineHeight: 1.6, margin: '-16px 0 32px', padding: '10px 14px', background: 'var(--linen)', borderRadius: 3 }}>
-              Não vê o e-mail? Verifique também a pasta de <strong>spam</strong> ou promoções.
-            </p>
+            <p style={{ color: 'var(--ink-soft)', fontSize: 15, lineHeight: 1.7, margin: '0 0 32px' }}>{t("Enviámos um link de confirmação para ")}<strong style={{ color: 'var(--ink)' }}>{t(email)}</strong>{t(".")}<br />{t("Clique no link para ativar a sua conta.")}</p>
+            <p style={{ fontSize: 12, color: 'var(--ink-mute)', lineHeight: 1.6, margin: '-16px 0 32px', padding: '10px 14px', background: 'var(--linen)', borderRadius: 3 }}>{t("Não vê o e-mail? Verifique também a pasta de ")}<strong>{t("spam")}</strong>{t(" ou promoções.")}</p>
             <button
               onClick={onClose}
               className="btn btn-solid"
               style={{ borderRadius: 999, padding: '13px 32px' }}
-            >
-              Fechar
-            </button>
-            <p style={{ marginTop: 16, fontSize: 12, color: 'var(--ink-mute)' }}>
-              Não recebeu?{' '}
+            >{t("Fechar")}</button>
+            <p style={{ marginTop: 16, fontSize: 12, color: 'var(--ink-mute)' }}>{t("Não recebeu?")}{t(' ')}
               <button
                 onClick={() => { setView('signup'); reset() }}
                 style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--ink-soft)', fontSize: 12, textDecoration: 'underline', fontFamily: 'inherit' }}
-              >
-                Tentar novamente
-              </button>
+              >{t("Tentar novamente")}</button>
             </p>
           </div>
-        )}
+        ))}
 
         {/* Normal content — hidden when verifying */}
-        {view !== 'verify' && <>
+        {t(view !== 'verify' && <>
 
         {/* Logo */}
-        <img src="/assets/brand/lusoprint-header.png" alt="Lusoprint" style={{ height: 36, marginBottom: 20, mixBlendMode: 'multiply' }} />
+        <img src="/assets/brand/lusoprint-header.png" alt={t("Lusoprint")} style={{ height: 36, marginBottom: 20, mixBlendMode: 'multiply' }} />
 
         {/* Heading */}
         <h2 className="serif" style={{ margin: '0 0 8px', fontSize: 32, fontWeight: 400, lineHeight: 1.1, letterSpacing: '-0.01em' }}>
-          {view === 'signin' ? <>Bem-vinda<br /><em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>de volta.</em></> : <>Criar<br /><em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>conta.</em></>}
+          {t(view === 'signin' ? <>{t("Bem-vinda")}<br /><em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("de volta.")}</em></> : <>{t("Criar")}<br /><em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("conta.")}</em></>)}
         </h2>
 
         {/* Tab switcher */}
         <div style={{ display: 'flex', gap: 0, marginTop: 20, marginBottom: 24, borderBottom: '1px solid var(--rule)' }}>
-          {(['signin', 'signup'] as View[]).map(v => (
+          {t((['signin', 'signup'] as View[]).map(v => (
             <button
               key={v}
               onClick={() => switchView(v)}
@@ -158,9 +148,9 @@ export function AuthModal({ onClose }: Props) {
                 transition: 'all 180ms ease', marginBottom: -1,
               }}
             >
-              {v === 'signin' ? 'Entrar' : 'Registar'}
+              {t(v === 'signin' ? 'Entrar' : 'Registar')}
             </button>
-          ))}
+          )))}
         </div>
 
         {/* Google */}
@@ -181,14 +171,12 @@ export function AuthModal({ onClose }: Props) {
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-          Continuar com Google
-        </button>
+          </svg>{t("Continuar com Google")}</button>
 
         {/* Divider */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '20px 0' }}>
           <div style={{ flex: 1, height: 1, background: 'var(--rule)' }} />
-          <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>ou</span>
+          <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>{t("ou")}</span>
           <div style={{ flex: 1, height: 1, background: 'var(--rule)' }} />
         </div>
 
@@ -196,34 +184,34 @@ export function AuthModal({ onClose }: Props) {
         <form onSubmit={view === 'signin' ? handleEmailSignIn : handleEmailSignUp}
           style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
 
-          {view === 'signup' && (
+          {t(view === 'signup' && (
             <label style={{ display: 'block' }}>
-              <div className="kicker" style={{ marginBottom: 6 }}>Nome</div>
-              <input value={name} onChange={e => setName(e.target.value)} placeholder="O seu nome…" required style={inputStyle} />
+              <div className="kicker" style={{ marginBottom: 6 }}>{t("Nome")}</div>
+              <input value={name} onChange={e => setName(e.target.value)} placeholder={t("O seu nome…")} required style={inputStyle} />
             </label>
-          )}
+          ))}
 
           <label style={{ display: 'block' }}>
-            <div className="kicker" style={{ marginBottom: 6 }}>E-mail</div>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="nome@email.com" required style={inputStyle} />
+            <div className="kicker" style={{ marginBottom: 6 }}>{t("E-mail")}</div>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder={t("nome@email.com")} required style={inputStyle} />
           </label>
 
           <label style={{ display: 'block' }}>
-            <div className="kicker" style={{ marginBottom: 6 }}>Palavra-passe</div>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} style={inputStyle} />
+            <div className="kicker" style={{ marginBottom: 6 }}>{t("Palavra-passe")}</div>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder={t("••••••••")} required minLength={6} style={inputStyle} />
           </label>
 
-          {error && (
+          {t(error && (
             <div style={{ fontSize: 12, color: 'var(--terracotta)', lineHeight: 1.5, padding: '8px 12px', background: 'rgba(201,130,110,0.1)', borderRadius: 3 }}>
-              {error}
+              {t(error)}
             </div>
-          )}
+          ))}
 
-          {success && (
+          {t(success && (
             <div style={{ fontSize: 12, color: '#5a7a5a', lineHeight: 1.5, padding: '8px 12px', background: 'rgba(90,122,90,0.1)', borderRadius: 3 }}>
-              {success}
+              {t(success)}
             </div>
-          )}
+          ))}
 
           <button
             type="submit"
@@ -231,18 +219,16 @@ export function AuthModal({ onClose }: Props) {
             className="btn btn-solid"
             style={{ borderRadius: 999, justifyContent: 'center', padding: '13px 20px', opacity: loading ? 0.7 : 1 }}
           >
-            {loading ? 'A processar…' : view === 'signin' ? 'Entrar' : 'Criar conta'}
-            {!loading && <span className="arr">→</span>}
+            {t(loading ? 'A processar…' : view === 'signin' ? 'Entrar' : 'Criar conta')}
+            {t(!loading && <span className="arr">{t("→")}</span>)}
           </button>
         </form>
 
-        <p style={{ marginTop: 20, textAlign: 'center', fontSize: 11, color: 'var(--ink-mute)', lineHeight: 1.6 }}>
-          Ao continuar, aceita os nossos{' '}
-          <a href="#" style={{ color: 'var(--ink-soft)', borderBottom: '1px solid var(--rule)' }}>Termos</a>
-          {' '}e{' '}
-          <a href="#" style={{ color: 'var(--ink-soft)', borderBottom: '1px solid var(--rule)' }}>Privacidade</a>.
-        </p>
-        </>}
+        <p style={{ marginTop: 20, textAlign: 'center', fontSize: 11, color: 'var(--ink-mute)', lineHeight: 1.6 }}>{t("Ao continuar, aceita os nossos")}{t(' ')}
+          <a href="#" style={{ color: 'var(--ink-soft)', borderBottom: '1px solid var(--rule)' }}>{t("Termos")}</a>
+          {t(' ')}{t("e")}{t(' ')}
+          <a href="#" style={{ color: 'var(--ink-soft)', borderBottom: '1px solid var(--rule)' }}>{t("Privacidade")}</a>{t(".")}</p>
+        </>)}
       </div>
     </div>
   )

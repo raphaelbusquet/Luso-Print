@@ -1,3 +1,4 @@
+import { translate as tr } from '../../i18n/translate'
 import { useState, useEffect, CSSProperties } from 'react'
 import { HeroShapes } from './HeroShapes'
 import { useIsMobile } from '../../hooks/useIsMobile'
@@ -31,6 +32,20 @@ const SLIDES: Slide[] = [
     caption: { eyebrow: 'Coleção de Natal', title: 'Placa Feliz Natal', sub: 'Para decorar e oferecer · €8,49' },
     theme: { bg: 'var(--linen)', fg: '#304737', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     shapes: 'estacoes',
+  },
+  {
+    id: 'kit-nail',
+    eyebrow: 'LANÇAMENTO · FORMAÇÃO & DEMONSTRAÇÃO',
+    badge: 'Novo · Kit Nail Instrutor',
+    titleLines: ['Kit Nail'],
+    italic: 'Instrutor.',
+    lede: 'Dê uma nova dimensão às suas aulas. Peças didáticas ampliadas para explicar técnicas de unhas com clareza, personalizáveis com o seu nome ou logótipo.',
+    ctaPrimary: { label: 'Conhecer o lançamento', href: '/empresas#kit-nail-instrutor' },
+    ctaSecondary: { label: 'Ver soluções para empresas', href: '/empresas' },
+    image: '/assets/empresas/kit-nail-novo-conjunto.png',
+    caption: { eyebrow: 'Novo na Luso', title: 'Kit Nail Instrutor', sub: '20 cm e 15 cm · Desde €59' },
+    theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
+    shapes: 'personal',
   },
   {
     id: 'estacoes',
@@ -114,9 +129,9 @@ export function Hero() {
       }}>
         <div key={'L' + idx} style={{ paddingBottom: 10, position: 'relative', animation: 'lp-fadein 700ms cubic-bezier(.2,.7,.2,1)' }}>
           <div style={{ display: 'flex', gap: 18, alignItems: 'center', marginBottom: 30, flexWrap: 'wrap' }}>
-            <span className="kicker" style={{ color: t.muted, fontSize: 13 }}>{slide.eyebrow}</span>
+            <span className="kicker" style={{ color: t.muted, fontSize: 13 }}>{tr(slide.eyebrow)}</span>
             <span style={{ width: 40, height: 1, background: t.rule }} />
-            <span className="kicker" style={{ color: t.accent, fontSize: 13 }}>{slide.badge}</span>
+            <span className="kicker" style={{ color: t.accent, fontSize: 13 }}>{tr(slide.badge)}</span>
           </div>
 
           <h1 className="serif" style={{
@@ -127,12 +142,12 @@ export function Hero() {
             fontWeight: 400,
             color: t.fg,
           }}>
-            {slide.titleLines.map((line, i) => <span key={i}>{line}<br /></span>)}
-            <em style={{ fontWeight: 400, fontStyle: 'italic', color: t.accent }}>{slide.italic}</em>
+            {tr(slide.titleLines.map((line, i) => <span key={i}>{tr(line)}<br /></span>))}
+            <em style={{ fontWeight: 400, fontStyle: 'italic', color: t.accent }}>{tr(slide.italic)}</em>
           </h1>
 
           <p className="lede" style={{ maxWidth: 520, marginTop: 20, color: t.muted, fontSize: isMobile ? 18 : 28, lineHeight: 1.45 }}>
-            {slide.lede}
+            {tr(slide.lede)}
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 22, marginTop: 38 }}>
@@ -143,13 +158,13 @@ export function Hero() {
               onMouseEnter={e => { e.currentTarget.style.background = t.accent; e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.color = '#fff' }}
               onMouseLeave={e => { e.currentTarget.style.background = t.fg; e.currentTarget.style.borderColor = t.fg; e.currentTarget.style.color = t.bg }}
             >
-              {slide.ctaPrimary.label} <span className="arr">→</span>
+              {tr(slide.ctaPrimary.label)} <span className="arr">{tr("→")}</span>
             </a>
             <a href={slide.ctaSecondary.href} style={{
               fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 16,
               color: t.muted, borderBottom: `1px solid ${t.muted}`, paddingBottom: 4,
             }}>
-              {slide.ctaSecondary.label}
+              {tr(slide.ctaSecondary.label)}
             </a>
           </div>
 
@@ -179,9 +194,9 @@ export function Hero() {
             borderLeft: `2px solid ${t.accent}`,
             maxWidth: 240,
           }}>
-            <div className="kicker" style={{ color: t.accent, marginBottom: 4 }}>{slide.caption.eyebrow}</div>
-            <div className="serif" style={{ fontSize: 20, lineHeight: 1.15, color: t.fg }}>{slide.caption.title}</div>
-            <div style={{ color: t.muted, marginTop: 2, fontSize: 12 }}>{slide.caption.sub}</div>
+            <div className="kicker" style={{ color: t.accent, marginBottom: 4 }}>{tr(slide.caption.eyebrow)}</div>
+            <div className="serif" style={{ fontSize: 20, lineHeight: 1.15, color: t.fg }}>{tr(slide.caption.title)}</div>
+            <div style={{ color: t.muted, marginTop: 2, fontSize: 12 }}>{tr(slide.caption.sub)}</div>
           </div>
         </div>
       </div>
@@ -195,23 +210,21 @@ export function Hero() {
         borderTop: `1px solid ${t.rule}`,
       }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-          <span className="serif" style={{ fontStyle: 'italic', fontSize: isMobile ? 28 : 40, color: t.fg, lineHeight: 1 }}>
-            0{idx + 1}
+          <span className="serif" style={{ fontStyle: 'italic', fontSize: isMobile ? 28 : 40, color: t.fg, lineHeight: 1 }}>{tr("0")}{tr(idx + 1)}
           </span>
-          {!isMobile && (
-            <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>
-              / 0{total} · {slide.id === 'natal' ? 'Natal' : slide.id === 'estacoes' ? 'Estações' : 'Para empresas'}
+          {tr(!isMobile && (
+            <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>{tr("/ 0")}{tr(total)}{tr(" · ")}{tr(slide.id === 'natal' ? 'Natal' : slide.id === 'estacoes' ? 'Estações' : 'Para empresas')}
             </span>
-          )}
+          ))}
         </div>
 
-        {!isMobile && (
+        {tr(!isMobile && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            {SLIDES.map((s, i) => (
+            {tr(SLIDES.map((s, i) => (
               <button
                 key={s.id}
                 onClick={() => go(i)}
-                aria-label={`Ir para slide ${i + 1}`}
+                aria-label={tr(`Ir para slide ${i + 1}`)}
                 style={{
                   width: i === idx ? 42 : 10, height: 10, padding: 0,
                   background: i === idx ? t.accent : t.rule,
@@ -220,18 +233,18 @@ export function Hero() {
                   transition: 'all 360ms cubic-bezier(.2,.7,.2,1)',
                 }}
               />
-            ))}
+            )))}
           </div>
-        )}
+        ))}
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: isMobile ? 10 : 18 }}>
-          {isMobile && (
+          {tr(isMobile && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              {SLIDES.map((s, i) => (
+              {tr(SLIDES.map((s, i) => (
                 <button
                   key={s.id}
                   onClick={() => go(i)}
-                  aria-label={`Ir para slide ${i + 1}`}
+                  aria-label={tr(`Ir para slide ${i + 1}`)}
                   style={{
                     width: i === idx ? 28 : 8, height: 8, padding: 0,
                     background: i === idx ? t.accent : t.rule,
@@ -240,20 +253,20 @@ export function Hero() {
                     transition: 'all 360ms cubic-bezier(.2,.7,.2,1)',
                   }}
                 />
-              ))}
+              )))}
             </div>
-          )}
-          {!isMobile && (
+          ))}
+          {tr(!isMobile && (
             <span style={{ letterSpacing: '0.28em', textTransform: 'uppercase', color: t.muted, fontSize: 10 }}>
-              {paused ? 'Pausado' : 'Auto'}
+              {tr(paused ? 'Pausado' : 'Auto')}
             </span>
-          )}
-          <button onClick={() => go(idx - 1)} aria-label="Anterior" style={arrowBtn(t)}>
+          ))}
+          <button onClick={() => go(idx - 1)} aria-label={tr("Anterior")} style={arrowBtn(t)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M15 6l-6 6 6 6" />
             </svg>
           </button>
-          <button onClick={() => go(idx + 1)} aria-label="Próximo" style={arrowBtn(t)}>
+          <button onClick={() => go(idx + 1)} aria-label={tr("Próximo")} style={arrowBtn(t)}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M9 6l6 6-6 6" />
             </svg>

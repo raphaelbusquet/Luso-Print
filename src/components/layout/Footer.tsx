@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { Link } from 'react-router-dom'
 import { useIsMobile } from '../../hooks/useIsMobile'
 
@@ -34,12 +35,12 @@ const linkStyle = { color: 'rgba(244,239,230,0.85)' }
 
 function FooterLink({ link }: { link: FooterLink }) {
   if (link.external) {
-    return <a href={link.to} target="_blank" rel="noreferrer" style={linkStyle}>{link.label}</a>
+    return <a href={link.to} target="_blank" rel="noreferrer" style={linkStyle}>{t(link.label)}</a>
   }
   if (link.to.startsWith('/#')) {
-    return <a href={link.to} style={linkStyle}>{link.label}</a>
+    return <a href={link.to} style={linkStyle}>{t(link.label)}</a>
   }
-  return <Link to={link.to} style={linkStyle}>{link.label}</Link>
+  return <Link to={link.to} style={linkStyle}>{t(link.label)}</Link>
 }
 
 export function Footer() {
@@ -57,14 +58,12 @@ export function Footer() {
           <div style={isMobile ? { gridColumn: 'span 2' } : {}}>
             <img
               src="/assets/brand/lusoprint-light.png"
-              alt="Lusoprint"
+              alt={t("Lusoprint")}
               style={{ height: 110, width: 'auto' }}
             />
-            <p style={{ marginTop: 22, color: 'rgba(244,239,230,0.7)', maxWidth: 340, lineHeight: 1.7, fontSize: 15 }}>
-              Ateliê de design e impressão 3D. Pequenas séries de objetos para a casa, feitas em Lisboa desde 2026.
-            </p>
+            <p style={{ marginTop: 22, color: 'rgba(244,239,230,0.7)', maxWidth: 340, lineHeight: 1.7, fontSize: 15 }}>{t("Ateliê de design e impressão 3D. Pequenas séries de objetos para a casa, feitas em Lisboa desde 2026.")}</p>
             <div style={{ display: 'flex', gap: 12, marginTop: 28 }}>
-              {[
+              {t([
                 {
                   label: 'Instagram',
                   href: 'https://instagram.com/lusoprint',
@@ -86,7 +85,7 @@ export function Footer() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={label}
+                  aria-label={t(label)}
                   style={{
                     width: 42, height: 42, borderRadius: '50%',
                     border: '1px solid rgba(244,239,230,0.25)',
@@ -97,22 +96,22 @@ export function Footer() {
                   onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--paper)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(244,239,230,0.6)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(244,239,230,0.7)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(244,239,230,0.25)' }}
                 >
-                  {icon}
+                  {t(icon)}
                 </a>
-              ))}
+              )))}
             </div>
           </div>
 
-          {FOOTER_COLS.map(([head, items]) => (
+          {t(FOOTER_COLS.map(([head, items]) => (
             <div key={head}>
-              <div className="kicker" style={{ color: 'rgba(244,239,230,0.55)', marginBottom: 18, fontSize: 11 }}>{head}</div>
+              <div className="kicker" style={{ color: 'rgba(244,239,230,0.55)', marginBottom: 18, fontSize: 11 }}>{t(head)}</div>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12, fontSize: 15 }}>
-                {items.map(link => (
+                {t(items.map(link => (
                   <li key={link.label}><FooterLink link={link} /></li>
-                ))}
+                )))}
               </ul>
             </div>
-          ))}
+          )))}
         </div>
 
         <div style={{
@@ -120,13 +119,13 @@ export function Footer() {
           display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
           color: 'rgba(244,239,230,0.55)', fontSize: 13,
         }}>
-          <div>© 2026 Lusoprint — todos os direitos reservados.</div>
+          <div>{t("© 2026 Lusoprint — todos os direitos reservados.")}</div>
           <div style={{ display: 'flex', gap: 24 }}>
-            <Link to="/termos" style={{ color: 'inherit' }}>Termos</Link>
-            <Link to="/termos" style={{ color: 'inherit' }}>Privacidade</Link>
-            <a href="#cookie-settings" style={{ color: 'inherit' }} onClick={e => { e.preventDefault(); window.dispatchEvent(new Event('lp:open-cookie-settings')) }}>Cookies</a>
+            <Link to="/termos" style={{ color: 'inherit' }}>{t("Termos")}</Link>
+            <Link to="/termos" style={{ color: 'inherit' }}>{t("Privacidade")}</Link>
+            <a href="#cookie-settings" style={{ color: 'inherit' }} onClick={e => { e.preventDefault(); window.dispatchEvent(new Event('lp:open-cookie-settings')) }}>{t("Cookies")}</a>
           </div>
-          <div>Lisboa, Portugal</div>
+          <div>{t("Lisboa, Portugal")}</div>
         </div>
       </div>
     </footer>

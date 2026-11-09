@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useIsMobile } from '../../hooks/useIsMobile'
 
 export function Edito() {
@@ -26,61 +27,56 @@ export function Edito() {
         gap: isMobile ? 32 : 56,
         alignItems: 'center',
       }}>
-        {!isMobile && (
+        {t(!isMobile && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/deco/candeeiro-fluxo-1.png)' }} />
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/familia/estatua-fams2-1.png)', marginLeft: 30 }} />
         </div>
-        )}
+        ))}
 
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           textAlign: 'center', maxWidth: 560, width: '100%', margin: '0 auto',
         }}>
-          <span className="kicker">02 — O nosso trabalho</span>
+          <span className="kicker">{t("03 — O nosso trabalho")}</span>
           <h2 className="serif" style={{
             fontSize: 'clamp(48px, 6vw, 92px)',
             lineHeight: 1, letterSpacing: '-0.01em',
             margin: '20px 0 32px', fontWeight: 400,
-          }}>
-            Da imaginação<br />
-            <em style={{ fontStyle: 'italic' }}>à matéria</em>,<br />
-            sem pressa.
-          </h2>
+          }}>{t("Da imaginação")}<br />
+            <em style={{ fontStyle: 'italic' }}>{t("à matéria")}</em>{t(",")}<br />{t("sem pressa.")}</h2>
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, margin: '24px 0 28px' }}>
             <span style={{ width: 32, height: 1, background: 'var(--ink-mute)' }} />
-            <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--terracotta)', fontSize: 22 }}>memorável</span>
+            <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--terracotta)', fontSize: 22 }}>{t("memorável")}</span>
             <span style={{ width: 32, height: 1, background: 'var(--ink-mute)' }} />
           </div>
 
-          <p style={{ color: 'var(--ink-soft)', lineHeight: 1.75, maxWidth: 480, margin: '0 auto', fontSize: 16 }}>
-            Desenhamos e imprimimos cada peça numa impressora 3D num cantinho do nosso lar com muito amor e carinho — porque acreditamos que o teu espaço, assim como o nosso, merece ter a tua cara.
-          </p>
+          <p style={{ color: 'var(--ink-soft)', lineHeight: 1.75, maxWidth: 480, margin: '0 auto', fontSize: 16 }}>{t("Desenhamos e imprimimos cada peça numa impressora 3D num cantinho do nosso lar com muito amor e carinho — porque acreditamos que o teu espaço, assim como o nosso, merece ter a tua cara.")}</p>
 
           <div style={{
             display: 'flex', justifyContent: 'center', gap: isMobile ? 14 : 36, flexWrap: 'wrap',
             marginTop: 40, paddingTop: 28, borderTop: '1px solid var(--rule)',
             fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)',
           }}>
-            <span>Conexão</span><span style={{ opacity: 0.4 }}>·</span>
-            <span>Acolhimento</span><span style={{ opacity: 0.4 }}>·</span>
-            <span>Sofisticação</span><span style={{ opacity: 0.4 }}>·</span>
-            <span>Equilíbrio</span>
+            <span>{t("Conexão")}</span><span style={{ opacity: 0.4 }}>{t("·")}</span>
+            <span>{t("Acolhimento")}</span><span style={{ opacity: 0.4 }}>{t("·")}</span>
+            <span>{t("Sofisticação")}</span><span style={{ opacity: 0.4 }}>{t("·")}</span>
+            <span>{t("Equilíbrio")}</span>
           </div>
         </div>
 
-        {!isMobile && (
+        {t(!isMobile && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/sala/conjunto-arco-1.png)', marginRight: 30 }} />
           <div style={{ ...imgBox, backgroundImage: 'url(/assets/products/quarto/bandeja-porta-joias-folha-1.png)' }} />
         </div>
-        )}
+        ))}
       </div>
 
-      {isMobile && (
+      {t(isMobile && (
         <div className="shell-wide" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 28 }}>
-          {[
+          {t([
             'url(/assets/products/deco/candeeiro-fluxo-1.png)',
             'url(/assets/products/familia/estatua-fams2-1.png)',
             'url(/assets/products/sala/conjunto-arco-1.png)',
@@ -91,9 +87,9 @@ export function Edito() {
               backgroundImage: img, backgroundSize: 'cover', backgroundPosition: 'center',
               backgroundColor: '#D9D5C9',
             }} />
-          ))}
+          )))}
         </div>
-      )}
+      ))}
 
       <div style={{
         marginTop: 48, marginBottom: -20,
@@ -108,9 +104,7 @@ export function Edito() {
           letterSpacing: '-0.02em',
           fontWeight: 400,
           userSelect: 'none',
-        }}>
-          Memorável
-        </div>
+        }}>{t("Memorável")}</div>
       </div>
     </section>
   )

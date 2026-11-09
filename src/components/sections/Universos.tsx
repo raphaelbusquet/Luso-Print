@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UNIVERSOS } from '../../data'
@@ -24,19 +25,13 @@ export function Universos() {
       <div className="shell">
         <div className="section-head">
           <div style={{ maxWidth: 560 }}>
-            <span className="kicker">01 — Por universos</span>
-            <h2>
-              Casas que se<br />compõem como{' '}
-              <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>poemas</em>.
-            </h2>
+            <span className="kicker">{t("01 — Por universos")}</span>
+            <h2>{t("Casas que se")}<br />{t("compõem como")}{t(' ')}
+              <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("poemas")}</em>{t(".")}</h2>
           </div>
           <div style={{ maxWidth: 380, paddingBottom: 14 }}>
-            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 16, lineHeight: 1.7 }}>
-              Organizadas por momento e por gesto — da papelaria ao quarto da bebé, do canto do café à mesa onde se recebe.
-            </p>
-            <Link to="/loja" className="btn-ghost" style={{ marginTop: 18, display: 'inline-block' }}>
-              Ver todas →
-            </Link>
+            <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 16, lineHeight: 1.7 }}>{t("Organizadas por momento e por gesto — da papelaria ao quarto da bebé, do canto do café à mesa onde se recebe.")}</p>
+            <Link to="/loja" className="btn-ghost" style={{ marginTop: 18, display: 'inline-block' }}>{t("Ver todas →")}</Link>
           </div>
         </div>
 
@@ -46,7 +41,7 @@ export function Universos() {
           gridAutoRows: 'minmax(160px, auto)',
           gap: 14,
         }}>
-          {UNIVERSOS.map((u, i) => {
+          {t(UNIVERSOS.map((u, i) => {
             const lay = layouts[i] ?? { col: 'span 4', row: 'span 1' }
             const isH = hovered === u.id
             const isTall = lay.row.includes('2')
@@ -97,47 +92,43 @@ export function Universos() {
                   color: '#fff', display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 8,
                 }}>
                   <div>
-                    {!isMobile && (
-                      <div className="kicker" style={{ color: 'rgba(255,255,255,0.75)', marginBottom: 6 }}>
-                        Universo · {String(i + 1).padStart(2, '0')}
+                    {t(!isMobile && (
+                      <div className="kicker" style={{ color: 'rgba(255,255,255,0.75)', marginBottom: 6 }}>{t("Universo · ")}{t(String(i + 1).padStart(2, '0'))}
                       </div>
-                    )}
+                    ))}
                     <div className="serif" style={{
                       fontSize: isMobile ? 20 : (isTall ? 44 : 32),
                       lineHeight: 1,
                       letterSpacing: '-0.005em',
                     }}>
-                      {u.nome}
+                      {t(u.nome)}
                     </div>
                   </div>
-                  {isMobile ? (
+                  {t(isMobile ? (
                     <div style={{
                       fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
                       background: 'rgba(255,255,255,0.88)', color: 'var(--ink)',
                       padding: '4px 8px', borderRadius: 999, flexShrink: 0,
                     }}>
-                      {u.cnt} pçs
-                    </div>
+                      {t(u.cnt)}{t(" pçs")}</div>
                   ) : (
                     <div style={{
                       fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
                       background: 'rgba(255,255,255,0.92)', color: 'var(--ink)',
                       padding: '8px 12px', borderRadius: 999, flexShrink: 0,
                     }}>
-                      {u.cnt} peças
-                    </div>
-                  )}
+                      {t(u.cnt)}{t(" peças")}</div>
+                  ))}
                 </div>
 
                 <div style={{
                   position: 'absolute', top: 18, left: 22, color: 'rgba(255,255,255,0.85)',
                   fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 14,
-                }}>
-                  —— 0{i + 1}
+                }}>{t("—— 0")}{t(i + 1)}
                 </div>
               </Link>
             )
-          })}
+          }))}
         </div>
       </div>
     </section>

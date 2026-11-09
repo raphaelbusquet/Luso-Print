@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
@@ -67,5 +68,5 @@ export function MaterialsProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
-  return <Ctx.Provider value={{ isColorAvailable, setAvailable, rows, loading }}>{children}</Ctx.Provider>
+  return <Ctx.Provider value={{ isColorAvailable, setAvailable, rows, loading }}>{t(children)}</Ctx.Provider>
 }

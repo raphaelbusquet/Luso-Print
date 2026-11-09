@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext'
 import { useIsMobile } from '../../hooks/useIsMobile'
@@ -18,31 +19,29 @@ export function NatalArvoreVela() {
   return (
     <article style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 28 : 56, alignItems: 'center', marginTop: 64, paddingTop: 64, borderTop: '1px solid var(--rule)' }}>
       <div>
-        <img src={PHOTOS[photo]} alt={`Árvore de Natal iluminada para vela — fotografia ${photo + 1}`} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
+        <img src={PHOTOS[photo]} alt={t(`Árvore de Natal iluminada para vela — fotografia ${photo + 1}`)} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
         <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
-          {PHOTOS.map((src, i) => (
-            <button key={src} onClick={() => setPhoto(i)} aria-label={`Ver fotografia ${i + 1} da árvore para vela`} aria-pressed={photo === i} style={{ padding: 3, width: 80, background: 'transparent', border: `1px solid ${photo === i ? 'var(--terracotta)' : 'var(--rule)'}`, cursor: 'pointer', borderRadius: 4 }}>
-              <img src={src} alt="" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block' }} />
+          {t(PHOTOS.map((src, i) => (
+            <button key={src} onClick={() => setPhoto(i)} aria-label={t(`Ver fotografia ${i + 1} da árvore para vela`)} aria-pressed={photo === i} style={{ padding: 3, width: 80, background: 'transparent', border: `1px solid ${photo === i ? 'var(--terracotta)' : 'var(--rule)'}`, cursor: 'pointer', borderRadius: 4 }}>
+              <img src={src} alt={t("")} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block' }} />
             </button>
-          ))}
+          )))}
         </div>
       </div>
       <div>
-        <span className="kicker">NATAL · PEQUENOS DETALHES</span>
-        <h3 className="serif" style={{ fontSize: mobile ? 38 : 48, lineHeight: 1.1, fontWeight: 400, margin: '18px 0' }}>Árvore de Natal para Vela</h3>
-        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>€6,49 <span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}> / unidade · 15 cm</span></p>
-        <p style={{ color: 'var(--ink-soft)', lineHeight: 1.8 }}>Uma luz acolhedora para celebrar o Natal. Esta árvore decorativa de 15 cm recebe uma pequena vela no interior, deixando a luz passar pelos recortes em forma de estrela. Ideal para dar um toque natalício à sala, à mesa de apoio ou a um cantinho do quarto. Acompanha vela.</p>
+        <span className="kicker">{t("NATAL · PEQUENOS DETALHES")}</span>
+        <h3 className="serif" style={{ fontSize: mobile ? 38 : 48, lineHeight: 1.1, fontWeight: 400, margin: '18px 0' }}>{t("Árvore de Natal para Vela")}</h3>
+        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{t("€6,49 ")}<span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade · 15 cm")}</span></p>
+        <p style={{ color: 'var(--ink-soft)', lineHeight: 1.8 }}>{t("Uma luz acolhedora para celebrar o Natal. Esta árvore decorativa de 15 cm recebe uma pequena vela no interior, deixando a luz passar pelos recortes em forma de estrela. Ideal para dar um toque natalício à sala, à mesa de apoio ou a um cantinho do quarto. Acompanha vela.")}</p>
         <div style={{ borderTop: '1px solid var(--rule)', borderBottom: '1px solid var(--rule)', padding: '16px 0', margin: '24px 0', fontSize: 14, lineHeight: 1.8 }}>
-          <div>Altura: 15 cm</div>
-          <div>Inclui: uma árvore e uma vela</div>
-          <div>Preço: €6,49 por unidade</div>
+          <div>{t("Altura: 15 cm")}</div>
+          <div>{t("Inclui: uma árvore e uma vela")}</div>
+          <div>{t("Preço: €6,49 por unidade")}</div>
         </div>
-        <label style={{ display: 'block', fontSize: 13, margin: '24px 0 16px' }}>
-          Quantidade de árvores
-          <input type="number" min={1} step={1} value={qty} onChange={e => { setQty(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 90, marginTop: 8, padding: 10, border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', background: 'var(--paper)', color: 'var(--ink)' }} />
+        <label style={{ display: 'block', fontSize: 13, margin: '24px 0 16px' }}>{t("Quantidade de árvores")}<input type="number" min={1} step={1} value={qty} onChange={e => { setQty(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 90, marginTop: 8, padding: 10, border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', background: 'var(--paper)', color: 'var(--ink)' }} />
         </label>
-        <p style={{ fontSize: 14 }}>Total: €{(6.49 * qty).toFixed(2).replace('.', ',')}</p>
-        <button type="button" onClick={addTree} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${(6.49 * qty).toFixed(2).replace('.', ',')}`}</button>
+        <p style={{ fontSize: 14 }}>{t("Total: €")}{t((6.49 * qty).toFixed(2).replace('.', ','))}</p>
+        <button type="button" onClick={addTree} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${(6.49 * qty).toFixed(2).replace('.', ',')}`)}</button>
       </div>
     </article>
   )

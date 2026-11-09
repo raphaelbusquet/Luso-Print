@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { useState, useEffect } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { UNIVERSOS } from '../data'
@@ -32,15 +33,15 @@ function HeartIcon({ filled }: { filled: boolean }) {
 
 function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => void }) {
   const { isFav, toggle } = useFavorites()
-  const { addItem, items } = useCart()
   const [hover, setHover] = useState(false)
   const fav = isFav(p.id)
-  const inCart = items.some(i => i.productId === p.id)
+
 
   return (
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      className="catalog-card"
       style={{ cursor: 'pointer' }}
     >
       <div
@@ -52,13 +53,13 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
       >
         <div style={{
           position: 'absolute', inset: 0,
-          background: `url(${p.img}) center/${p.universoId === 'pets' ? 'contain' : 'cover'} no-repeat`,
-          transform: hover && p.universoId !== 'pets' ? 'scale(1.04)' : 'scale(1)',
+          background: `url(${p.img}) center/${p.universoId === 'pets' || p.id === 'sala-trio-serena' ? 'contain' : 'cover'} no-repeat`,
+          transform: hover && p.universoId !== 'pets' && p.id !== 'sala-trio-serena' ? 'scale(1.04)' : 'scale(1)',
           transition: 'transform 900ms cubic-bezier(.2,.7,.2,1)',
           filter: 'saturate(0.93)',
         }} />
 
-        {p.tag && (
+        {t(p.tag && (
           <div style={{
             position: 'absolute', top: 12, left: 12,
             background: TAG_COLOR[p.tag] ?? 'rgba(43,39,34,0.55)',
@@ -66,9 +67,9 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
             fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase',
             padding: '5px 10px', borderRadius: 999,
           }}>
-            {p.tag}
+            {t(p.tag)}
           </div>
-        )}
+        ))}
 
         <button
           onClick={e => { e.stopPropagation(); toggle(p.id) }}
@@ -82,43 +83,17 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
             transition: 'all 180ms ease',
             boxShadow: '0 2px 8px rgba(43,39,34,0.10)',
           }}
-          aria-label={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+          aria-label={t(fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos')}
         >
           <HeartIcon filled={fav} />
         </button>
 
-        <div style={{
-          position: 'absolute', left: 12, right: 12, bottom: 12,
-          opacity: hover ? 1 : 0,
-          transform: hover ? 'translateY(0)' : 'translateY(8px)',
-          transition: 'all 220ms ease',
-        }}>
-          <button
-            onClick={e => {
-              e.stopPropagation()
-              if (p.quoteOnly || p.comingSoon || p.id === 'bebes-bubble-layers') { onOpen(); return }
-              if (inCart) return
-              addItem({ name: p.name, price: p.price, img: p.img, productId: p.id })
-            }}
-            style={{
-              width: '100%', padding: '11px 14px',
-              background: inCart ? 'var(--terracotta)' : 'var(--ink)',
-              color: '#fff', border: 'none',
-              cursor: inCart ? 'default' : 'pointer',
-              borderRadius: 999,
-              fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase',
-              fontFamily: 'inherit',
-              transition: 'background 200ms ease',
-            }}
-          >
-            {p.quoteOnly ? 'Ver detalhes' : p.comingSoon ? 'Saber mais' : p.id === 'bebes-bubble-layers' ? 'Escolher versão' : inCart ? 'No cesto ✓' : `Adicionar — €${p.price}`}
-          </button>
-        </div>
+        <button type="button" className="catalog-details" onClick={event => { event.stopPropagation(); onOpen() }} aria-label={t(`Ver detalhes de ${p.name}`)}>{t("Ver detalhes")}</button>
       </div>
 
       <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
-        <div className="serif" style={{ fontSize: 17, lineHeight: 1.2 }}>{p.name}</div>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>{p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : `${p.id === 'bebes-bubble-layers' ? 'Desde ' : ''}€${p.price}`}</div>
+        <button type="button" onClick={onOpen} className="serif" style={{ padding: 0, border: 0, background: 'transparent', color: 'inherit', textAlign: 'left', cursor: 'pointer', fontSize: 17, lineHeight: 1.2 }}>{t(p.name)}</button>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : `${p.id === 'bebes-bubble-layers' ? 'Desde ' : ''}€${p.price}`)}</div>
       </div>
     </div>
   )
@@ -131,9 +106,9 @@ function FilterBlock({ title, children }: { title: string; children: React.React
         fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase',
         color: 'var(--ink-mute)', fontWeight: 500, marginBottom: 14,
       }}>
-        {title}
+        {t(title)}
       </div>
-      {children}
+      {t(children)}
     </div>
   )
 }
@@ -210,23 +185,20 @@ export function ShopPage() {
             }}
             onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
             onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-          >
-            ← Universos
-          </Link>
+          >{t("← Universos")}</Link>
 
           <div style={{ textAlign: 'center' }}>
-            <div className="kicker" style={{ marginBottom: 4 }}>Lusoprint</div>
-            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>{pageTitle}</div>
+            <div className="kicker" style={{ marginBottom: 4 }}>{t("Lusoprint")}</div>
+            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>{t(pageTitle)}</div>
           </div>
 
           <div style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-            {filtered.length} peças
-          </div>
+            {t(filtered.length)}{t(" peças")}</div>
         </div>
       </div>
 
       {/* Mobile filter toggle */}
-      {isMobile && (
+      {t(isMobile && (
         <div className="shell-wide" style={{ padding: '16px 0 0' }}>
           <button
             onClick={() => setFiltersOpen(o => !o)}
@@ -242,23 +214,22 @@ export function ShopPage() {
               <line x1="4" y1="6" x2="20" y2="6" />
               <line x1="8" y1="12" x2="20" y2="12" />
               <line x1="12" y1="18" x2="20" y2="18" />
-            </svg>
-            Filtros {activeFilters > 0 ? `(${activeFilters})` : ''}
+            </svg>{t("Filtros ")}{t(activeFilters > 0 ? `(${activeFilters})` : '')}
           </button>
         </div>
-      )}
+      ))}
 
       {/* Body */}
       <div className="shell-wide" style={{ padding: isMobile ? '20px 0 80px' : '48px 0 120px', display: 'flex', gap: 52, alignItems: 'flex-start' }}>
 
         {/* Sidebar */}
-        {(!isMobile || filtersOpen) && (
+        {t((!isMobile || filtersOpen) && (
         <aside style={{
           width: isMobile ? '100%' : 210, flexShrink: 0,
           position: isMobile ? 'static' : 'sticky', top: 120,
           marginBottom: isMobile ? 24 : 0,
         }}>
-          {isMobile && (
+          {t(isMobile && (
             <button
               onClick={() => setFiltersOpen(false)}
               style={{
@@ -271,13 +242,13 @@ export function ShopPage() {
                 color: 'var(--ink-soft)',
               }}
             >
-              <span>Filtros</span>
+              <span>{t("Filtros")}</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
-          )}
-          {activeFilters > 0 && (
+          ))}
+          {t(activeFilters > 0 && (
             <button
               onClick={() => { setSelUniversos([]); setSelColors([]); setSelTag('') }}
               style={{
@@ -299,14 +270,13 @@ export function ShopPage() {
                 b.style.borderColor = 'var(--rule)'
                 b.style.color = 'var(--ink-soft)'
               }}
-            >
-              × Limpar {activeFilters} {activeFilters === 1 ? 'filtro' : 'filtros'}
+            >{t("× Limpar ")}{t(activeFilters)} {t(activeFilters === 1 ? 'filtro' : 'filtros')}
             </button>
-          )}
+          ))}
 
-          <FilterBlock title="Novidades">
+          <FilterBlock title={t("Novidades")}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {Object.entries(TAG_LABELS).map(([tag, label]) => {
+              {t(Object.entries(TAG_LABELS).map(([tag, label]) => {
                 const active = selTag === tag
                 const cnt = ALL_SHOP_PRODUCTS.filter(p => p.tag === tag).length
                 return (
@@ -330,24 +300,24 @@ export function ShopPage() {
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         transition: 'all 160ms',
                       }}>
-                        {active && (
+                        {t(active && (
                           <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="#fff" strokeWidth="1.8">
                             <path d="M2 5l2.5 2.5L8 3" />
                           </svg>
-                        )}
+                        ))}
                       </div>
-                      <span style={{ fontSize: 13 }}>{label}</span>
+                      <span style={{ fontSize: 13 }}>{t(label)}</span>
                     </div>
-                    <span style={{ fontSize: 11, color: 'var(--ink-mute)' }}>{cnt}</span>
+                    <span style={{ fontSize: 11, color: 'var(--ink-mute)' }}>{t(cnt)}</span>
                   </button>
                 )
-              })}
+              }))}
             </div>
           </FilterBlock>
 
-          <FilterBlock title="Universo">
+          <FilterBlock title={t("Universo")}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {UNIVERSOS.map(u => {
+              {t(UNIVERSOS.map(u => {
                 const active = selUniversos.includes(u.id)
                 const cnt = ALL_SHOP_PRODUCTS.filter(p => p.universoId === u.id).length
                 return (
@@ -371,30 +341,30 @@ export function ShopPage() {
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         transition: 'all 160ms',
                       }}>
-                        {active && (
+                        {t(active && (
                           <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="#fff" strokeWidth="1.8">
                             <path d="M2 5l2.5 2.5L8 3" />
                           </svg>
-                        )}
+                        ))}
                       </div>
-                      <span style={{ fontSize: 13 }}>{u.nome}</span>
+                      <span style={{ fontSize: 13 }}>{t(u.nome)}</span>
                     </div>
-                    <span style={{ fontSize: 11, color: 'var(--ink-mute)' }}>{cnt}</span>
+                    <span style={{ fontSize: 11, color: 'var(--ink-mute)' }}>{t(cnt)}</span>
                   </button>
                 )
-              })}
+              }))}
             </div>
           </FilterBlock>
 
-          <FilterBlock title="Cor">
+          <FilterBlock title={t("Cor")}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {VISUAL_COLORS.map(c => {
+              {t(VISUAL_COLORS.map(c => {
                 const active = selColors.includes(c.name)
                 return (
                   <button
                     key={c.name}
                     onClick={() => toggleC(c.name)}
-                    title={c.name}
+                    title={t(c.name)}
                     style={{
                       width: 26, height: 26, borderRadius: '50%',
                       background: c.hex,
@@ -404,25 +374,23 @@ export function ShopPage() {
                       boxShadow: c.name === 'branco' ? 'inset 0 0 0 1px rgba(43,39,34,0.18)' : '0 1px 3px rgba(43,39,34,0.10)',
                       border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0,
                     }}
-                    aria-label={c.name}
+                    aria-label={t(c.name)}
                     aria-pressed={active}
                   />
                 )
-              })}
+              }))}
             </div>
             <div style={{ marginTop: 10, height: 14 }}>
-              {selColors.length > 0 && (
+              {t(selColors.length > 0 && (
                 <span style={{ fontSize: 10, letterSpacing: '0.08em', color: 'var(--ink-soft)', textTransform: 'capitalize' }}>
-                  {selColors[0]}
+                  {t(selColors[0])}
                 </span>
-              )}
+              ))}
             </div>
-            <div style={{ marginTop: 10, fontSize: 10, color: 'var(--ink-mute)', fontStyle: 'italic', lineHeight: 1.5 }}>
-              Clique novamente na cor para desselecionar e ver todas as cores.
-            </div>
+            <div style={{ marginTop: 10, fontSize: 10, color: 'var(--ink-mute)', fontStyle: 'italic', lineHeight: 1.5 }}>{t("Clique novamente na cor para desselecionar e ver todas as cores.")}</div>
           </FilterBlock>
 
-          {isMobile && (
+          {t(isMobile && (
             <button
               onClick={() => setFiltersOpen(false)}
               style={{
@@ -432,21 +400,17 @@ export function ShopPage() {
                 border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                 fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
               }}
-            >
-              Ver tudo {filtered.length > 0 ? `(${filtered.length})` : ''} →
-            </button>
-          )}
+            >{t("Ver tudo ")}{t(filtered.length > 0 ? `(${filtered.length})` : '')}{t(" →")}</button>
+          ))}
         </aside>
-        )}
+        ))}
 
         {/* Products */}
-        {(!isMobile || !filtersOpen) && (
+        {t((!isMobile || !filtersOpen) && (
         <main style={{ flex: 1, minWidth: 0, width: '100%' }}>
-          {filtered.length === 0 ? (
+          {t(filtered.length === 0 ? (
             <div style={{ paddingTop: 80, textAlign: 'center' }}>
-              <p className="serif" style={{ fontSize: 24, fontStyle: 'italic', color: 'var(--ink-soft)' }}>
-                Nenhuma peça encontrada.
-              </p>
+              <p className="serif" style={{ fontSize: 24, fontStyle: 'italic', color: 'var(--ink-soft)' }}>{t("Nenhuma peça encontrada.")}</p>
               <button
                 onClick={() => { setSelUniversos([]); setSelColors([]); setSelTag('') }}
                 style={{
@@ -454,9 +418,7 @@ export function ShopPage() {
                   fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
                   color: 'var(--terracotta)', fontFamily: 'inherit',
                 }}
-              >
-                Limpar filtros
-              </button>
+              >{t("Limpar filtros")}</button>
             </div>
           ) : (
             <div style={{
@@ -464,14 +426,14 @@ export function ShopPage() {
               gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))',
               gap: isMobile ? '24px 14px' : '36px 24px',
             }}>
-              {filtered.map(p => <ShopCard key={p.id} product={p} onOpen={() => setSelectedProduct(p)} />)}
+              {t(filtered.map(p => <ShopCard key={p.id} product={p} onOpen={() => setSelectedProduct(p)} />))}
             </div>
-          )}
+          ))}
         </main>
-        )}
+        ))}
       </div>
 
-      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
       <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />

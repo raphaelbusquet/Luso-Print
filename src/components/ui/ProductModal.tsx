@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { PetFrameModal } from './PetFrameModal'
 import { useState, useEffect, useRef } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
@@ -63,11 +64,9 @@ function FamilyConfig({ value, onChange }: {
 
   return (
     <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 14, marginBottom: 14 }}>
-      <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
-        Configuração da família
-      </div>
+      <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>{t("Configuração da família")}</div>
 
-      {nothingConfigured && (
+      {t(nothingConfigured && (
         <div style={{
           display: 'flex', alignItems: 'flex-start', gap: 8,
           background: 'rgba(201,130,110,0.10)', border: '1px solid rgba(201,130,110,0.3)',
@@ -76,33 +75,31 @@ function FamilyConfig({ value, onChange }: {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--terracotta)" strokeWidth="2" style={{ flexShrink: 0, marginTop: 1 }}>
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
-          <span style={{ fontSize: 11, color: 'var(--terracotta)', lineHeight: 1.5 }}>
-            Escolha os membros da família antes de adicionar ao cesto.
-          </span>
-        </div>
-      )}
-
-      <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
-        <button style={btnStyle(value.pai)} onClick={() => toggle('pai')}>Pai</button>
-        <button style={btnStyle(value.mae)} onClick={() => toggle('mae')}>Mãe</button>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-        <span style={{ fontSize: 11, color: 'var(--ink-soft)', letterSpacing: '0.08em' }}>Crianças</span>
-        <button onClick={() => setCriancas(Math.max(0, value.criancas.length - 1))}
-          style={{ width: 26, height: 26, border: '1px solid var(--rule)', borderRadius: '3px 0 0 3px', background: 'transparent', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)' }}>−</button>
-        <span style={{ width: 28, textAlign: 'center', fontSize: 13 }}>{value.criancas.length}</span>
-        <button onClick={() => setCriancas(value.criancas.length + 1)}
-          style={{ width: 26, height: 26, border: '1px solid var(--rule)', borderRadius: '0 3px 3px 0', background: 'transparent', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)' }}>+</button>
-      </div>
-      {value.criancas.map((idade, i) => (
-        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-          <span style={{ fontSize: 11, color: 'var(--ink-mute)', minWidth: 60 }}>Criança {i + 1}</span>
-          <select value={idade} onChange={e => setIdade(i, e.target.value)}
-            style={{ flex: 1, padding: '5px 8px', border: '1px solid var(--rule)', borderRadius: 4, fontSize: 11, background: 'var(--paper)', color: 'var(--ink)', outline: 'none' }}>
-            {IDADES.map(op => <option key={op} value={op}>{op}</option>)}
-          </select>
+          <span style={{ fontSize: 11, color: 'var(--terracotta)', lineHeight: 1.5 }}>{t("Escolha os membros da família antes de adicionar ao cesto.")}</span>
         </div>
       ))}
+
+      <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
+        <button style={btnStyle(value.pai)} onClick={() => toggle('pai')}>{t("Pai")}</button>
+        <button style={btnStyle(value.mae)} onClick={() => toggle('mae')}>{t("Mãe")}</button>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+        <span style={{ fontSize: 11, color: 'var(--ink-soft)', letterSpacing: '0.08em' }}>{t("Crianças")}</span>
+        <button onClick={() => setCriancas(Math.max(0, value.criancas.length - 1))}
+          style={{ width: 26, height: 26, border: '1px solid var(--rule)', borderRadius: '3px 0 0 3px', background: 'transparent', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)' }}>{t("−")}</button>
+        <span style={{ width: 28, textAlign: 'center', fontSize: 13 }}>{t(value.criancas.length)}</span>
+        <button onClick={() => setCriancas(value.criancas.length + 1)}
+          style={{ width: 26, height: 26, border: '1px solid var(--rule)', borderRadius: '0 3px 3px 0', background: 'transparent', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink)' }}>{t("+")}</button>
+      </div>
+      {t(value.criancas.map((idade, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+          <span style={{ fontSize: 11, color: 'var(--ink-mute)', minWidth: 60 }}>{t("Criança ")}{t(i + 1)}</span>
+          <select value={idade} onChange={e => setIdade(i, e.target.value)}
+            style={{ flex: 1, padding: '5px 8px', border: '1px solid var(--rule)', borderRadius: 4, fontSize: 11, background: 'var(--paper)', color: 'var(--ink)', outline: 'none' }}>
+            {t(IDADES.map(op => <option key={op} value={op}>{t(op)}</option>))}
+          </select>
+        </div>
+      )))}
     </div>
   )
 }
@@ -121,6 +118,8 @@ export function ProductModal({ product: p, onClose }: Props) {
   const [bubbleStyle, setBubbleStyle] = useState<'simple' | 'themed'>('simple')
   const [customTheme, setCustomTheme] = useState('')
   const [selectedColor, setSelectedColor] = useState<string>('')
+  const [secondColor, setSecondColor] = useState('')
+  const isTrevoKit = p?.id === 'sala-bandeja-trevo'
   const [notifyState, setNotifyState] = useState<'idle' | 'open' | 'sending' | 'done'>('idle')
   const [notifyEmail, setNotifyEmail] = useState('')
   const swipeStartX = useRef<number | null>(null)
@@ -130,7 +129,8 @@ export function ProductModal({ product: p, onClose }: Props) {
   const familyNotConfigured = isFamilyProduct && !familyConfig.pai && !familyConfig.mae && familyConfig.criancas.length === 0
   const nameNotProvided = isNameProduct && childName.trim() === ''
   const selectedColorOption = p?.colorOptions?.find(c => c.color === selectedColor)
-  const colorUnavailable = selectedColorOption ? !isColorAvailable(selectedColor, selectedColorOption.materials) : false
+  const secondColorOption = p?.colorOptions?.find(c => c.color === secondColor)
+  const colorUnavailable = (selectedColorOption ? !isColorAvailable(selectedColor, selectedColorOption.materials) : false) || (isTrevoKit && secondColorOption ? !isColorAvailable(secondColor, secondColorOption.materials) : false)
 
   useEffect(() => {
     setActiveImg(0)
@@ -141,6 +141,7 @@ export function ProductModal({ product: p, onClose }: Props) {
     setCustomTheme('')
     setBubbleStyle('simple')
     setSelectedColor(p?.colorOptions?.[0]?.color ?? '')
+    setSecondColor(p?.colorOptions?.[1]?.color ?? p?.colorOptions?.[0]?.color ?? '')
     setNotifyState('idle')
     setNotifyEmail('')
   }, [p?.id])
@@ -159,6 +160,7 @@ export function ProductModal({ product: p, onClose }: Props) {
   }, [onClose, p?.imgs?.length])
 
   useEffect(() => {
+    if (p?.universoId === 'pets') return
     if (p) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
     return () => { document.body.style.overflow = '' }
@@ -170,15 +172,15 @@ export function ProductModal({ product: p, onClose }: Props) {
 
   if (p.comingSoon || p.quoteOnly) return (
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(43,39,34,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-      <div role="dialog" aria-modal="true" aria-label={p.name} onClick={e => e.stopPropagation()} style={{ position: 'relative', background: 'var(--paper)', padding: 28, width: '100%', maxWidth: 480, maxHeight: '90vh', overflowY: 'auto', borderRadius: 8 }}>
-        <button type="button" onClick={onClose} aria-label="Fechar" style={{ position: 'absolute', top: 12, right: 12, cursor: 'pointer', padding: 8 }}>✕</button>
-        <img src={p.img} alt={p.quoteOnly ? p.name : "Fotografias em breve"} style={{ display: 'block', width: '100%', maxHeight: 260, objectFit: 'contain' }} />
-        <span className="kicker">{p.universoId === 'pets' ? 'PETS' : 'FAMÍLIA'} · PERSONALIZÁVEL</span>
-        <h2 className="serif" style={{ fontWeight: 400, fontSize: 34 }}>{p.name}</h2>
-        <p style={{ color: 'var(--ink-soft)', lineHeight: 1.7 }}>{p.description}</p>
-        {p.quoteOnly ? (
-          <a href={`https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre ${p.name}, para cão ou gato.`)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid">Pedir informações →</a>
-        ) : <p style={{ fontSize: 13, color: 'var(--ink-mute)' }}>Fotografias, opções e preço disponíveis em breve.</p>}
+      <div role="dialog" aria-modal="true" aria-label={t(p.name)} onClick={e => e.stopPropagation()} style={{ position: 'relative', background: 'var(--paper)', padding: 28, width: '100%', maxWidth: 480, maxHeight: '90vh', overflowY: 'auto', borderRadius: 8 }}>
+        <button type="button" onClick={onClose} aria-label={t("Fechar")} style={{ position: 'absolute', top: 12, right: 12, cursor: 'pointer', padding: 8 }}>{t("✕")}</button>
+        <img src={p.img} alt={t(p.quoteOnly ? p.name : "Fotografias em breve")} style={{ display: 'block', width: '100%', maxHeight: 260, objectFit: 'contain' }} />
+        <span className="kicker">{t(p.universoId === 'pets' ? 'PETS' : 'FAMÍLIA')}{t(" · PERSONALIZÁVEL")}</span>
+        <h2 className="serif" style={{ fontWeight: 400, fontSize: 34 }}>{t(p.name)}</h2>
+        <p style={{ color: 'var(--ink-soft)', lineHeight: 1.7 }}>{t(p.description)}</p>
+        {t(p.quoteOnly ? (
+          <a href={`https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre ${p.name}, para cão ou gato.`)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid">{t("Pedir informações →")}</a>
+        ) : <p style={{ fontSize: 13, color: 'var(--ink-mute)' }}>{t("Fotografias, opções e preço disponíveis em breve.")}</p>)}
       </div>
     </div>
   )
@@ -214,7 +216,8 @@ export function ProductModal({ product: p, onClose }: Props) {
       note = `${note ? `${note} · ` : ''}Tema e cores: ${customTheme.trim()}`
     }
     if (selectedColor && p.colorOptions && p.colorOptions.length > 1) {
-      note = note ? `${note} · Cor: ${selectedColor}` : `Cor: ${selectedColor}`
+      const colors = isTrevoKit ? `Kit com 2 bandejas · Bandeja 1: ${selectedColor} · Bandeja 2: ${secondColor}` : `Cor: ${selectedColor}`
+      note = note ? `${note} · ${colors}` : colors
     }
     addItem({ name: p.name, price: unitPrice, img: p.img, productId: p.id, note }, qty)
     setQtyModified(false)
@@ -271,26 +274,26 @@ export function ProductModal({ product: p, onClose }: Props) {
               else setActiveImg(i => (i - 1 + total) % total)
             }}
           >
-            {photos.map((img, i) => (
+            {t(photos.map((img, i) => (
               <div
                 key={i}
                 style={{
                   position: 'absolute', inset: 0,
-                  background: `url(${img}) center/cover no-repeat`,
+                  background: `url(${img}) center/${p.id === 'sala-trio-serena' ? 'contain' : 'cover'} no-repeat`,
                   opacity: activeImg === i ? 1 : 0,
                   transition: 'opacity 220ms ease',
                   pointerEvents: 'none',
                 }}
               />
-            ))}
+            )))}
 
             {/* Dot indicators — mobile only */}
-            {isMobile && photos.length > 1 && (
+            {t(isMobile && photos.length > 1 && (
               <div style={{
                 position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)',
                 display: 'flex', gap: 6, zIndex: 2,
               }}>
-                {photos.map((_, i) => (
+                {t(photos.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
@@ -301,19 +304,19 @@ export function ProductModal({ product: p, onClose }: Props) {
                       transition: 'all 220ms ease',
                     }}
                   />
-                ))}
+                )))}
               </div>
-            )}
+            ))}
           </div>
 
           {/* Thumbnails — desktop only */}
-          {!isMobile && (
+          {t(!isMobile && (
           <div style={{
             display: 'flex', gap: 6, padding: '8px 10px',
             background: 'rgba(43,39,34,0.04)',
             borderTop: '1px solid var(--rule)',
           }}>
-            {photos.map((img, i) => (
+            {t(photos.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setActiveImg(i)}
@@ -325,11 +328,11 @@ export function ProductModal({ product: p, onClose }: Props) {
                   transition: 'border-color 160ms',
                   outline: 'none',
                 }}
-                aria-label={`Foto ${i + 1}`}
+                aria-label={t(`Foto ${i + 1}`)}
               />
-            ))}
+            )))}
           </div>
-          )}
+          ))}
         </div>
 
         {/* Right — info */}
@@ -350,72 +353,69 @@ export function ProductModal({ product: p, onClose }: Props) {
             }}
             onMouseEnter={e => (e.currentTarget.style.background = 'var(--rule)')}
             onMouseLeave={e => (e.currentTarget.style.background = 'var(--linen)')}
-            aria-label="Fechar"
-          >
-            ×
-          </button>
+            aria-label={t("Fechar")}
+          >{t("×")}</button>
 
           {/* Breadcrumb */}
           <div style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 12 }}>
-            {universo?.nome ?? 'Loja'}
+            {t(universo?.nome ?? 'Loja')}
           </div>
 
           {/* Name */}
           <h2 className="serif" style={{ margin: '0 0 4px', fontSize: 'clamp(24px, 2.8vw, 34px)', fontWeight: 400, lineHeight: 1.05 }}>
-            {p.name}
+            {t(p.name)}
           </h2>
 
           {/* Price + tag inline */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '8px 0 20px' }}>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{isBubble && bubbleStyle === 'simple' ? 'Desde ' : ''}€{unitPrice}</div>
-            {p.tag && (
+            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{t(isBubble && bubbleStyle === 'simple' ? 'Desde ' : '')}{t("€")}{t(unitPrice)}</div>
+            {t(p.tag && (
               <span style={{
                 background: TAG_COLOR[p.tag] ?? 'rgba(43,39,34,0.55)',
                 color: '#fff', fontSize: 9, letterSpacing: '0.26em',
                 textTransform: 'uppercase', padding: '4px 10px', borderRadius: 999,
               }}>
-                {p.tag}
+                {t(p.tag)}
               </span>
-            )}
+            ))}
           </div>
 
-          {p.description && (
+          {t(p.description && (
             <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-soft)', margin: '0 0 20px' }}>
-              {p.description}
+              {t(p.description)}
             </p>
-          )}
+          ))}
 
-          {isBubble && (
+          {t(isBubble && (
             <fieldset style={{ border: '1px solid var(--rule)', borderRadius: 4, padding: 14, margin: '0 0 20px' }}>
-              <legend style={{ fontSize: 12 }}>Escolha a versão</legend>
-              {(['simple', 'themed'] as const).map(option => (
+              <legend style={{ fontSize: 12 }}>{t("Escolha a versão")}</legend>
+              {t((['simple', 'themed'] as const).map(option => (
                 <label key={option} style={{ display: 'flex', gap: 8, marginBottom: 10, fontSize: 14, cursor: 'pointer' }}>
                   <input type="radio" name="bubble-style" checked={bubbleStyle === option} onChange={() => { setBubbleStyle(option); setQtyModified(true) }} />
-                  {option === 'simple' ? 'Escrita simples — a partir de €30' : 'Com tema personalizado — €45 (+€15)'}
+                  {t(option === 'simple' ? 'Escrita simples — a partir de €30' : 'Com tema personalizado — €45 (+€15)')}
                 </label>
-              ))}
-              <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
-                O valor da escrita simples depende do nome da criança e será confirmado antes de finalizar a encomenda. A versão com tema personalizado custa €45.
-              </p>
+              )))}
+              <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5, color: 'var(--ink-soft)' }}>{t("O valor da escrita simples depende do nome da criança e será confirmado antes de finalizar a encomenda. A versão com tema personalizado custa €45.")}</p>
             </fieldset>
-          )}
+          ))}
 
           {/* Color picker */}
-          {p.colorOptions && p.colorOptions.length > 1 && (
-            <div style={{ marginBottom: 20 }}>
+          {t(p.colorOptions && p.colorOptions.length > 1 && (isTrevoKit ? [0, 1] : [0]).map(colorIndex => (
+
+            <div key={colorIndex} style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
-                Cor — <span style={{ textTransform: 'capitalize', letterSpacing: '0.04em', color: 'var(--ink-soft)' }}>{selectedColor}</span>
+                {t(isTrevoKit ? `Cor da bandeja ${colorIndex + 1}` : 'Cor')}{t(" — ")}<span style={{ textTransform: 'capitalize', letterSpacing: '0.04em', color: 'var(--ink-soft)' }}>{t(colorIndex === 0 ? selectedColor : secondColor)}</span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {p.colorOptions.map(c => {
+                {t(p.colorOptions!.map(c => {
                   const hex = COLOR_HEX[c.color] ?? '#C8B89A'
-                  const isActive = selectedColor === c.color
+                  const isActive = (colorIndex === 0 ? selectedColor : secondColor) === c.color
                   const avail = isColorAvailable(c.color, c.materials)
                   return (
                     <button
                       key={c.color}
-                      onClick={() => { setSelectedColor(c.color); setQtyModified(true); setNotifyState('idle'); setNotifyEmail('') }}
-                      title={avail ? c.color : `${c.color} — indisponível`}
+                      onClick={() => { if (colorIndex === 0) setSelectedColor(c.color); else setSecondColor(c.color); setQtyModified(true); setNotifyState('idle'); setNotifyEmail('') }}
+                      title={t(avail ? c.color : `${c.color} — indisponível`)}
                       style={{
                         width: 28, height: 28, borderRadius: '50%',
                         background: hex,
@@ -429,18 +429,18 @@ export function ProductModal({ product: p, onClose }: Props) {
                         opacity: avail ? 1 : 0.35,
                         position: 'relative',
                       }}
-                      aria-label={c.color}
+                      aria-label={t(isTrevoKit ? `Bandeja ${colorIndex + 1}: ${c.color}` : c.color)}
                       aria-pressed={isActive}
                     />
                   )
-                })}
+                }))}
               </div>
             </div>
-          )}
+          )))}
 
           {/* Details list */}
           <div style={{ borderTop: '1px solid var(--rule)', marginBottom: 20 }}>
-            {[
+            {t([
               ['Material', 'PLA Matte'],
               ['Acabamento', 'Lixado suave'],
               ['Entrega', '5–10 dias úteis'],
@@ -450,23 +450,21 @@ export function ProductModal({ product: p, onClose }: Props) {
                 padding: '8px 0', borderBottom: '1px solid var(--rule)',
                 fontSize: 12,
               }}>
-                <span style={{ color: 'var(--ink-mute)', letterSpacing: '0.06em' }}>{label}</span>
-                <span style={{ color: 'var(--ink)' }}>{val}</span>
+                <span style={{ color: 'var(--ink-mute)', letterSpacing: '0.06em' }}>{t(label)}</span>
+                <span style={{ color: 'var(--ink)' }}>{t(val)}</span>
               </div>
-            ))}
+            )))}
           </div>
 
           {/* Name field for personalizable products */}
-          {isNameProduct && (
+          {t(isNameProduct && (
             <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 14, marginBottom: 14 }}>
-              <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
-                Nome da criança
-              </div>
+              <div style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>{t("Nome da criança")}</div>
               <input
                 type="text"
                 value={childName}
                 onChange={e => { setChildName(e.target.value); setQtyModified(true) }}
-                placeholder="Ex: Heitor, Maria, João…"
+                placeholder={t("Ex: Heitor, Maria, João…")}
                 style={{
                   width: '100%', padding: '10px 14px',
                   border: '1px solid var(--rule)', borderRadius: 4,
@@ -477,45 +475,39 @@ export function ProductModal({ product: p, onClose }: Props) {
                 onFocus={e => (e.currentTarget.style.borderColor = 'var(--terracotta)')}
                 onBlur={e => (e.currentTarget.style.borderColor = 'var(--rule)')}
               />
-              {nameNotProvided && needsValidation && (
+              {t(nameNotProvided && needsValidation && (
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: 6,
                   marginTop: 8, fontSize: 11, color: 'var(--terracotta)', lineHeight: 1.4,
                 }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0 }}>
                     <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                  </svg>
-                  Indique o nome antes de adicionar ao cesto.
-                </div>
-              )}
+                  </svg>{t("Indique o nome antes de adicionar ao cesto.")}</div>
+              ))}
             </div>
-          )}
+          ))}
 
-          {isBubble && bubbleStyle === 'themed' && (
-            <label style={{ display: 'block', marginBottom: 20, fontSize: 12, color: 'var(--ink-soft)' }}>
-              Tema e cores desejados
-              <textarea
+          {t(isBubble && bubbleStyle === 'themed' && (
+            <label style={{ display: 'block', marginBottom: 20, fontSize: 12, color: 'var(--ink-soft)' }}>{t("Tema e cores desejados")}<textarea
                 value={customTheme}
                 onChange={e => { setCustomTheme(e.target.value); setQtyModified(true) }}
-                placeholder="Ex.: fazendinha em verde e bege, unicórnio em tons pastel, princesas…"
+                placeholder={t("Ex.: fazendinha em verde e bege, unicórnio em tons pastel, princesas…")}
                 rows={3}
                 style={{ display: 'block', width: '100%', marginTop: 8, padding: '10px 14px', border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', fontSize: 13, color: 'var(--ink)', background: 'var(--paper)', resize: 'vertical' }}
               />
             </label>
-          )}
+          ))}
 
           {/* Family configurator */}
-          {isFamilyProduct && (
+          {t(isFamilyProduct && (
             <FamilyConfig value={familyConfig} onChange={v => { setFamilyConfig(v); setQtyModified(true) }} />
-          )}
+          ))}
 
           {/* Actions */}
           <div style={{ marginTop: 'auto' }}>
-            {!isFamilyProduct && (
+            {t(!isFamilyProduct && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
-                <span style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-                  Quantidade
-                </span>
+                <span style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>{t("Quantidade")}</span>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <button
                     onClick={() => { setQty(q => Math.max(1, q - 1)); setQtyModified(true) }}
@@ -525,14 +517,14 @@ export function ProductModal({ product: p, onClose }: Props) {
                       cursor: 'pointer', color: 'var(--ink)', fontSize: 16,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}
-                  >−</button>
+                  >{t("−")}</button>
                   <div style={{
                     width: 40, height: 30, border: '1px solid var(--rule)',
                     borderLeft: 'none', borderRight: 'none',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 14, color: 'var(--ink)',
                   }}>
-                    {qty}
+                    {t(qty)}
                   </div>
                   <button
                     onClick={() => { setQty(q => q + 1); setQtyModified(true) }}
@@ -542,27 +534,23 @@ export function ProductModal({ product: p, onClose }: Props) {
                       cursor: 'pointer', color: 'var(--ink)', fontSize: 16,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}
-                  >+</button>
+                  >{t("+")}</button>
                 </div>
-                {qty > 1 && (
-                  <span style={{ fontSize: 13, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-                    €{(unitPrice * qty).toFixed(2).replace('.00', '')} total
-                  </span>
-                )}
+                {t(qty > 1 && (
+                  <span style={{ fontSize: 13, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>{t("€")}{t((unitPrice * qty).toFixed(2).replace('.00', ''))}{t(" total")}</span>
+                ))}
               </div>
-            )}
+            ))}
             <div style={{ display: 'flex', gap: 12 }}>
               <div style={{ flex: 1 }}>
-                {colorUnavailable ? (
+                {t(colorUnavailable ? (
                   notifyState === 'done' ? (
                     <div style={{
                       flex: 1, padding: '15px 20px', borderRadius: 999,
                       background: 'rgba(60,160,80,0.08)', border: '1px solid rgba(60,160,80,0.3)',
                       fontSize: 11, letterSpacing: '0.16em', color: 'rgb(50,140,70)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      Notificação registada ✓
-                    </div>
+                    }}>{t("Notificação registada ✓")}</div>
                   ) : notifyState === 'open' || notifyState === 'sending' ? (
                     <div style={{ display: 'flex', gap: 8, flex: 1 }}>
                       <input
@@ -579,7 +567,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                             setNotifyState('done')
                           }
                         }}
-                        placeholder="O seu email"
+                        placeholder={t("O seu email")}
                         autoFocus
                         style={{
                           flex: 1, padding: '0 16px', height: 52,
@@ -608,7 +596,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                           fontFamily: 'inherit',
                         }}
                       >
-                        {notifyState === 'sending' ? '…' : 'OK'}
+                        {t(notifyState === 'sending' ? '…' : 'OK')}
                       </button>
                     </div>
                   ) : (
@@ -622,9 +610,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
                           fontFamily: 'inherit',
                         }}
-                      >
-                        Cor sem stock
-                      </button>
+                      >{t("Cor sem stock")}</button>
                       <button
                         onClick={() => setNotifyState('open')}
                         style={{
@@ -637,9 +623,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                         }}
                         onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--ink)'; e.currentTarget.style.color = 'var(--ink)' }}
                         onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rule)'; e.currentTarget.style.color = 'var(--ink-soft)' }}
-                      >
-                        Notificar
-                      </button>
+                      >{t("Notificar")}</button>
                     </div>
                   )
                 ) : (
@@ -657,9 +641,9 @@ export function ProductModal({ product: p, onClose }: Props) {
                       transition: 'background 200ms ease',
                     }}
                   >
-                    {btnDisabled ? 'No cesto ✓' : `Adicionar ao cesto — €${unitPrice * qty}`}
+                    {t(btnDisabled ? 'No cesto ✓' : `Adicionar ao cesto — €${unitPrice * qty}`)}
                   </button>
-                )}
+                ))}
               </div>
               <button
                 onClick={() => toggle(p.id)}
@@ -678,7 +662,7 @@ export function ProductModal({ product: p, onClose }: Props) {
                 onMouseLeave={e => {
                   if (!fav) (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--rule)'
                 }}
-                aria-label={fav ? 'Remover dos favoritos' : 'Guardar nos favoritos'}
+                aria-label={t(fav ? 'Remover dos favoritos' : 'Guardar nos favoritos')}
               >
                 <HeartIcon filled={fav} />
               </button>

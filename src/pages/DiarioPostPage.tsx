@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { DIARIO } from '../data'
@@ -30,17 +31,13 @@ export function DiarioPostPage() {
           cartCount={cartCount}
         />
         <div style={{ padding: '120px 0', textAlign: 'center' }}>
-          <p className="serif" style={{ fontSize: 24, fontStyle: 'italic', color: 'var(--ink-soft)' }}>
-            Texto não encontrado.
-          </p>
+          <p className="serif" style={{ fontSize: 24, fontStyle: 'italic', color: 'var(--ink-soft)' }}>{t("Texto não encontrado.")}</p>
           <button
             onClick={() => navigate('/diario')}
             style={{ marginTop: 20, background: 'none', border: 'none', cursor: 'pointer', fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--terracotta)', fontFamily: 'inherit' }}
-          >
-            ← Todos os textos
-          </button>
+          >{t("← Todos os textos")}</button>
         </div>
-        {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+        {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
         <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
         <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
       </div>
@@ -74,15 +71,13 @@ export function DiarioPostPage() {
             }}
             onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
             onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-          >
-            ← Diário
-          </Link>
+          >{t("← Diário")}</Link>
           <div style={{ textAlign: 'center' }}>
-            <div className="kicker" style={{ marginBottom: 4 }}>Lusoprint</div>
-            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>Diário</div>
+            <div className="kicker" style={{ marginBottom: 4 }}>{t("Lusoprint")}</div>
+            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>{t("Diário")}</div>
           </div>
           <div style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-            {post.cat}
+            {t(post.cat)}
           </div>
         </div>
       </div>
@@ -96,11 +91,11 @@ export function DiarioPostPage() {
             color: 'var(--terracotta)',
             fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 500,
           }}>
-            {post.cat}
+            {t(post.cat)}
           </span>
           <span style={{ flex: 1, height: 1, background: 'var(--rule)' }} />
           <span style={{ fontSize: 11, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-            {post.date}
+            {t(post.date)}
           </span>
         </div>
 
@@ -110,7 +105,7 @@ export function DiarioPostPage() {
           fontWeight: 400, letterSpacing: '-0.01em',
           margin: '0 0 28px',
         }}>
-          {post.ttl}
+          {t(post.ttl)}
         </h1>
 
         {/* Lead */}
@@ -121,7 +116,7 @@ export function DiarioPostPage() {
           borderLeft: '3px solid var(--terracotta)',
           paddingLeft: 24,
         }}>
-          {post.lead}
+          {t(post.lead)}
         </p>
 
         {/* Hero image */}
@@ -138,24 +133,24 @@ export function DiarioPostPage() {
 
         {/* Body paragraphs */}
         <div>
-          {post.body.trim().split('\n\n').map((para, i) => (
+          {t(post.body.trim().split('\n\n').map((para, i) => (
             <p key={i} style={{
               fontSize: 16, lineHeight: 1.85, color: 'var(--ink-soft)',
               margin: '0 0 24px', letterSpacing: '0.01em',
             }}>
-              {para.trim()}
+              {t(para.trim())}
             </p>
-          ))}
+          )))}
         </div>
 
         {/* Prev / Next */}
-        {(prev || next) && (
+        {t((prev || next) && (
           <div style={{
             marginTop: 80, paddingTop: 40,
             borderTop: '1px solid var(--rule)',
             display: 'flex', justifyContent: 'space-between', gap: 24,
           }}>
-            {prev ? (
+            {t(prev ? (
               <Link
                 to={`/diario/${prev.id}`}
                 style={{
@@ -163,15 +158,13 @@ export function DiarioPostPage() {
                   display: 'flex', flexDirection: 'column', gap: 6,
                 }}
               >
-                <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-                  ← Anterior
-                </span>
+                <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>{t("← Anterior")}</span>
                 <span className="serif" style={{ fontSize: 16, color: 'var(--ink)', lineHeight: 1.3 }}>
-                  {prev.ttl}
+                  {t(prev.ttl)}
                 </span>
               </Link>
-            ) : <div style={{ flex: 1 }} />}
-            {next ? (
+            ) : <div style={{ flex: 1 }} />)}
+            {t(next ? (
               <Link
                 to={`/diario/${next.id}`}
                 style={{
@@ -179,21 +172,19 @@ export function DiarioPostPage() {
                   display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end',
                 }}
               >
-                <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-                  Seguinte →
-                </span>
+                <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>{t("Seguinte →")}</span>
                 <span className="serif" style={{ fontSize: 16, color: 'var(--ink)', lineHeight: 1.3 }}>
-                  {next.ttl}
+                  {t(next.ttl)}
                 </span>
               </Link>
-            ) : <div style={{ flex: 1 }} />}
+            ) : <div style={{ flex: 1 }} />)}
           </div>
-        )}
+        ))}
       </div>
 
       <Footer />
 
-      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
     </div>

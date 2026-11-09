@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useIsMobile } from '../../hooks/useIsMobile'
 
@@ -75,24 +76,21 @@ export function Contacto() {
 
         {/* Left — copy */}
         <div>
-          <span className="kicker">Contacto</span>
+          <span className="kicker">{t("Contacto")}</span>
           <h2 className="serif" style={{
             fontSize: 'clamp(38px, 5vw, 70px)',
             lineHeight: 1,
             letterSpacing: '-0.01em',
             fontWeight: 400,
             margin: '16px 0 28px',
-          }}>
-            Não encontrou<br />o que procurava?<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>Crie algo ao teu gosto.</em>
+          }}>{t("Não encontrou")}<br />{t("o que procurava?")}<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("Crie algo ao teu gosto.")}</em>
           </h2>
-          <p style={{ color: 'var(--ink-soft)', fontSize: 16, lineHeight: 1.75, maxWidth: 400 }}>
-            Cada peça Lusoprint pode ser desenhada especialmente para si — escolha o material, as cores, o nome. Estamos aqui para ouvir.
-          </p>
+          <p style={{ color: 'var(--ink-soft)', fontSize: 16, lineHeight: 1.75, maxWidth: 400 }}>{t("Cada peça Lusoprint pode ser desenhada especialmente para si — escolha o material, as cores, o nome. Estamos aqui para ouvir.")}</p>
 
           {/* Channel picker */}
           <div style={{ marginTop: 44, display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {CHANNELS.map(ch => (
+            {t(CHANNELS.map(ch => (
               <button
                 key={ch.id}
                 onClick={() => setActive(ch.id)}
@@ -116,27 +114,27 @@ export function Contacto() {
                   flexShrink: 0,
                   transition: 'all 220ms ease',
                 }}>
-                  {ch.icon}
+                  {t(ch.icon)}
                 </span>
                 <span style={{ flex: 1 }}>
                   <span style={{ display: 'block', fontFamily: 'var(--sans)', fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 500, color: active === ch.id ? 'var(--ink)' : 'var(--ink-soft)' }}>
-                    {ch.label}
+                    {t(ch.label)}
                   </span>
                   <span style={{ display: 'block', fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 16, color: 'var(--ink-mute)', marginTop: 2 }}>
-                    {ch.sub}
+                    {t(ch.sub)}
                   </span>
                 </span>
-                {active === ch.id && (
-                  <span style={{ fontSize: 18, color: 'var(--terracotta)' }}>→</span>
-                )}
+                {t(active === ch.id && (
+                  <span style={{ fontSize: 18, color: 'var(--terracotta)' }}>{t("→")}</span>
+                ))}
               </button>
-            ))}
+            )))}
           </div>
         </div>
 
         {/* Right — form or direct link */}
         <div style={{ paddingTop: isMobile ? 0 : 56 }}>
-          {active === 'instagram' ? (
+          {t(active === 'instagram' ? (
             <div style={{
               background: 'var(--paper)', border: '1px solid var(--rule)',
               borderRadius: 4, padding: '48px 40px',
@@ -155,21 +153,17 @@ export function Contacto() {
                   <circle cx="17.5" cy="6.5" r="1.2" fill="#fff" stroke="none" />
                 </svg>
               </div>
-              <h3 className="serif" style={{ margin: '0 0 12px', fontSize: 28, fontWeight: 400, lineHeight: 1.1 }}>
-                Inspire-se no<br />
-                <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>nosso atelier</em>
+              <h3 className="serif" style={{ margin: '0 0 12px', fontSize: 28, fontWeight: 400, lineHeight: 1.1 }}>{t("Inspire-se no")}<br />
+                <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("nosso atelier")}</em>
               </h3>
-              <p style={{ color: 'var(--ink-soft)', fontSize: 15, lineHeight: 1.6, margin: '0 0 28px', maxWidth: 300 }}>
-                Veja o nosso processo, novidades e peças exclusivas no Instagram.
-              </p>
+              <p style={{ color: 'var(--ink-soft)', fontSize: 15, lineHeight: 1.6, margin: '0 0 28px', maxWidth: 300 }}>{t("Veja o nosso processo, novidades e peças exclusivas no Instagram.")}</p>
               <a
                 href={CHANNEL_HREF.instagram}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-solid"
                 style={{ borderRadius: 999 }}
-              >
-                @lusoprint <span className="arr">→</span>
+              >{t("@lusoprint ")}<span className="arr">{t("→")}</span>
               </a>
             </div>
           ) : (
@@ -182,17 +176,16 @@ export function Contacto() {
                 display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4,
                 fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-mute)',
               }}>
-                <span style={{ width: 20, height: 1, background: 'var(--rule)' }} />
-                Mensagem por {active === 'email' ? 'e-mail' : 'WhatsApp'}
+                <span style={{ width: 20, height: 1, background: 'var(--rule)' }} />{t("Mensagem por ")}{t(active === 'email' ? 'e-mail' : 'WhatsApp')}
                 <span style={{ flex: 1, height: 1, background: 'var(--rule)' }} />
               </div>
 
               <label style={{ display: 'block' }}>
-                <div className="kicker" style={{ marginBottom: 8 }}>O seu nome</div>
+                <div className="kicker" style={{ marginBottom: 8 }}>{t("O seu nome")}</div>
                 <input
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  placeholder="Como quer ser chamada…"
+                  placeholder={t("Como quer ser chamada…")}
                   required
                   style={{
                     width: '100%', padding: '10px 0',
@@ -204,11 +197,11 @@ export function Contacto() {
               </label>
 
               <label style={{ display: 'block' }}>
-                <div className="kicker" style={{ marginBottom: 8 }}>O que imagina</div>
+                <div className="kicker" style={{ marginBottom: 8 }}>{t("O que imagina")}</div>
                 <textarea
                   value={message}
                   onChange={e => setMessage(e.target.value)}
-                  placeholder="Descreva a peça que sonha ter em casa…"
+                  placeholder={t("Descreva a peça que sonha ter em casa…")}
                   required
                   rows={4}
                   style={{
@@ -222,24 +215,22 @@ export function Contacto() {
               </label>
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, paddingTop: 8 }}>
-                <p style={{ margin: 0, fontSize: 12, color: 'var(--ink-mute)', lineHeight: 1.5, maxWidth: 220 }}>
-                  Respondemos em até 24h com uma proposta personalizada.
-                </p>
+                <p style={{ margin: 0, fontSize: 12, color: 'var(--ink-mute)', lineHeight: 1.5, maxWidth: 220 }}>{t("Respondemos em até 24h com uma proposta personalizada.")}</p>
                 <button
                   type="submit"
                   className="btn btn-solid"
                   style={{ flexShrink: 0 }}
                 >
-                  {sent ? 'Enviado ✓' : active === 'email' ? 'Enviar e-mail' : 'Abrir WhatsApp'}
-                  {!sent && <span className="arr">→</span>}
+                  {t(sent ? 'Enviado ✓' : active === 'email' ? 'Enviar e-mail' : 'Abrir WhatsApp')}
+                  {t(!sent && <span className="arr">{t("→")}</span>)}
                 </button>
               </div>
             </form>
-          )}
+          ))}
 
           <div style={{ marginTop: 20, display: 'flex', gap: 28, fontSize: 12, color: 'var(--ink-mute)', letterSpacing: '0.05em' }}>
-            <span>↳ Resposta em 24h</span>
-            <span>↳ Orçamento sem compromisso</span>
+            <span>{t("↳ Resposta em 24h")}</span>
+            <span>{t("↳ Orçamento sem compromisso")}</span>
           </div>
         </div>
       </div>

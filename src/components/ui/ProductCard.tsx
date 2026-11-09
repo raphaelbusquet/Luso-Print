@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import type { Product } from '../../data'
 import { useFavorites } from '../../context/FavoritesContext'
@@ -44,16 +45,16 @@ export function ProductCard({ product: p, big = false }: Props) {
           filter: 'saturate(0.95)',
         }} />
 
-        {p.tag && (
+        {t(p.tag && (
           <div style={{
             position: 'absolute', top: 14, left: 14,
             background: tagColor, color: '#fff',
             fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase',
             padding: '6px 10px', borderRadius: 999,
           }}>
-            {p.tag}
+            {t(p.tag)}
           </div>
-        )}
+        ))}
 
         {/* Heart — always visible */}
         <button
@@ -68,7 +69,7 @@ export function ProductCard({ product: p, big = false }: Props) {
             transition: 'all 180ms ease',
             boxShadow: '0 2px 8px rgba(43,39,34,0.10)',
           }}
-          aria-label={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+          aria-label={t(fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos')}
         >
           <HeartIcon filled={fav} />
         </button>
@@ -82,18 +83,17 @@ export function ProductCard({ product: p, big = false }: Props) {
           <button
             className="btn btn-solid"
             style={{ width: '100%', padding: '12px 14px', fontSize: 10, justifyContent: 'center' }}
-          >
-            Adicionar — €{p.price}
+          >{t("Adicionar — €")}{t(p.price)}
           </button>
         </div>
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 14, gap: 12 }}>
         <div>
-          <div className="kicker" style={{ marginBottom: 4, fontSize: 9 }}>{p.collection}</div>
-          <div className="serif" style={{ fontSize: big ? 22 : 18, lineHeight: 1.15 }}>{p.name}</div>
+          <div className="kicker" style={{ marginBottom: 4, fontSize: 9 }}>{t(p.collection)}</div>
+          <div className="serif" style={{ fontSize: big ? 22 : 18, lineHeight: 1.15 }}>{t(p.name)}</div>
         </div>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: big ? 22 : 18, color: 'var(--ink)' }}>€{p.price}</div>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: big ? 22 : 18, color: 'var(--ink)' }}>{t("€")}{t(p.price)}</div>
       </div>
     </div>
   )

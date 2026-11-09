@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import { ALL_SHOP_PRODUCTS } from '../data/shop'
 
@@ -29,7 +30,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
   return (
     <FavoritesContext.Provider value={{ isFav: id => ids.includes(id), toggle, favIds: ids, count: ids.length }}>
-      {children}
+      {t(children)}
     </FavoritesContext.Provider>
   )
 }

@@ -144,6 +144,7 @@ Há objetos que compramos por necessidade. E há objetos que compramos porque, d
 
 export const NAV_LINKS: [string, string][] = [
   ['Universos', '/#universos'],
+  ['Para empresas', '/empresas'],
   ['Diário', '/#diario'],
   ['Atelier', '/#atelier'],
   ['Contacto', '/#contacto'],

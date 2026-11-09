@@ -1,3 +1,4 @@
+import { translate as t, getLanguage } from '../i18n/translate'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
@@ -137,19 +138,15 @@ export function ProfilePage() {
             style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-soft)', transition: 'color 160ms' }}
             onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
             onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-          >
-            ← Início
-          </Link>
-          <h1 className="serif" style={{ margin: '20px 0 6px', fontSize: 'clamp(36px, 4vw, 54px)', fontWeight: 400, lineHeight: 1 }}>
-            O meu perfil
-          </h1>
+          >{t("← Início")}</Link>
+          <h1 className="serif" style={{ margin: '20px 0 6px', fontSize: 'clamp(36px, 4vw, 54px)', fontWeight: 400, lineHeight: 1 }}>{t("O meu perfil")}</h1>
           <p style={{ margin: 0, color: 'var(--ink-mute)', fontSize: 14 }}>
             {user?.email}
           </p>
         </div>
 
         {/* Google notice */}
-        {isGoogle && (
+        {t(isGoogle && (
           <div style={{
             background: 'var(--paper-2)', border: '1px solid var(--rule)',
             borderRadius: 4, padding: '14px 18px', marginBottom: 36,
@@ -159,23 +156,21 @@ export function ProfilePage() {
               <circle cx="12" cy="12" r="10" />
               <path d="M12 8v4M12 16h.01" />
             </svg>
-            <p style={{ margin: 0, fontSize: 13, color: 'var(--ink-soft)', lineHeight: 1.6 }}>
-              A sua conta está ligada ao <strong>Google</strong>. Para alterar o email ou palavra-passe, faça-o diretamente nas definições da sua conta Google.
-            </p>
+            <p style={{ margin: 0, fontSize: 13, color: 'var(--ink-soft)', lineHeight: 1.6 }}>{t("A sua conta está ligada ao ")}<strong>{t("Google")}</strong>{t(". Para alterar o email ou palavra-passe, faça-o diretamente nas definições da sua conta Google.")}</p>
           </div>
-        )}
+        ))}
 
         <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
 
           {/* Section: dados pessoais */}
           <div style={{ marginBottom: 40 }}>
-            <div className="kicker" style={{ marginBottom: 20 }}>Dados pessoais</div>
+            <div className="kicker" style={{ marginBottom: 20 }}>{t("Dados pessoais")}</div>
 
             <Field label="Nome completo">
               <input
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="O seu nome"
+                placeholder={t("O seu nome")}
                 style={inputStyle}
               />
             </Field>
@@ -186,22 +181,18 @@ export function ProfilePage() {
                 onChange={e => setEmail(e.target.value)}
                 type="email"
                 disabled={isGoogle}
-                placeholder="o@email.com"
+                placeholder={t("o@email.com")}
                 style={{ ...inputStyle, opacity: isGoogle ? 0.45 : 1, cursor: isGoogle ? 'not-allowed' : 'text' }}
               />
-              {isGoogle && (
-                <span style={{ fontSize: 11, color: 'var(--ink-mute)', marginTop: 6, display: 'block' }}>
-                  Gerido pelo Google
-                </span>
-              )}
+              {t(isGoogle && (
+                <span style={{ fontSize: 11, color: 'var(--ink-mute)', marginTop: 6, display: 'block' }}>{t("Gerido pelo Google")}</span>
+              ))}
             </Field>
           </div>
 
           {/* Section: palavra-passe */}
           <div style={{ marginBottom: 40 }}>
-            <div className="kicker" style={{ marginBottom: 20 }}>
-              Palavra-passe
-              {isGoogle && <span style={{ marginLeft: 10, color: 'var(--ink-mute)', letterSpacing: '0.04em', textTransform: 'none', fontSize: 11 }}>— não disponível para contas Google</span>}
+            <div className="kicker" style={{ marginBottom: 20 }}>{t("Palavra-passe")}{t(isGoogle && <span style={{ marginLeft: 10, color: 'var(--ink-mute)', letterSpacing: '0.04em', textTransform: 'none', fontSize: 11 }}>{t("— não disponível para contas Google")}</span>)}
             </div>
 
             <Field label="Nova palavra-passe" disabled={isGoogle}>
@@ -210,7 +201,7 @@ export function ProfilePage() {
                 onChange={e => setPassword(e.target.value)}
                 type="password"
                 disabled={isGoogle}
-                placeholder={isGoogle ? '——' : 'Deixe em branco para não alterar'}
+                placeholder={t(isGoogle ? '——' : 'Deixe em branco para não alterar')}
                 style={{ ...inputStyle, opacity: isGoogle ? 0.45 : 1, cursor: isGoogle ? 'not-allowed' : 'text' }}
               />
             </Field>
@@ -221,23 +212,23 @@ export function ProfilePage() {
                 onChange={e => setConfirmPassword(e.target.value)}
                 type="password"
                 disabled={isGoogle}
-                placeholder={isGoogle ? '——' : 'Repita a nova palavra-passe'}
+                placeholder={t(isGoogle ? '——' : 'Repita a nova palavra-passe')}
                 style={{ ...inputStyle, opacity: isGoogle ? 0.45 : 1, cursor: isGoogle ? 'not-allowed' : 'text' }}
               />
             </Field>
           </div>
 
           {/* Feedback */}
-          {error && (
+          {t(error && (
             <div style={{ marginBottom: 20, fontSize: 13, color: 'var(--terracotta)', padding: '12px 16px', background: 'rgba(201,130,110,0.08)', borderRadius: 4 }}>
-              {error}
+              {t(error)}
             </div>
-          )}
-          {success && (
+          ))}
+          {t(success && (
             <div style={{ marginBottom: 20, fontSize: 13, color: 'var(--olive)', padding: '12px 16px', background: 'rgba(141,146,116,0.1)', borderRadius: 4 }}>
-              {success}
+              {t(success)}
             </div>
-          )}
+          ))}
 
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <button
@@ -246,7 +237,7 @@ export function ProfilePage() {
               className="btn btn-solid"
               style={{ borderRadius: 999, padding: '13px 28px', opacity: saving ? 0.6 : 1 }}
             >
-              {saving ? 'A guardar…' : 'Guardar alterações'}
+              {t(saving ? 'A guardar…' : 'Guardar alterações')}
             </button>
           </div>
         </form>
@@ -255,27 +246,21 @@ export function ProfilePage() {
       {/* Generated images */}
       <div id="imagens-geradas" style={{ borderTop: '1px solid var(--rule)', padding: '64px 0 120px' }}>
         <div className="shell" style={{ maxWidth: 900 }}>
-          <div className="kicker" style={{ marginBottom: 8 }}>Imagens Geradas</div>
-          <p style={{ margin: '0 0 36px', fontSize: 14, color: 'var(--ink-mute)', lineHeight: 1.6 }}>
-            Pré-visualizações criadas com IA na secção de personalização.
-          </p>
+          <div className="kicker" style={{ marginBottom: 8 }}>{t("Imagens Geradas")}</div>
+          <p style={{ margin: '0 0 36px', fontSize: 14, color: 'var(--ink-mute)', lineHeight: 1.6 }}>{t("Pré-visualizações criadas com IA na secção de personalização.")}</p>
 
-          {loadingImages ? (
-            <div style={{ color: 'var(--ink-mute)', fontSize: 14 }}>A carregar…</div>
+          {t(loadingImages ? (
+            <div style={{ color: 'var(--ink-mute)', fontSize: 14 }}>{t("A carregar…")}</div>
           ) : genImages.length === 0 ? (
             <div style={{
               padding: '48px 0', textAlign: 'center',
               border: '1px dashed var(--rule)', borderRadius: 4,
             }}>
-              <p className="serif" style={{ fontSize: 20, fontStyle: 'italic', color: 'var(--ink-soft)', margin: '0 0 8px' }}>
-                Ainda sem imagens geradas.
-              </p>
+              <p className="serif" style={{ fontSize: 20, fontStyle: 'italic', color: 'var(--ink-soft)', margin: '0 0 8px' }}>{t("Ainda sem imagens geradas.")}</p>
               <Link
                 to="/loja/bebes"
                 style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--terracotta)' }}
-              >
-                Explorar letreiros →
-              </Link>
+              >{t("Explorar letreiros →")}</Link>
             </div>
           ) : (
             <div style={{
@@ -283,22 +268,22 @@ export function ProfilePage() {
               gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
               gap: 20,
             }}>
-              {genImages.map(img => (
+              {t(genImages.map(img => (
                 <ImageCard
                   key={img.id}
                   img={img}
                   deleting={deletingId === img.id}
                   onDelete={() => handleDeleteImage(img)}
                 />
-              ))}
+              )))}
             </div>
-          )}
+          ))}
         </div>
       </div>
 
       <Footer />
 
-      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
     </div>
@@ -314,9 +299,9 @@ function Field({ label, children, disabled = false }: { label: string; children:
           color: disabled ? 'var(--ink-mute)' : 'var(--ink-soft)',
           fontWeight: 500, marginBottom: 8,
         }}>
-          {label}
+          {t(label)}
         </div>
-        {children}
+        {t(children)}
       </label>
     </div>
   )
@@ -353,7 +338,7 @@ function ImageCard({ img, deleting, onDelete }: { img: GeneratedImage; deleting:
         style={{ position: 'relative', aspectRatio: '1', borderRadius: 4, overflow: 'hidden', background: 'var(--linen)', border: '1px solid var(--rule)' }}
       >
         <img src={img.image_url} alt={img.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        {(hovered || deleting) && (
+        {t((hovered || deleting) && (
           <button
             onClick={onDelete}
             disabled={deleting}
@@ -366,19 +351,19 @@ function ImageCard({ img, deleting, onDelete }: { img: GeneratedImage; deleting:
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'background 150ms',
             }}
-            aria-label="Eliminar imagem"
+            aria-label={t("Eliminar imagem")}
           >
-            {deleting ? '…' : '×'}
+            {t(deleting ? '…' : '×')}
           </button>
-        )}
+        ))}
       </div>
       <div>
         <div className="serif" style={{ fontSize: 15, fontStyle: 'italic', lineHeight: 1.2 }}>{img.name}</div>
         <div style={{ fontSize: 11, color: 'var(--ink-mute)', marginTop: 3, letterSpacing: '0.04em' }}>
-          {img.size} cm · {img.mono ? 'mono' : `${img.letra_color} / ${img.nome_color}`}
+          {t(img.size)}{t(" cm · ")}{t(img.mono ? 'mono' : `${img.letra_color} / ${img.nome_color}`)}
         </div>
         <div style={{ fontSize: 10, color: 'var(--ink-mute)', marginTop: 2 }}>
-          {new Date(img.created_at).toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', year: 'numeric' })}
+          {t(new Date(img.created_at).toLocaleDateString(getLanguage() === 'pt' ? 'pt-PT' : getLanguage(), { day: 'numeric', month: 'short', year: 'numeric' }))}
         </div>
         <button
           onClick={handleAddToCart}
@@ -394,7 +379,7 @@ function ImageCard({ img, deleting, onDelete }: { img: GeneratedImage; deleting:
             transition: 'background 250ms',
           }}
         >
-          {added ? '✓ Adicionado' : `Adicionar · €${price}`}
+          {t(added ? '✓ Adicionado' : `Adicionar · €${price}`)}
         </button>
       </div>
     </div>

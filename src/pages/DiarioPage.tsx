@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { DIARIO } from '../data'
@@ -40,16 +41,13 @@ export function DiarioPage() {
             }}
             onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')}
             onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink-soft)')}
-          >
-            ← Início
-          </Link>
+          >{t("← Início")}</Link>
           <div style={{ textAlign: 'center' }}>
-            <div className="kicker" style={{ marginBottom: 4 }}>Lusoprint</div>
-            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>Diário</div>
+            <div className="kicker" style={{ marginBottom: 4 }}>{t("Lusoprint")}</div>
+            <div className="serif" style={{ fontSize: 32, lineHeight: 1 }}>{t("Diário")}</div>
           </div>
           <div style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-            {DIARIO.length} textos
-          </div>
+            {t(DIARIO.length)}{t(" textos")}</div>
         </div>
       </div>
 
@@ -59,15 +57,15 @@ export function DiarioPage() {
           gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
           gap: '48px 32px',
         }}>
-          {DIARIO.map((post) => (
+          {t(DIARIO.map((post) => (
             <ArticleCard key={post.id} post={post} onOpen={() => navigate(`/diario/${post.id}`)} />
-          ))}
+          )))}
         </div>
       </div>
 
       <Footer />
 
-      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {t(authOpen && <AuthModal onClose={() => setAuthOpen(false)} />)}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <FavoritesDrawer open={favsOpen} onClose={() => setFavsOpen(false)} />
     </div>
@@ -108,29 +106,28 @@ function ArticleCard({ post, onOpen }: { post: DiarioPost; onOpen: () => void })
           display: 'inline-block', color: 'var(--terracotta)',
           fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 500,
         }}>
-          {post.cat}
+          {t(post.cat)}
         </span>
         <span style={{ flex: 1, height: 1, background: 'var(--rule)' }} />
         <span style={{ fontSize: 11, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-          {post.date}
+          {t(post.date)}
         </span>
       </div>
       <h3 className="serif" style={{
         margin: 0, lineHeight: 1.2, letterSpacing: '-0.005em', fontWeight: 400, fontSize: 22,
       }}>
-        {post.ttl}
+        {t(post.ttl)}
       </h3>
       <p style={{
         marginTop: 10, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-mute)',
         fontFamily: 'var(--serif)', fontStyle: 'italic',
       }}>
-        {post.lead}
+        {t(post.lead)}
       </p>
       <div style={{
         marginTop: 14, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
         color: 'var(--ink-soft)', display: 'inline-flex', gap: 8, alignItems: 'center',
-      }}>
-        Ler texto <span style={{ color: 'var(--terracotta)' }}>→</span>
+      }}>{t("Ler texto ")}<span style={{ color: 'var(--terracotta)' }}>{t("→")}</span>
       </div>
     </article>
   )

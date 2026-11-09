@@ -1,3 +1,4 @@
+import { translate as tr } from '../../i18n/translate'
 import { useState } from 'react'
 import { PRODUCTS } from '../../data'
 import { ProductCard } from '../ui/ProductCard'
@@ -15,22 +16,18 @@ export function Products() {
       <div className="shell">
         <div className="section-head">
           <div>
-            <span className="kicker">03 — Coleção em destaque</span>
+            <span className="kicker">{tr("03 — Coleção em destaque")}</span>
             <h2 style={{ fontSize: 'clamp(36px, 7vw, 88px)' }}>
-              <em style={{ fontStyle: 'italic', fontSize: 'clamp(36px, 7vw, 88px)' }}>Estações</em> —<br />
-              objetos para se viver.
-            </h2>
+              <em style={{ fontStyle: 'italic', fontSize: 'clamp(36px, 7vw, 88px)' }}>{tr("Estações")}</em>{tr(" —")}<br />{tr("objetos para se viver.")}</h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 14 }}>
-            <p style={{ color: 'var(--ink-soft)', maxWidth: 320, margin: 0, textAlign: 'right', fontSize: 20 }}>
-              Uma seleção curada do que melhor traduz o nosso pensamento esta temporada.
-            </p>
-            <a href="#" className="btn-ghost" style={{ fontSize: 19 }}>Loja completa — 287 peças</a>
+            <p style={{ color: 'var(--ink-soft)', maxWidth: 320, margin: 0, textAlign: 'right', fontSize: 20 }}>{tr("Uma seleção curada do que melhor traduz o nosso pensamento esta temporada.")}</p>
+            <a href="#" className="btn-ghost" style={{ fontSize: 19 }}>{tr("Loja completa — 287 peças")}</a>
           </div>
         </div>
 
         <div style={{ display: 'flex', gap: 6, marginBottom: 48, borderBottom: '1px solid var(--rule)', overflowX: 'auto', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-          {TABS.map(t => (
+          {tr(TABS.map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -46,16 +43,15 @@ export function Products() {
                 cursor: 'pointer',
               }}
             >
-              {t}
+              {tr(t)}
             </button>
-          ))}
+          )))}
           <span style={{ marginLeft: 'auto', alignSelf: 'center', color: 'var(--ink-mute)', fontSize: 12, paddingRight: 4 }}>
-            {filtered.length} peças mostradas
-          </span>
+            {tr(filtered.length)}{tr(" peças mostradas")}</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))', gap: isMobile ? 16 : 28, gridAutoRows: 'auto' }}>
-          {filtered.map((p, i) => (
+          {tr(filtered.map((p, i) => (
             <div
               key={p.id}
               style={{
@@ -65,7 +61,7 @@ export function Products() {
             >
               <ProductCard product={p} big={!isMobile && i === 0} />
             </div>
-          ))}
+          )))}
         </div>
       </div>
     </section>

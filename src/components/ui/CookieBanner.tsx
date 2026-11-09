@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -34,14 +35,9 @@ export function CookieBanner() {
       animation: 'lp-fadein 260ms ease',
     }}>
       <div>
-        <div style={{ fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(244,239,230,0.55)', marginBottom: 8 }}>
-          Cookies
-        </div>
-        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'rgba(244,239,230,0.85)' }}>
-          Utilizamos cookies essenciais para o funcionamento do website e cookies analíticos para melhorar a sua experiência.{' '}
-          <Link to="/termos" style={{ color: 'rgba(244,239,230,0.55)', textDecoration: 'underline', fontSize: 13 }}>
-            Saber mais
-          </Link>
+        <div style={{ fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(244,239,230,0.55)', marginBottom: 8 }}>{t("Cookies")}</div>
+        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'rgba(244,239,230,0.85)' }}>{t("Utilizamos cookies essenciais para o funcionamento do website e cookies analíticos para melhorar a sua experiência.")}{t(' ')}
+          <Link to="/termos" style={{ color: 'rgba(244,239,230,0.55)', textDecoration: 'underline', fontSize: 13 }}>{t("Saber mais")}</Link>
         </p>
       </div>
       <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
@@ -56,9 +52,7 @@ export function CookieBanner() {
           }}
           onMouseEnter={e => { const b = e.currentTarget; b.style.borderColor = 'rgba(244,239,230,0.55)'; b.style.color = 'var(--paper)' }}
           onMouseLeave={e => { const b = e.currentTarget; b.style.borderColor = 'rgba(244,239,230,0.25)'; b.style.color = 'rgba(244,239,230,0.7)' }}
-        >
-          Recusar
-        </button>
+        >{t("Recusar")}</button>
         <button
           onClick={() => save('accepted')}
           style={{
@@ -70,9 +64,7 @@ export function CookieBanner() {
           }}
           onMouseEnter={e => (e.currentTarget.style.background = 'var(--linen)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'var(--paper)')}
-        >
-          Aceitar todos
-        </button>
+        >{t("Aceitar todos")}</button>
       </div>
     </div>
   )

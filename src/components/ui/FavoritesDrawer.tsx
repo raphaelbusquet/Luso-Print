@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useEffect, useState } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
 import { ALL_SHOP_PRODUCTS } from '../../data/shop'
@@ -68,37 +69,27 @@ export function FavoritesDrawer({ open, onClose }: Props) {
           flexShrink: 0,
         }}>
           <div>
-            <div style={{ fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 4 }}>
-              Lusoprint
-            </div>
-            <h2 className="serif" style={{ margin: 0, fontSize: 28, fontWeight: 400, lineHeight: 1 }}>
-              Favoritos
-            </h2>
+            <div style={{ fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 4 }}>{t("Lusoprint")}</div>
+            <h2 className="serif" style={{ margin: 0, fontSize: 28, fontWeight: 400, lineHeight: 1 }}>{t("Favoritos")}</h2>
           </div>
           <button
             onClick={onClose}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, color: 'var(--ink-mute)', fontSize: 22, lineHeight: 1 }}
-            aria-label="Fechar"
-          >
-            ×
-          </button>
+            aria-label={t("Fechar")}
+          >{t("×")}</button>
         </div>
 
         {/* Items */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px' }}>
-          {items.length === 0 ? (
+          {t(items.length === 0 ? (
             <div style={{ textAlign: 'center', paddingTop: 60 }}>
-              <div style={{ fontSize: 36, marginBottom: 16 }}>♡</div>
-              <p className="serif" style={{ fontSize: 22, fontStyle: 'italic', color: 'var(--ink-soft)', margin: 0 }}>
-                Nenhum favorito ainda.
-              </p>
-              <p style={{ fontSize: 14, color: 'var(--ink-mute)', marginTop: 10, lineHeight: 1.6 }}>
-                Explore os universos e guarde as peças que mais gosta.
-              </p>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>{t("♡")}</div>
+              <p className="serif" style={{ fontSize: 22, fontStyle: 'italic', color: 'var(--ink-soft)', margin: 0 }}>{t("Nenhum favorito ainda.")}</p>
+              <p style={{ fontSize: 14, color: 'var(--ink-mute)', marginTop: 10, lineHeight: 1.6 }}>{t("Explore os universos e guarde as peças que mais gosta.")}</p>
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {items.map(item => (
+              {t(items.map(item => (
                 <div
                   key={item.id}
                   style={{
@@ -126,20 +117,20 @@ export function FavoritesDrawer({ open, onClose }: Props) {
                     onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
                     onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                   >
-                    {!item.img && (
+                    {t(!item.img && (
                       <span style={{ fontSize: 22, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-                        {item.name.charAt(0)}
+                        {t(item.name.charAt(0))}
                       </span>
-                    )}
+                    ))}
                   </div>
 
                   {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="serif" style={{ fontSize: 18, fontStyle: 'italic', lineHeight: 1.15, marginBottom: 4 }}>
-                      {item.name}
+                      {t(item.name)}
                     </div>
                     <div style={{ fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.06em' }}>
-                      {item.quoteOnly ? 'Sob consulta' : item.comingSoon ? 'Em breve' : `€${item.price}`}
+                      {t(item.quoteOnly ? 'Sob consulta' : item.comingSoon ? 'Em breve' : `€${item.price}`)}
                     </div>
                   </div>
 
@@ -155,27 +146,27 @@ export function FavoritesDrawer({ open, onClose }: Props) {
                     }}
                     onMouseEnter={e => (e.currentTarget.style.background = 'var(--terracotta)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'var(--ink)')}
-                    aria-label="Remover dos favoritos"
+                    aria-label={t("Remover dos favoritos")}
                   >
                     <HeartIcon filled />
                   </button>
                 </div>
-              ))}
+              )))}
             </div>
-          )}
+          ))}
         </div>
 
         {/* Footer */}
-        {items.length > 0 && (
+        {t(items.length > 0 && (
           <div style={{
             padding: '16px 28px 28px',
             borderTop: '1px solid var(--rule)',
             flexShrink: 0,
             fontSize: 12, color: 'var(--ink-mute)', letterSpacing: '0.06em',
           }}>
-            {items.length} {items.length === 1 ? 'peça guardada' : 'peças guardadas'}
+            {t(items.length)} {t(items.length === 1 ? 'peça guardada' : 'peças guardadas')}
           </div>
-        )}
+        ))}
       </div>
 
       <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />

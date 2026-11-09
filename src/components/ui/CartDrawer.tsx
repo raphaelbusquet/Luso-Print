@@ -1,3 +1,4 @@
+import { translate as t, translateOrderNote } from '../../i18n/translate'
 import { useEffect, useState } from 'react'
 import { useCart } from '../../context/CartContext'
 import { ALL_SHOP_PRODUCTS } from '../../data/shop'
@@ -37,21 +38,21 @@ export function CartDrawer({ open, onClose }: Props) {
   }
 
   const handleOrder = async () => {
-    const savings = discount > 0 ? `\nDesconto (10%): -€${(total - finalTotal).toFixed(2)}` : ''
+    const savings = discount > 0 ? `\n${t("Desconto (10%)")}: -€${(total - finalTotal).toFixed(2)}` : ''
     const lines = items.map((item, i) => {
       if (item.size) {
         const previewLine = item.previewUrl?.startsWith('http') ? `\n   Preview: ${item.previewUrl}` : ''
-        return `${i + 1}. "${item.name}" — ${item.size}cm — ${item.mono ? item.nomeColorName : `Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`} — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${previewLine}`
+        return `${i + 1}. "${t(item.name)}" — ${item.size}cm — ${item.mono ? item.nomeColorName : `Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`} — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${previewLine}`
       }
-      const noteLine = item.note ? `\n   ${item.note}` : ''
-      return `${i + 1}. "${item.name}" — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${noteLine}`
+      const noteLine = item.note ? `\n   ${translateOrderNote(item.note)}` : ''
+      return `${i + 1}. "${t(item.name)}" — €${item.price}${item.qty > 1 ? ` x${item.qty}` : ''}${noteLine}`
     })
     const petReminder = items.some(item => item.productId?.startsWith('pets-quadro-busto-'))
-      ? '\n\nPersonalização dos quadros Pets: vou enviar nesta conversa uma fotografia nítida e o nome de cada pet.'
+      ? t('\n\nPersonalização dos quadros Pets: vou enviar nesta conversa uma fotografia nítida e o nome de cada pet.')
       : ''
-    const couponLine = couponCode ? `\nCupão: ${couponCode}` : ''
+    const couponLine = couponCode ? `\n${t("Cupão")}: ${couponCode}` : ''
     const text = encodeURIComponent(
-      `Olá! Gostaria de encomendar:\n\n${lines.join('\n')}${savings}${couponLine}\n\nTotal: €${finalTotal}${petReminder}`
+      `${t("Olá! Gostaria de encomendar:")}\n\n${lines.join('\n')}${savings}${couponLine}\n\n${t("Total:")} €${finalTotal}${petReminder}`
     )
     await markCouponUsed()
     window.open(`https://wa.me/351939158345?text=${text}`, '_blank')
@@ -99,37 +100,27 @@ export function CartDrawer({ open, onClose }: Props) {
           flexShrink: 0,
         }}>
           <div>
-            <div style={{ fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 4 }}>
-              Lusoprint
-            </div>
-            <h2 className="serif" style={{ margin: 0, fontSize: 28, fontWeight: 400, lineHeight: 1 }}>
-              O seu cesto
-            </h2>
+            <div style={{ fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 4 }}>{t("Lusoprint")}</div>
+            <h2 className="serif" style={{ margin: 0, fontSize: 28, fontWeight: 400, lineHeight: 1 }}>{t("O seu cesto")}</h2>
           </div>
           <button
             onClick={onClose}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, color: 'var(--ink-mute)', fontSize: 22, lineHeight: 1 }}
-            aria-label="Fechar"
-          >
-            ×
-          </button>
+            aria-label={t("Fechar")}
+          >{t("×")}</button>
         </div>
 
         {/* Items */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px' }}>
-          {items.length === 0 ? (
+          {t(items.length === 0 ? (
             <div style={{ textAlign: 'center', paddingTop: 60 }}>
-              <div style={{ fontSize: 36, marginBottom: 16 }}>🛒</div>
-              <p className="serif" style={{ fontSize: 22, fontStyle: 'italic', color: 'var(--ink-soft)', margin: 0 }}>
-                O cesto está vazio.
-              </p>
-              <p style={{ fontSize: 14, color: 'var(--ink-mute)', marginTop: 10, lineHeight: 1.6 }}>
-                Personalize uma peça e adicione aqui.
-              </p>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>{t("🛒")}</div>
+              <p className="serif" style={{ fontSize: 22, fontStyle: 'italic', color: 'var(--ink-soft)', margin: 0 }}>{t("O cesto está vazio.")}</p>
+              <p style={{ fontSize: 14, color: 'var(--ink-mute)', marginTop: 10, lineHeight: 1.6 }}>{t("Personalize uma peça e adicione aqui.")}</p>
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {items.map(item => (
+              {t(items.map(item => (
                 <div key={item.id} style={{
                   background: 'var(--paper-2)',
                   border: '1px solid var(--rule)',
@@ -138,7 +129,7 @@ export function CartDrawer({ open, onClose }: Props) {
                 }}>
                   {/* Thumbnail */}
                   <div style={{ flexShrink: 0, paddingTop: 2 }}>
-                    {item.img ? (
+                    {t(item.img ? (
                       <div
                         onClick={() => openProduct(item.productId)}
                         style={{
@@ -164,7 +155,7 @@ export function CartDrawer({ open, onClose }: Props) {
                         onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                       >
                         <span style={{ fontSize: 18, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-                          {item.name.charAt(0)}
+                          {t(item.name.charAt(0))}
                         </span>
                       </div>
                     ) : item.previewUrl ? (
@@ -175,28 +166,27 @@ export function CartDrawer({ open, onClose }: Props) {
                       }} />
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: item.letraHex, border: '1px solid var(--rule)' }} title={item.letraColorName} />
-                        {!item.mono && (
-                          <div style={{ width: 28, height: 28, borderRadius: '50%', background: item.nomeHex, border: '1px solid var(--rule)' }} title={item.nomeColorName} />
-                        )}
+                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: item.letraHex, border: '1px solid var(--rule)' }} title={t(item.letraColorName)} />
+                        {t(!item.mono && (
+                          <div style={{ width: 28, height: 28, borderRadius: '50%', background: item.nomeHex, border: '1px solid var(--rule)' }} title={t(item.nomeColorName)} />
+                        ))}
                       </div>
-                    )}
+                    ))}
                   </div>
 
                   {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="serif" style={{ fontSize: 18, fontStyle: 'italic', lineHeight: 1.1, marginBottom: 6 }}>
-                      {item.name}
+                      {t(item.name)}
                     </div>
-                    {item.size && (
+                    {t(item.size && (
                       <div style={{ fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.06em', lineHeight: 1.7, marginBottom: 8 }}>
-                        {item.size} cm
-                        {item.mono
+                        {t(item.size)}{t(" cm")}{t(item.mono
                           ? ` · ${item.nomeColorName}`
-                          : ` · Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`}
+                          : ` · Inicial: ${item.letraColorName} / Nome: ${item.nomeColorName}`)}
                       </div>
-                    )}
-                    {item.note && (
+                    ))}
+                    {t(item.note && (
                       <div style={{
                         fontSize: 11, lineHeight: 1.6, marginBottom: 8,
                         padding: '6px 10px',
@@ -204,15 +194,15 @@ export function CartDrawer({ open, onClose }: Props) {
                         borderLeft: '2px solid var(--olive)',
                         borderRadius: '0 3px 3px 0',
                       }}>
-                        <div style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--olive)', marginBottom: 2 }}>Configuração</div>
-                        <div style={{ color: 'var(--ink-soft)' }}>{item.note.split(' · ').join('\n').split('\n').map((line, i) => (
-                          <div key={i}>{line}</div>
-                        ))}</div>
+                        <div style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--olive)', marginBottom: 2 }}>{t("Configuração")}</div>
+                        <div style={{ color: 'var(--ink-soft)' }}>{t(item.note.split(' · ').join('\n').split('\n').map((line, i) => (
+                          <div key={i}>{translateOrderNote(line)}</div>
+                        )))}</div>
                       </div>
-                    )}
+                    ))}
 
                     {/* Qty controls */}
-                    {!item.note ? (
+                    {t(!item.note ? (
                       <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginTop: 6 }}>
                         <button
                           onClick={() => updateQty(item.id, item.qty - 1)}
@@ -222,14 +212,14 @@ export function CartDrawer({ open, onClose }: Props) {
                             cursor: 'pointer', color: 'var(--ink)', fontSize: 16, lineHeight: 1,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                           }}
-                        >−</button>
+                        >{t("−")}</button>
                         <div style={{
                           width: 36, height: 28, border: '1px solid var(--rule)',
                           borderLeft: 'none', borderRight: 'none',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                           fontSize: 13, color: 'var(--ink)',
                         }}>
-                          {item.qty}
+                          {t(item.qty)}
                         </div>
                         <button
                           onClick={() => updateQty(item.id, item.qty + 1)}
@@ -239,23 +229,19 @@ export function CartDrawer({ open, onClose }: Props) {
                             cursor: 'pointer', color: 'var(--ink)', fontSize: 16, lineHeight: 1,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                           }}
-                        >+</button>
+                        >{t("+")}</button>
                       </div>
                     ) : (
-                      <div style={{ marginTop: 6, fontSize: 11, color: 'var(--ink-mute)', fontStyle: 'italic' }}>
-                        1 unidade
-                      </div>
-                    )}
+                      <div style={{ marginTop: 6, fontSize: 11, color: 'var(--ink-mute)', fontStyle: 'italic' }}>{t("1 unidade")}</div>
+                    ))}
                   </div>
 
                   {/* Price + remove */}
                   <div style={{ flexShrink: 0, textAlign: 'right' }}>
-                    <div className="serif" style={{ fontSize: 20 }}>€{(item.price * item.qty).toFixed(2).replace('.00', '')}</div>
-                    {item.qty > 1 && (
-                      <div style={{ fontSize: 11, color: 'var(--ink-mute)', marginTop: 2 }}>
-                        €{item.price} / un.
-                      </div>
-                    )}
+                    <div className="serif" style={{ fontSize: 20 }}>{t("€")}{t((item.price * item.qty).toFixed(2).replace('.00', ''))}</div>
+                    {t(item.qty > 1 && (
+                      <div style={{ fontSize: 11, color: 'var(--ink-mute)', marginTop: 2 }}>{t("€")}{t(item.price)}{t(" / un.")}</div>
+                    ))}
                     <button
                       onClick={() => removeItem(item.id)}
                       style={{
@@ -263,26 +249,22 @@ export function CartDrawer({ open, onClose }: Props) {
                         fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.06em',
                         textDecoration: 'underline', padding: 0, fontFamily: 'inherit',
                       }}
-                    >
-                      Remover
-                    </button>
+                    >{t("Remover")}</button>
                   </div>
                 </div>
-              ))}
+              )))}
             </div>
-          )}
+          ))}
         </div>
 
         {/* Footer */}
-        {items.length > 0 && (
+        {t(items.length > 0 && (
           <div style={{ padding: '20px 28px 28px', borderTop: '1px solid var(--rule)', flexShrink: 0 }}>
 
             {/* Coupon */}
             <div style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>
-                Cupão
-              </div>
-              {couponCode ? (
+              <div style={{ fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 10 }}>{t("Cupão")}</div>
+              {t(couponCode ? (
                 <div style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   background: 'rgba(107,128,90,0.1)', border: '1px solid var(--sage)',
@@ -290,16 +272,14 @@ export function CartDrawer({ open, onClose }: Props) {
                 }}>
                   <div>
                     <span style={{ fontSize: 12, letterSpacing: '0.1em', fontFamily: 'monospace', color: 'var(--ink)', fontWeight: 600 }}>
-                      {couponCode}
+                      {t(couponCode)}
                     </span>
-                    <span style={{ marginLeft: 10, fontSize: 11, color: 'var(--olive)' }}>10% OFF aplicado</span>
+                    <span style={{ marginLeft: 10, fontSize: 11, color: 'var(--olive)' }}>{t("10% OFF aplicado")}</span>
                   </div>
                   <button
                     onClick={handleRemoveCoupon}
                     style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 11, color: 'var(--ink-mute)', fontFamily: 'inherit' }}
-                  >
-                    Remover
-                  </button>
+                  >{t("Remover")}</button>
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: 8 }}>
@@ -307,7 +287,7 @@ export function CartDrawer({ open, onClose }: Props) {
                     value={couponInput}
                     onChange={e => { setCouponInput(e.target.value.toUpperCase()); setCouponState('idle') }}
                     onKeyDown={e => { if (e.key === 'Enter') handleApplyCoupon() }}
-                    placeholder="LUSO-XXXXXX"
+                    placeholder={t("LUSO-XXXXXX")}
                     style={{
                       flex: 1, padding: '10px 12px',
                       border: `1px solid ${couponState === 'invalid' || couponState === 'used' ? 'var(--terracotta)' : 'var(--rule)'}`,
@@ -327,44 +307,43 @@ export function CartDrawer({ open, onClose }: Props) {
                       transition: 'opacity 150ms',
                     }}
                   >
-                    {couponState === 'loading' ? '…' : 'Aplicar'}
+                    {t(couponState === 'loading' ? '…' : 'Aplicar')}
                   </button>
                 </div>
-              )}
-              {couponMsg[couponState] && (
+              ))}
+              {t(couponMsg[couponState] && (
                 <div style={{ marginTop: 6, fontSize: 12, color: 'var(--terracotta)' }}>
-                  {couponMsg[couponState]}
+                  {t(couponMsg[couponState])}
                 </div>
-              )}
+              ))}
             </div>
 
             {/* Totals */}
-            {discount > 0 && (
+            {t(discount > 0 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, color: 'var(--ink-mute)', fontSize: 13 }}>
-                <span>Subtotal</span><span>€{total.toFixed(2).replace('.00', '')}</span>
+                <span>{t("Subtotal")}</span><span>{t("€")}{t(total.toFixed(2).replace('.00', ''))}</span>
               </div>
-            )}
-            {discount > 0 && (
+            ))}
+            {t(discount > 0 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, color: 'var(--olive)', fontSize: 13 }}>
-                <span>Desconto (10%)</span><span>−€{(total - finalTotal).toFixed(2)}</span>
+                <span>{t("Desconto (10%)")}</span><span>{t("−€")}{t((total - finalTotal).toFixed(2))}</span>
               </div>
-            )}
+            ))}
             <div style={{
               display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
               marginBottom: 16,
               borderTop: discount > 0 ? '1px solid var(--rule)' : 'none',
               paddingTop: discount > 0 ? 10 : 0,
             }}>
-              <span style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>Total</span>
-              <span className="serif" style={{ fontSize: 30 }}>€{finalTotal}</span>
+              <span style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>{t("Total")}</span>
+              <span className="serif" style={{ fontSize: 30 }}>{t("€")}{t(finalTotal)}</span>
             </div>
 
             <button
               onClick={handleOrder}
               className="btn btn-solid"
               style={{ width: '100%', justifyContent: 'center', borderRadius: 999, padding: '14px 20px' }}
-            >
-              Encomendar via WhatsApp <span className="arr">→</span>
+            >{t("Encomendar via WhatsApp ")}<span className="arr">{t("→")}</span>
             </button>
             <button
               onClick={clearCart}
@@ -374,11 +353,9 @@ export function CartDrawer({ open, onClose }: Props) {
                 letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'inherit',
                 textDecoration: 'underline',
               }}
-            >
-              Limpar cesto
-            </button>
+            >{t("Limpar cesto")}</button>
           </div>
-        )}
+        ))}
       </div>
 
       <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />

@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DIARIO } from '../../data'
@@ -15,23 +16,18 @@ export function Diario() {
       <div className="shell">
         <div className="section-head">
           <div>
-            <span className="kicker">04 — DIÁRIO</span>
-            <h2>
-              Pequenas <em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>histórias</em><br />
-              da nossa casa.
-            </h2>
+            <span className="kicker">{t("04 — DIÁRIO")}</span>
+            <h2>{t("Pequenas ")}<em style={{ fontStyle: 'italic', color: 'var(--terracotta)' }}>{t("histórias")}</em><br />{t("da nossa casa.")}</h2>
           </div>
           <button
             onClick={() => navigate('/diario')}
             className="btn-ghost"
             style={{ paddingBottom: 14, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
-          >
-            Todos os textos →
-          </button>
+          >{t("Todos os textos →")}</button>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: isMobile ? 28 : 36 }}>
-          {visible.map((d) => (
+          {t(visible.map((d) => (
             <article
               key={d.id}
               onClick={() => navigate(`/diario/${d.id}`)}
@@ -65,29 +61,28 @@ export function Diario() {
                   display: 'inline-block', background: 'transparent', color: 'var(--terracotta)',
                   fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 500,
                 }}>
-                  {d.cat}
+                  {t(d.cat)}
                 </span>
                 <span style={{ flex: 1, height: 1, background: 'var(--rule)' }} />
                 <span style={{ fontSize: 11, color: 'var(--ink-mute)', fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-                  {d.date}
+                  {t(d.date)}
                 </span>
               </div>
               <h3 className="serif" style={{
                 margin: 0, lineHeight: 1.2, letterSpacing: '-0.005em', fontWeight: 400, fontSize: 26,
               }}>
-                {d.ttl}
+                {t(d.ttl)}
               </h3>
               <div style={{
                 marginTop: 16, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
                 color: 'var(--ink-soft)', display: 'inline-flex', gap: 8, alignItems: 'center',
-              }}>
-                Ler texto <span style={{ color: 'var(--terracotta)' }}>→</span>
+              }}>{t("Ler texto ")}<span style={{ color: 'var(--terracotta)' }}>{t("→")}</span>
               </div>
             </article>
-          ))}
+          )))}
         </div>
 
-        {isMobile && (
+        {t(isMobile && (
           <button
             onClick={() => setExpanded(e => !e)}
             style={{
@@ -98,9 +93,9 @@ export function Diario() {
               color: 'var(--ink-soft)',
             }}
           >
-            {expanded ? 'Ver menos ↑' : 'Ver mais textos →'}
+            {t(expanded ? 'Ver menos ↑' : 'Ver mais textos →')}
           </button>
-        )}
+        ))}
       </div>
     </section>
   )

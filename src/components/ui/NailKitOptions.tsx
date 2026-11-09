@@ -1,3 +1,4 @@
+import { translate as t } from '../../i18n/translate'
 import { NAIL_BITS } from '../../data/nail-bits'
 import { useState } from 'react'
 
@@ -32,76 +33,78 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
   const total = (price ?? 0) + extraCost + personalizationCost
   const money = (value: number) => `€${value.toFixed(2).replace('.', ',')}`
   const ready = included.length === includedCount
-  const includedNames = NAIL_BITS.filter(bit => included.includes(bit.id)).map(bit => bit.name).join(', ')
-  const extraNames = NAIL_BITS.filter(bit => extras[bit.id] > 0).map(bit => `${extras[bit.id]} × ${bit.name}`).join(', ')
-  const message = `Olá! Gostaria de encomendar o Kit Nail Instrutor — ${selectedKit.name}, ${size} cm.\nBrocas incluídas: ${includedNames}.\nExtras: ${extraNames || 'nenhum'} (${money(extraCost)}).\nPersonalização: ${personalization === 'none' ? 'sem personalização' : `nome ou logótipo (+€10)${customName.trim() ? ` — ${customName.trim()}` : ''}; confirmarei o nome ou enviarei o logótipo nesta conversa`}.\nTotal: ${money(total)}.`
+  const includedNames = NAIL_BITS.filter(bit => included.includes(bit.id)).map(bit => t(bit.name)).join(', ')
+  const extraNames = NAIL_BITS.filter(bit => extras[bit.id] > 0).map(bit => `${extras[bit.id]} × ${t(bit.name)}`).join(', ')
+  const personalisationLabel = personalization === 'none'
+    ? t('Sem personalização')
+    : `${t('Nome ou logótipo (+€10)')}${customName.trim() ? ` — ${customName.trim()}` : ''}. ${t('Ao finalizar no WhatsApp, confirme o nome ou envie a imagem do seu logótipo. O acréscimo é de €10.')}`
+  const message = `${t('Olá! Gostaria de encomendar')} Kit Nail Instrutor — ${t(selectedKit.name)}, ${size} cm.\n${t('Brocas incluídas:')} ${includedNames}.\n${t('Extras:')} ${extraNames || t('Nenhum')} (${money(extraCost)}).\n${t('Personalização:')} ${personalisationLabel}.\n${t('Total:')} ${money(total)}.`
   const contact = `https://wa.me/351939158345?text=${encodeURIComponent(message)}`
 
   return (
     <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 24, marginTop: 24 }}>
       <fieldset style={{ border: 0, padding: 0, margin: '0 0 24px' }}>
-        <legend className="kicker" style={{ marginBottom: 12 }}>Escolha o tamanho</legend>
+        <legend className="kicker" style={{ marginBottom: 12 }}>{t("Escolha o tamanho")}</legend>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          {SIZES.map(option => (
+          {t(SIZES.map(option => (
             <label key={option} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', border: `1px solid ${size === option ? 'var(--ink)' : 'var(--rule)'}`, borderRadius: 30, cursor: 'pointer', fontSize: 14 }}>
               <input type="radio" name="nail-kit-size" value={option} checked={size === option} onChange={() => { setSize(option); if (option !== 20) { onKitChange('master'); setSelectedBits([]) } }} style={{ accentColor: 'var(--terracotta)' }} />
-              {option} cm
-            </label>
-          ))}
+              {t(option)}{t(" cm")}</label>
+          )))}
         </div>
       </fieldset>
       <fieldset style={{ border: 0, padding: 0, margin: '0 0 24px' }}>
-        <legend className="kicker" style={{ marginBottom: 12 }}>Escolha o kit</legend>
+        <legend className="kicker" style={{ marginBottom: 12 }}>{t("Escolha o kit")}</legend>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          {KITS.filter(option => size === 20 || option.id === 'master').map(option => (
+          {t(KITS.filter(option => size === 20 || option.id === 'master').map(option => (
             <label key={option.id} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '12px 14px', border: `1px solid ${kit === option.id ? 'var(--ink)' : 'var(--rule)'}`, borderRadius: 6, cursor: 'pointer', background: kit === option.id ? 'var(--linen)' : 'transparent' }}>
               <input type="radio" name="nail-kit-version" value={option.id} checked={kit === option.id} onChange={() => { onKitChange(option.id); setSelectedBits([]) }} style={{ accentColor: 'var(--terracotta)', marginTop: 3 }} />
-              <span style={{ fontSize: 14 }}>{option.name}{option.detail && <small style={{ display: 'block', color: 'var(--ink-soft)', fontSize: 11, marginTop: 5 }}>{option.detail}</small>}</span>
+              <span style={{ fontSize: 14 }}>{t(option.name)}{t(option.detail && <small style={{ display: 'block', color: 'var(--ink-soft)', fontSize: 11, marginTop: 5 }}>{t(option.detail)}</small>)}</span>
             </label>
-          ))}
+          )))}
         </div>
       </fieldset>
-      {size !== 20 && <p style={{ fontSize: 12, color: 'var(--ink-soft)', margin: '0 0 16px' }}>No tamanho de 15 cm, está disponível apenas o Kit Master.</p>}
-      <p style={{ fontSize: 13, color: 'var(--ink-soft)', lineHeight: 1.7, margin: '0 0 20px' }}>{selectedKit.contents}</p>
+      {t(size !== 20 && <p style={{ fontSize: 12, color: 'var(--ink-soft)', margin: '0 0 16px' }}>{t("No tamanho de 15 cm, está disponível apenas o Kit Master.")}</p>)}
+      <p style={{ fontSize: 13, color: 'var(--ink-soft)', lineHeight: 1.7, margin: '0 0 20px' }}>{t(selectedKit.contents)}</p>
       <fieldset style={{ border: '1px solid var(--rule)', padding: 16, margin: '24px 0', borderRadius: 6 }}>
-        <legend style={{ fontSize: 14 }}>Escolha as {includedCount} brocas incluídas</legend>
-        <p aria-live="polite" style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{included.length} de {includedCount} selecionadas · 10 modelos disponíveis</p>
-        {NAIL_BITS.map(bit => (
+        <legend style={{ fontSize: 14 }}>{t("Escolha as ")}{t(includedCount)}{t(" brocas incluídas")}</legend>
+        <p aria-live="polite" style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t(included.length)}{t(" de ")}{t(includedCount)}{t(" selecionadas · 10 modelos disponíveis")}</p>
+        {t(NAIL_BITS.map(bit => (
           <label key={bit.id} style={{ display: 'flex', gap: 10, padding: '9px 0', cursor: 'pointer', lineHeight: 1.5 }}>
             <input type="checkbox" checked={included.includes(bit.id)} disabled={!included.includes(bit.id) && included.length >= includedCount} onChange={e => setSelectedBits(e.target.checked ? [...included, bit.id] : included.filter(id => id !== bit.id))} style={{ marginTop: 5, accentColor: 'var(--terracotta)' }} />
-            <span style={{ fontSize: 13 }}>{bit.name}</span>
+            <span style={{ fontSize: 13 }}>{t(bit.name)}</span>
           </label>
-        ))}
+        )))}
       </fieldset>
       <fieldset style={{ border: '1px solid var(--rule)', padding: 16, margin: '24px 0', borderRadius: 6 }}>
-        <legend style={{ fontSize: 14 }}>Brocas extras · €7 por unidade</legend>
-        <p style={{ fontSize: 12, color: 'var(--ink-soft)' }}>Escolha os modelos e quantidades adicionais. Duas brocas extras acrescentam €14 ao kit.</p>
-        {NAIL_BITS.map(bit => (
+        <legend style={{ fontSize: 14 }}>{t("Brocas extras · €7 por unidade")}</legend>
+        <p style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t("Escolha os modelos e quantidades adicionais. Duas brocas extras acrescentam €14 ao kit.")}</p>
+        {t(NAIL_BITS.map(bit => (
           <label key={bit.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, margin: '10px 0', fontSize: 13 }}>
-            {bit.name}
+            {t(bit.name)}
             <input type="number" min={0} step={1} value={extras[bit.id] ?? 0} onChange={e => setExtras(current => ({ ...current, [bit.id]: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} style={{ width: 64, flexShrink: 0, padding: 8, fontFamily: 'inherit', border: '1px solid var(--rule)', borderRadius: 4 }} />
           </label>
-        ))}
+        )))}
       </fieldset>
       <fieldset style={{ border: '1px solid var(--rule)', padding: 16, margin: '24px 0', borderRadius: 6 }}>
-        <legend style={{ fontSize: 14 }}>Personalizar o kit</legend>
-        {([['none', 'Sem personalização'], ['custom', 'Nome ou logótipo (+€10)']] as const).map(([value, label]) => (
+        <legend style={{ fontSize: 14 }}>{t("Personalizar o kit")}</legend>
+        {t(([['none', 'Sem personalização'], ['custom', 'Nome ou logótipo (+€10)']] as const).map(([value, label]) => (
           <label key={value} style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '12px 0', fontSize: 13 }}>
-            <input type="radio" name="nail-personalization" checked={personalization === value} onChange={() => setPersonalization(value)} style={{ accentColor: 'var(--terracotta)' }} />{label}
+            <input type="radio" name="nail-personalization" checked={personalization === value} onChange={() => setPersonalization(value)} style={{ accentColor: 'var(--terracotta)' }} />{t(label)}
           </label>
-        ))}
-        {personalization === 'custom' && <label style={{ display: 'block', fontSize: 13 }}>Personalização desejada (opcional)<input value={customName} maxLength={60} onChange={e => setCustomName(e.target.value)} placeholder="Indique o nome ou escreva que pretende o logótipo" style={{ display: 'block', width: '100%', padding: 10, marginTop: 8, boxSizing: 'border-box', fontFamily: 'inherit', border: '1px solid var(--rule)', borderRadius: 4 }} /></label>}
-        {personalization === 'custom' && <p style={{ fontSize: 12, color: 'var(--ink-soft)' }}>Ao finalizar no WhatsApp, confirme o nome ou envie a imagem do seu logótipo. O acréscimo é de €10.</p>}
+        )))}
+        {t(personalization === 'custom' && <label style={{ display: 'block', fontSize: 13 }}>{t("Personalização desejada (opcional)")}<input value={customName} maxLength={60} onChange={e => setCustomName(e.target.value)} placeholder={t("Indique o nome ou escreva que pretende o logótipo")} style={{ display: 'block', width: '100%', padding: 10, marginTop: 8, boxSizing: 'border-box', fontFamily: 'inherit', border: '1px solid var(--rule)', borderRadius: 4 }} /></label>)}
+        {t(personalization === 'custom' && <p style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t("Ao finalizar no WhatsApp, confirme o nome ou envie a imagem do seu logótipo. O acréscimo é de €10.")}</p>)}
       </fieldset>
       <div aria-live="polite" style={{ background: 'var(--linen)', padding: 16, borderRadius: 6, marginBottom: 20, lineHeight: 1.8, fontSize: 14 }}>
-        <strong>{selectedKit.name} · {size} cm</strong>
-        <div>Kit: {money(price ?? 0)}</div>
-        <div>Extras: {extrasCount} brocas · {money(extraCost)}</div>
-        <div>Personalização: {money(personalizationCost)}</div>
-        <div style={{ borderTop: '1px solid var(--rule)', marginTop: 10, paddingTop: 10, fontSize: 20 }}>Total: {money(total)}</div>
+        <strong>{t(selectedKit.name)}{t(" · ")}{t(size)}{t(" cm")}</strong>
+        <div>{t("Kit: ")}{t(money(price ?? 0))}</div>
+        <div>{t("Extras: ")}{t(extrasCount)}{t(" brocas · ")}{t(money(extraCost))}</div>
+        <div>{t("Personalização: ")}{t(money(personalizationCost))}</div>
+        <div style={{ borderTop: '1px solid var(--rule)', marginTop: 10, paddingTop: 10, fontSize: 20 }}>{t("Total: ")}{t(money(total))}</div>
       </div>
-      {!ready && <p style={{ fontSize: 12, color: 'var(--ink-soft)' }}>Selecione as {includedCount} brocas incluídas para continuar.</p>}
-      <a href={ready ? contact : undefined} aria-disabled={!ready} onClick={e => { if (!ready) e.preventDefault() }} target="_blank" rel="noopener noreferrer" className="btn btn-solid" style={{ opacity: ready ? 1 : 0.5, cursor: ready ? 'pointer' : 'default' }}>Finalizar no WhatsApp →</a>
+      {t(!ready && <p style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t("Selecione as ")}{t(includedCount)}{t(" brocas incluídas para continuar.")}</p>)}
+      <a href={ready ? contact : undefined} aria-disabled={!ready} onClick={e => { if (!ready) e.preventDefault() }} target="_blank" rel="noopener noreferrer" className="btn btn-solid" style={{ opacity: ready ? 1 : 0.5, cursor: ready ? 'pointer' : 'default' }}>{t("Finalizar no WhatsApp →")}</a>
     </div>
   )
 }

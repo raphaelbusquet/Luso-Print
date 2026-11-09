@@ -1,3 +1,4 @@
+import { translate as t } from '../i18n/translate'
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { supabase } from '../lib/supabase'
 
@@ -121,7 +122,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       count, total, couponCode, discount, finalTotal,
       applyCoupon, removeCoupon, markCouponUsed,
     }}>
-      {children}
+      {t(children)}
     </CartContext.Provider>
   )
 }
