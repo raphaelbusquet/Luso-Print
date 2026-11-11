@@ -22,7 +22,7 @@ export function NatalOrnamentos() {
     addItem({ name: 'Ornamentos para Árvore de Natal — pack de 10 unidades', price: 10, productId: 'natal-ornamentos-arvore-pack-10', img: PHOTOS[0], note: `Cor: ${color} · Cada pack contém 10 ornamentos` }, packs)
     setAdded(true)
   }
-  const contact = `https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de encomendar a Ornamentos para Árvore de Natal na cor ${color}, ${packs} pack(s) de 10 unidades, a €10 por pack. Podem dar-me mais informações?`)}`
+  const contact = `https://wa.me/351928419522?text=${encodeURIComponent(`Olá! Gostaria de encomendar a Ornamentos para Árvore de Natal na cor ${color}, ${packs} pack(s) de 10 unidades, a €10 por pack. Podem dar-me mais informações?`)}`
   return (
     <article style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 28 : 56, marginTop: 64, paddingTop: 64, borderTop: '1px solid var(--rule)', alignItems: 'center' }}>
       <div>

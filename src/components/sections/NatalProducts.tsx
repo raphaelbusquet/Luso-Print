@@ -22,7 +22,7 @@ export function NatalProducts() {
     addItem({ name: 'Bola de Natal Vazada — pack de 10 unidades', price: 10, productId: 'natal-bola-vazada-pack-10', img: PHOTOS[0], note: `Cor: ${color} · Cada pack contém 10 bolas` }, packs)
     setAdded(true)
   }
-  const contact = `https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de encomendar a Bola de Natal Vazada na cor ${color}, ${packs} pack(s) de 10 unidades, a €10 por pack. Podem dar-me mais informações?`)}`
+  const contact = `https://wa.me/351928419522?text=${encodeURIComponent(`Olá! Gostaria de encomendar a Bola de Natal Vazada na cor ${color}, ${packs} pack(s) de 10 unidades, a €10 por pack. Podem dar-me mais informações?`)}`
   return (
     <article style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 28 : 56, marginTop: 36, alignItems: 'center' }}>
       <div>

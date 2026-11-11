@@ -93,7 +93,7 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
 
       <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
         <button type="button" onClick={onOpen} className="serif" style={{ padding: 0, border: 0, background: 'transparent', color: 'inherit', textAlign: 'left', cursor: 'pointer', fontSize: 17, lineHeight: 1.2 }}>{t(p.name)}</button>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : `${p.id === 'bebes-bubble-layers' ? 'Desde ' : ''}€${p.price}`)}</div>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : `${['bebes-bubble-layers', 'familia-funko'].includes(p.id) ? 'Desde ' : ''}€${p.price}`)}</div>
       </div>
     </div>
   )

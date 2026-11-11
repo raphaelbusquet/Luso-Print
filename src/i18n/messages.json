@@ -3989,6 +3989,54 @@
     "La mia idea:",
     "My idea:"
   ],
+  "Opções e preço disponíveis em breve.": [
+    "Opciones y precio próximamente.",
+    "Options et prix bientôt disponibles.",
+    "Opzioni e prezzo disponibili a breve.",
+    "Options and price coming soon."
+  ],
+  "Um conjunto para celebrar a sua família. Inclui as estatuetas da composição escolhida e a bandeja de apoio.": [
+    "Un conjunto para celebrar a tu familia. Incluye las estatuetas de la composición elegida y la bandeja de apoyo.",
+    "Un ensemble pour célébrer votre famille. Il comprend les statuettes de la composition choisie et le plateau de présentation.",
+    "Un set per celebrare la tua famiglia. Include le statuette della composizione scelta e il vassoio di appoggio.",
+    "A set to celebrate your family. Includes the figurines in your chosen arrangement and the display tray."
+  ],
+  "Quantidade de pessoas": [
+    "Número de personas",
+    "Nombre de personnes",
+    "Numero di persone",
+    "Number of people"
+  ],
+  "pessoa": [
+    "persona",
+    "personne",
+    "persona",
+    "person"
+  ],
+  "pessoas": [
+    "personas",
+    "personnes",
+    "persone",
+    "people"
+  ],
+  "Funko Pet — em breve": [
+    "Funko Pet — próximamente",
+    "Funko Pet — bientôt",
+    "Funko Pet — prossimamente",
+    "Funko Pet — coming soon"
+  ],
+  "Ainda sem data de lançamento. Esta opção não está disponível para encomenda.": [
+    "Aún sin fecha de lanzamiento. Esta opción no está disponible para pedidos.",
+    "Aucune date de lancement pour le moment. Cette option ne peut pas encore être commandée.",
+    "Data di lancio non ancora definita. Questa opzione non è disponibile per l'ordine.",
+    "No release date yet. This option is not available to order."
+  ],
+  "A sua família numa versão cheia de personalidade. Escolha uma composição com uma, duas, três ou quatro pessoas para criar uma peça personalizada à sua medida.": [
+    "Tu familia en una versión llena de personalidad. Elige una composición con una, dos, tres o cuatro personas para crear una pieza personalizada a tu medida.",
+    "Votre famille dans une version pleine de personnalité. Choisissez une composition avec une, deux, trois ou quatre personnes pour créer une pièce personnalisée à votre image.",
+    "La tua famiglia in una versione ricca di personalità. Scegli una composizione con una, due, tre o quattro persone per creare un articolo personalizzato su misura.",
+    "Your family in a version full of character. Choose an arrangement with one, two, three or four people to create your own personalised piece."
+  ],
   "A boleira que transforma um simples bolo numa cerimónia.": [
     "El soporte para tartas que convierte un simple pastel en una ceremonia.",
     "Le présentoir qui transforme un simple gâteau en cérémonie.",
@@ -11488,6 +11536,90 @@
     "mon idée :",
     "la mia idea:",
     "my idea:"
+  ],
+  "OPÇÕES E PREÇO DISPONÍVEIS EM BREVE.": [
+    "OPCIONES Y PRECIO PRÓXIMAMENTE.",
+    "OPTIONS ET PRIX BIENTÔT DISPONIBLES.",
+    "OPZIONI E PREZZO DISPONIBILI A BREVE.",
+    "OPTIONS AND PRICE COMING SOON."
+  ],
+  "opções e preço disponíveis em breve.": [
+    "opciones y precio próximamente.",
+    "options et prix bientôt disponibles.",
+    "opzioni e prezzo disponibili a breve.",
+    "options and price coming soon."
+  ],
+  "UM CONJUNTO PARA CELEBRAR A SUA FAMÍLIA. INCLUI AS ESTATUETAS DA COMPOSIÇÃO ESCOLHIDA E A BANDEJA DE APOIO.": [
+    "UN CONJUNTO PARA CELEBRAR A TU FAMILIA. INCLUYE LAS ESTATUETAS DE LA COMPOSICIÓN ELEGIDA Y LA BANDEJA DE APOYO.",
+    "UN ENSEMBLE POUR CÉLÉBRER VOTRE FAMILLE. IL COMPREND LES STATUETTES DE LA COMPOSITION CHOISIE ET LE PLATEAU DE PRÉSENTATION.",
+    "UN SET PER CELEBRARE LA TUA FAMIGLIA. INCLUDE LE STATUETTE DELLA COMPOSIZIONE SCELTA E IL VASSOIO DI APPOGGIO.",
+    "A SET TO CELEBRATE YOUR FAMILY. INCLUDES THE FIGURINES IN YOUR CHOSEN ARRANGEMENT AND THE DISPLAY TRAY."
+  ],
+  "um conjunto para celebrar a sua família. inclui as estatuetas da composição escolhida e a bandeja de apoio.": [
+    "un conjunto para celebrar a tu familia. incluye las estatuetas de la composición elegida y la bandeja de apoyo.",
+    "un ensemble pour célébrer votre famille. il comprend les statuettes de la composition choisie et le plateau de présentation.",
+    "un set per celebrare la tua famiglia. include le statuette della composizione scelta e il vassoio di appoggio.",
+    "a set to celebrate your family. includes the figurines in your chosen arrangement and the display tray."
+  ],
+  "QUANTIDADE DE PESSOAS": [
+    "NÚMERO DE PERSONAS",
+    "NOMBRE DE PERSONNES",
+    "NUMERO DI PERSONE",
+    "NUMBER OF PEOPLE"
+  ],
+  "quantidade de pessoas": [
+    "número de personas",
+    "nombre de personnes",
+    "numero di persone",
+    "number of people"
+  ],
+  "PESSOA": [
+    "PERSONA",
+    "PERSONNE",
+    "PERSONA",
+    "PERSON"
+  ],
+  "PESSOAS": [
+    "PERSONAS",
+    "PERSONNES",
+    "PERSONE",
+    "PEOPLE"
+  ],
+  "FUNKO PET — EM BREVE": [
+    "FUNKO PET — PRÓXIMAMENTE",
+    "FUNKO PET — BIENTÔT",
+    "FUNKO PET — PROSSIMAMENTE",
+    "FUNKO PET — COMING SOON"
+  ],
+  "funko pet — em breve": [
+    "funko pet — próximamente",
+    "funko pet — bientôt",
+    "funko pet — prossimamente",
+    "funko pet — coming soon"
+  ],
+  "AINDA SEM DATA DE LANÇAMENTO. ESTA OPÇÃO NÃO ESTÁ DISPONÍVEL PARA ENCOMENDA.": [
+    "AÚN SIN FECHA DE LANZAMIENTO. ESTA OPCIÓN NO ESTÁ DISPONIBLE PARA PEDIDOS.",
+    "AUCUNE DATE DE LANCEMENT POUR LE MOMENT. CETTE OPTION NE PEUT PAS ENCORE ÊTRE COMMANDÉE.",
+    "DATA DI LANCIO NON ANCORA DEFINITA. QUESTA OPZIONE NON È DISPONIBILE PER L'ORDINE.",
+    "NO RELEASE DATE YET. THIS OPTION IS NOT AVAILABLE TO ORDER."
+  ],
+  "ainda sem data de lançamento. esta opção não está disponível para encomenda.": [
+    "aún sin fecha de lanzamiento. esta opción no está disponible para pedidos.",
+    "aucune date de lancement pour le moment. cette option ne peut pas encore être commandée.",
+    "data di lancio non ancora definita. questa opzione non è disponibile per l'ordine.",
+    "no release date yet. this option is not available to order."
+  ],
+  "A SUA FAMÍLIA NUMA VERSÃO CHEIA DE PERSONALIDADE. ESCOLHA UMA COMPOSIÇÃO COM UMA, DUAS, TRÊS OU QUATRO PESSOAS PARA CRIAR UMA PEÇA PERSONALIZADA À SUA MEDIDA.": [
+    "TU FAMILIA EN UNA VERSIÓN LLENA DE PERSONALIDAD. ELIGE UNA COMPOSICIÓN CON UNA, DOS, TRES O CUATRO PERSONAS PARA CREAR UNA PIEZA PERSONALIZADA A TU MEDIDA.",
+    "VOTRE FAMILLE DANS UNE VERSION PLEINE DE PERSONNALITÉ. CHOISISSEZ UNE COMPOSITION AVEC UNE, DEUX, TROIS OU QUATRE PERSONNES POUR CRÉER UNE PIÈCE PERSONNALISÉE À VOTRE IMAGE.",
+    "LA TUA FAMIGLIA IN UNA VERSIONE RICCA DI PERSONALITÀ. SCEGLI UNA COMPOSIZIONE CON UNA, DUE, TRE O QUATTRO PERSONE PER CREARE UN ARTICOLO PERSONALIZZATO SU MISURA.",
+    "YOUR FAMILY IN A VERSION FULL OF CHARACTER. CHOOSE AN ARRANGEMENT WITH ONE, TWO, THREE OR FOUR PEOPLE TO CREATE YOUR OWN PERSONALISED PIECE."
+  ],
+  "a sua família numa versão cheia de personalidade. escolha uma composição com uma, duas, três ou quatro pessoas para criar uma peça personalizada à sua medida.": [
+    "tu familia en una versión llena de personalidad. elige una composición con una, dos, tres o cuatro personas para crear una pieza personalizada a tu medida.",
+    "votre famille dans une version pleine de personnalité. choisissez une composition avec une, deux, trois ou quatre personnes pour créer une pièce personnalisée à votre image.",
+    "la tua famiglia in una versione ricca di personalità. scegli una composizione con una, due, tre o quattro persone per creare un articolo personalizzato su misura.",
+    "your family in a version full of character. choose an arrangement with one, two, three or four people to create your own personalised piece."
   ],
   "A BOLEIRA QUE TRANSFORMA UM SIMPLES BOLO NUMA CERIMÓNIA.": [
     "EL SOPORTE PARA TARTAS QUE CONVIERTE UN SIMPLE PASTEL EN UNA CEREMONIA.",

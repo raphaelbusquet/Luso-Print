@@ -20,7 +20,7 @@ const CHANNELS: { id: Channel; label: string; sub: string; icon: React.ReactNode
   {
     id: 'whatsapp',
     label: 'WhatsApp',
-    sub: '+351 939 158 345',
+    sub: '+351 928 419 522',
     cta: 'Abrir conversa',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -45,7 +45,7 @@ const CHANNELS: { id: Channel; label: string; sub: string; icon: React.ReactNode
 
 const CHANNEL_HREF: Record<Channel, string> = {
   email: 'mailto:lusoprint3d@gmail.com',
-  whatsapp: 'https://wa.me/351939158345',
+  whatsapp: 'https://wa.me/351928419522',
   instagram: 'https://instagram.com/lusoprint',
 }
 
@@ -64,7 +64,7 @@ export function Contacto() {
       window.location.href = `mailto:lusoprint3d@gmail.com?subject=${subject}&body=${body}`
     } else if (active === 'whatsapp') {
       const text = encodeURIComponent(`Olá! Sou ${name}.\n\n${message}`)
-      window.open(`https://wa.me/351939158345?text=${text}`, '_blank')
+      window.open(`https://wa.me/351928419522?text=${text}`, '_blank')
     }
     setSent(true)
     setTimeout(() => setSent(false), 4000)

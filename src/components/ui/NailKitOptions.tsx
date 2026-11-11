@@ -39,7 +39,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
     ? t('Sem personalização')
     : `${t('Nome ou logótipo (+€10)')}${customName.trim() ? ` — ${customName.trim()}` : ''}. ${t('Ao finalizar no WhatsApp, confirme o nome ou envie a imagem do seu logótipo. O acréscimo é de €10.')}`
   const message = `${t('Olá! Gostaria de encomendar')} Kit Nail Instrutor — ${t(selectedKit.name)}, ${size} cm.\n${t('Brocas incluídas:')} ${includedNames}.\n${t('Extras:')} ${extraNames || t('Nenhum')} (${money(extraCost)}).\n${t('Personalização:')} ${personalisationLabel}.\n${t('Total:')} ${money(total)}.`
-  const contact = `https://wa.me/351939158345?text=${encodeURIComponent(message)}`
+  const contact = `https://wa.me/351928419522?text=${encodeURIComponent(message)}`
 
   return (
     <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 24, marginTop: 24 }}>

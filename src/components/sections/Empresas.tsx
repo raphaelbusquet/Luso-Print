@@ -16,7 +16,7 @@ export function Empresas() {
           </h2>
           <p style={{ color: 'var(--ink-soft)', fontSize: 18, lineHeight: 1.7, maxWidth: 500 }}>{t("Ideias que dão forma à sua marca. Brindes personalizados, chaveiros multifuncionais e peças com NFC, pensados para criar ligações com os seus clientes.")}</p>
           <Link to="/empresas" className="btn btn-solid" style={{ marginTop: 20 }}>{t("Descobrir as soluções ")}<span aria-hidden="true">{t("→")}</span></Link>
-          <a href="https://wa.me/351939158345?text=Ol%C3%A1!%20Quero%20algo%20exclusivo%20para%20a%20minha%20empresa%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%20personalizado." target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ display: 'block', width: 'fit-content', marginTop: 20 }}>{t("Quero algo exclusivo →")}</a>
+          <a href="https://wa.me/351928419522?text=Ol%C3%A1!%20Quero%20algo%20exclusivo%20para%20a%20minha%20empresa%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%20personalizado." target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ display: 'block', width: 'fit-content', marginTop: 20 }}>{t("Quero algo exclusivo →")}</a>
           <p style={{ fontSize: 12, color: 'var(--ink-mute)', marginTop: 18 }}>{t("Projetos à medida · Orçamento sob consulta")}</p>
         </div>
       </div>

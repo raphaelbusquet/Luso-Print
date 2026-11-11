@@ -1,3 +1,4 @@
+import { FunkoFamilyModal } from './FunkoFamilyModal'
 import { translate as t } from '../../i18n/translate'
 import { PetFrameModal } from './PetFrameModal'
 import { useState, useEffect, useRef } from 'react'
@@ -160,7 +161,7 @@ export function ProductModal({ product: p, onClose }: Props) {
   }, [onClose, p?.imgs?.length])
 
   useEffect(() => {
-    if (p?.universoId === 'pets') return
+    if (p?.universoId === 'pets' || p?.id === 'familia-funko') return
     if (p) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
     return () => { document.body.style.overflow = '' }
@@ -168,19 +169,30 @@ export function ProductModal({ product: p, onClose }: Props) {
 
   if (!p) return null
 
+  if (p.id === 'familia-funko') return <FunkoFamilyModal key={p.id} product={p} onClose={onClose} />
+
   if (p.universoId === 'pets') return <PetFrameModal key={p.id} product={p} onClose={onClose} />
 
   if (p.comingSoon || p.quoteOnly) return (
     <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(43,39,34,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
       <div role="dialog" aria-modal="true" aria-label={t(p.name)} onClick={e => e.stopPropagation()} style={{ position: 'relative', background: 'var(--paper)', padding: 28, width: '100%', maxWidth: 480, maxHeight: '90vh', overflowY: 'auto', borderRadius: 8 }}>
         <button type="button" onClick={onClose} aria-label={t("Fechar")} style={{ position: 'absolute', top: 12, right: 12, cursor: 'pointer', padding: 8 }}>{t("✕")}</button>
-        <img src={p.img} alt={t(p.quoteOnly ? p.name : "Fotografias em breve")} style={{ display: 'block', width: '100%', maxHeight: 260, objectFit: 'contain' }} />
+        <img src={p.imgs?.[activeImg] ?? p.img} alt={t(p.name)} style={{ display: 'block', width: '100%', maxHeight: 360, objectFit: 'contain' }} />
+        {p.imgs && p.imgs.length > 1 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '12px 0 20px' }}>
+            {p.imgs.map((src, index) => (
+              <button key={src} type="button" onClick={() => setActiveImg(index)} aria-label={t(`Ver fotografia ${index + 1}`)} aria-pressed={activeImg === index} style={{ width: 64, padding: 3, background: 'transparent', cursor: 'pointer', border: `1px solid ${activeImg === index ? 'var(--terracotta)' : 'var(--rule)'}`, borderRadius: 4 }}>
+                <img src={src} alt="" style={{ display: 'block', width: '100%', aspectRatio: '1/1', objectFit: 'contain' }} />
+              </button>
+            ))}
+          </div>
+        )}
         <span className="kicker">{t(p.universoId === 'pets' ? 'PETS' : 'FAMÍLIA')}{t(" · PERSONALIZÁVEL")}</span>
         <h2 className="serif" style={{ fontWeight: 400, fontSize: 34 }}>{t(p.name)}</h2>
         <p style={{ color: 'var(--ink-soft)', lineHeight: 1.7 }}>{t(p.description)}</p>
         {t(p.quoteOnly ? (
-          <a href={`https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre ${p.name}, para cão ou gato.`)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid">{t("Pedir informações →")}</a>
-        ) : <p style={{ fontSize: 13, color: 'var(--ink-mute)' }}>{t("Fotografias, opções e preço disponíveis em breve.")}</p>)}
+          <a href={`https://wa.me/351928419522?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre ${p.name}, para cão ou gato.`)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid">{t("Pedir informações →")}</a>
+        ) : <p style={{ fontSize: 13, color: 'var(--ink-mute)' }}>{t(p.imgs?.length ? "Opções e preço disponíveis em breve." : "Fotografias, opções e preço disponíveis em breve.")}</p>)}
       </div>
     </div>
   )

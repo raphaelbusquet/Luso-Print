@@ -55,7 +55,7 @@ export function CartDrawer({ open, onClose }: Props) {
       `${t("Olá! Gostaria de encomendar:")}\n\n${lines.join('\n')}${savings}${couponLine}\n\n${t("Total:")} €${finalTotal}${petReminder}`
     )
     await markCouponUsed()
-    window.open(`https://wa.me/351939158345?text=${text}`, '_blank')
+    window.open(`https://wa.me/351928419522?text=${text}`, '_blank')
   }
 
   const openProduct = (productId?: string) => {

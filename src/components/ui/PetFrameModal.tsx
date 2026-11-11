@@ -18,7 +18,7 @@ export function PetFrameModal({ product, onClose }: { product: ShopProduct; onCl
   const [photo, setPhoto] = useState(0)
   const photos = product.imgs ?? [product.img]
   const label = `${count} ${count === 1 ? 'pet' : 'pets'}`
-  const contact = `https://wa.me/351939158345?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre o Quadro com Busto do Seu Pet, com ${label}. Enviarei por aqui uma fotografia e o nome de cada pet para personalização.`)}`
+  const contact = `https://wa.me/351928419522?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre o Quadro com Busto do Seu Pet, com ${label}. Enviarei por aqui uma fotografia e o nome de cada pet para personalização.`)}`
   return (
     <ProductOverlay title={t(product.name)} onClose={onClose}>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 32, alignItems: 'start' }}>

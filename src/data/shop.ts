@@ -1,3 +1,4 @@
+import { FUNKO_OPTIONS } from './funko'
 import { PET_FRAME_OPTIONS } from './pets'
 import type { ColorOption } from './materials'
 
@@ -95,9 +96,9 @@ const COZINHA_PRODUCTS: ShopProduct[] = [
 
 // ─── Família ──────────────────────────────────────────────────────────────────
 const FAMILIA_PRODUCTS: ShopProduct[] = [
-  { id: 'familia-funko', name: 'Sua Família em Funko', description: 'A sua família numa versão cheia de personalidade. Em breve, descubra os detalhes desta peça personalizada.', comingSoon: true, universoId: 'mamaes', price: 0, img: `${ap}/familia/familia-funko-em-breve.svg`, tag: 'PERSONALIZÁVEL', color: 'Natural', dominantColors: [] },
+  { id: 'familia-funko', name: 'Sua Família em Funko', description: 'A sua família numa versão cheia de personalidade. Escolha uma composição com uma, duas, três ou quatro pessoas para criar uma peça personalizada à sua medida.', universoId: 'mamaes', price: FUNKO_OPTIONS[0].price, img: `${ap}/familia/familia-funko-logo-capa.png`, imgs: [`${ap}/familia/familia-funko-logo-capa.png`, `${ap}/familia/familia-funko-capa.png`], tag: 'PERSONALIZÁVEL', color: 'Natural', dominantColors: [] },
   { id: 'familia-estatua-familia', name: 'Estátua Toda Família', universoId: 'mamaes', price: 26, img: `${ap}/familia/estatua-toda-familia-capa.png`, imgs: [`${ap}/familia/estatua-toda-familia-capa.png`, ...i4('familia/estatua-familia', 4)], color: 'Natural', tag: 'PERSONALIZÁVEL', dominantColors: ['branco'], colorOptions: co(['branco', 'preto', 'cinza'], ['PLA Mate']) },
-  { id: 'familia-estatua-fams2',   name: 'Estátua Família S2',   universoId: 'mamaes', price: 32, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme',   tag: 'PERSONALIZÁVEL', dominantColors: ['branco'], colorOptions: co(['branco', 'preto', 'cinza'], ['PLA Mate']) },
+  { id: 'familia-estatua-fams2',   name: 'Estátua Família S2', description: 'Um conjunto para celebrar a sua família. Inclui as estatuetas da composição escolhida e a bandeja de apoio.',   universoId: 'mamaes', price: 32, img: `${ap}/familia/estatua-fams2-1.png`,   imgs: i4('familia/estatua-fams2', 4),   color: 'Creme',   tag: 'PERSONALIZÁVEL', dominantColors: ['branco'], colorOptions: co(['branco', 'preto', 'cinza'], ['PLA Mate']) },
 ]
 
 // ─── Decoração ────────────────────────────────────────────────────────────────

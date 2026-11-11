@@ -17,7 +17,7 @@ export function ProjetoExclusivo() {
       <div>
         <label htmlFor="exclusive-project-idea" className="kicker">{t("O que gostava de criar? ")}<span style={{ letterSpacing: 0, textTransform: 'none' }}>{t("(opcional)")}</span></label>
         <textarea id="exclusive-project-idea" value={idea} onChange={e => setIdea(e.target.value)} maxLength={1500} rows={5} placeholder={t("Uma peça com a minha marca, um presente para clientes, um produto que ainda não existe…")} style={{ display: 'block', boxSizing: 'border-box', width: '100%', padding: 16, margin: '14px 0 20px', resize: 'vertical', border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', fontSize: 14, lineHeight: 1.6, background: 'var(--paper)', color: 'var(--ink)' }} />
-        <a href={`https://wa.me/351939158345?text=${encodeURIComponent(message)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid" style={{ whiteSpace: 'normal', textAlign: 'center' }}>{t("Quero algo exclusivo · Falar no WhatsApp →")}</a>
+        <a href={`https://wa.me/351928419522?text=${encodeURIComponent(message)}`} target="_blank" rel="noopener noreferrer" className="btn btn-solid" style={{ whiteSpace: 'normal', textAlign: 'center' }}>{t("Quero algo exclusivo · Falar no WhatsApp →")}</a>
       </div>
     </section>
   )

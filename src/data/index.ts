@@ -50,7 +50,7 @@ export const PRODUCTS: Product[] = [
 ]
 
 export const UNIVERSOS: Universo[] = [
-  { id: 'mamaes',     nome: 'Família',         cnt: 3,  img: '/assets/products/familia/estatua-fams2-1.png',                   hue: 'var(--terracotta)', overlay: 'rgba(201,130,110,0.32)' },
+  { id: 'mamaes',     nome: 'Família',         cnt: 3,  img: '/assets/products/familia/familia-funko-logo-capa.png',                   hue: 'var(--terracotta)', overlay: 'rgba(201,130,110,0.32)' },
   { id: 'pets', nome: 'Pets', cnt: 4, img: '/assets/products/pets/capa-universo-pets.png', hue: 'var(--cream)', overlay: 'rgba(217,206,188,0.24)' },
   { id: 'bebes',      nome: 'Bebés & Crianças',cnt: 18, img: '/assets/products/bebe-crianca/bubble-layers-1.jpg',        hue: 'var(--cream)',      overlay: 'rgba(217,206,188,0.30)' },
   { id: 'cozinha',    nome: 'Cozinha',          cnt: 8,  img: '/assets/products/cozinha-real/mini-adega-1.png',          hue: 'var(--blue-gray)',  overlay: 'rgba(168,180,179,0.36)' },
