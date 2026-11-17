@@ -20,6 +20,20 @@ type Slide = {
 
 const SLIDES: Slide[] = [
   {
+    id: 'kit-nail',
+    eyebrow: 'LANÇAMENTO · FORMAÇÃO & DEMONSTRAÇÃO',
+    badge: 'Novo · Kit Nail Instrutor',
+    titleLines: ['Kit Nail'],
+    italic: 'Instrutor.',
+    lede: 'Dê uma nova dimensão às suas aulas. Peças didáticas ampliadas para explicar técnicas de unhas com clareza, personalizáveis com o seu nome ou logótipo.',
+    ctaPrimary: { label: 'Conhecer o lançamento', href: '/empresas#kit-nail-instrutor' },
+    ctaSecondary: { label: 'Ver soluções para empresas', href: '/empresas' },
+    image: '/IMG_3593-kit-nail-fundo-infinito.png',
+    caption: { eyebrow: 'Novo na Luso', title: 'Kit Nail Instrutor', sub: '20 cm e 15 cm · Desde €59' },
+    theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
+    shapes: 'personal',
+  },
+  {
     id: 'natal',
     eyebrow: 'NATAL · PEQUENOS GESTOS, GRANDES AFETOS',
     badge: 'Um Natal com a sua marca',
@@ -32,20 +46,6 @@ const SLIDES: Slide[] = [
     caption: { eyebrow: 'Coleção de Natal', title: 'Placa Feliz Natal', sub: 'Para decorar e oferecer · €8,49' },
     theme: { bg: 'var(--linen)', fg: '#304737', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     shapes: 'estacoes',
-  },
-  {
-    id: 'kit-nail',
-    eyebrow: 'LANÇAMENTO · FORMAÇÃO & DEMONSTRAÇÃO',
-    badge: 'Novo · Kit Nail Instrutor',
-    titleLines: ['Kit Nail'],
-    italic: 'Instrutor.',
-    lede: 'Dê uma nova dimensão às suas aulas. Peças didáticas ampliadas para explicar técnicas de unhas com clareza, personalizáveis com o seu nome ou logótipo.',
-    ctaPrimary: { label: 'Conhecer o lançamento', href: '/empresas#kit-nail-instrutor' },
-    ctaSecondary: { label: 'Ver soluções para empresas', href: '/empresas' },
-    image: '/assets/empresas/kit-nail-novo-conjunto.png',
-    caption: { eyebrow: 'Novo na Luso', title: 'Kit Nail Instrutor', sub: '20 cm e 15 cm · Desde €59' },
-    theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
-    shapes: 'personal',
   },
   {
     id: 'estacoes',
@@ -187,6 +187,7 @@ export function Hero() {
             overflow: 'hidden',
           }} />
 
+
           <div style={{
             position: 'absolute', left: 18, bottom: 18,
             background: t.bg, color: t.fg,
@@ -210,10 +211,10 @@ export function Hero() {
         borderTop: `1px solid ${t.rule}`,
       }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-          <span className="serif" style={{ fontStyle: 'italic', fontSize: isMobile ? 28 : 40, color: t.fg, lineHeight: 1 }}>{tr("0")}{tr(idx + 1)}
+            <span className="serif" style={{ fontStyle: 'italic', fontSize: isMobile ? 28 : 40, color: t.fg, lineHeight: 1 }}>{tr("0")}{tr(idx + 1)}
           </span>
           {tr(!isMobile && (
-            <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>{tr("/ 0")}{tr(total)}{tr(" · ")}{tr(slide.id === 'natal' ? 'Natal' : slide.id === 'estacoes' ? 'Estações' : 'Para empresas')}
+            <span style={{ letterSpacing: '0.26em', textTransform: 'uppercase', color: t.muted, fontSize: 13 }}>{tr("/ 0")}{tr(total)}{tr(" · ")}{tr(slide.id === 'natal' ? 'Natal' : slide.id === 'estacoes' ? 'Estações' : slide.id === 'kit-nail' ? 'Kit Nail' : 'Para empresas')}
             </span>
           ))}
         </div>

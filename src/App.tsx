@@ -8,6 +8,7 @@ import { Announce } from './components/layout/Announce'
 import { Nav } from './components/layout/Nav'
 import { Footer } from './components/layout/Footer'
 import { Hero } from './components/sections/Hero'
+import { BlackFridayBand } from './components/sections/BlackFridayBand'
 import { Universos } from './components/sections/Universos'
 import { Edito } from './components/sections/Edito'
 import { Empresas } from './components/sections/Empresas'
@@ -43,6 +44,7 @@ function HomePage() {
         onOpenFavorites={() => setFavsOpen(true)}
         cartCount={count}
       />
+      <BlackFridayBand />
       <Hero />
       <Universos />
       <Empresas />

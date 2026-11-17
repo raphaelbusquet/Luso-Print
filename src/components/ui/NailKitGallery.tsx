@@ -2,6 +2,9 @@ import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 
 const PHOTOS = [
+  { src: '/IMG_3584-kit-nail-fundo-infinito.png', alt: 'Kit Nail Instrutor com fundo infinito marfim' },
+  { src: '/IMG_3593-kit-nail-fundo-infinito.png', alt: 'Unhas demonstrativas do Kit Nail Instrutor com fundo infinito marfim' },
+  { src: '/IMG_3599-kit-nail-fundo-infinito.png', alt: 'Kit Nail Instrutor com unha demonstrativa vermelha' },
   { src: '/assets/empresas/kit-nail-novo-conjunto.png', alt: 'Conjunto didático Kit Nail Instrutor com dedo 3D, unhas, brocas e lixas' },
   { src: '/assets/empresas/kit-nail-novo-unhas.png', alt: 'Detalhe do dedo didático e dos diferentes formatos de unhas' },
   { src: '/assets/empresas/kit-nail-novo-tamanhos.png', alt: 'Comparação dos dedos didáticos de 15 cm e 20 cm' },

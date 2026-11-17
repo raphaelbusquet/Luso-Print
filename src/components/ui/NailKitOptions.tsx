@@ -8,7 +8,7 @@ const KITS = [
   { id: 'basic', name: 'Kit Basic', detail: '', contents: '1 dedo didático 3D · 2 modelos de unha · 2 brocas · 1 lixa' },
 ] as const
 export type NailKitVersion = typeof KITS[number]['id']
-const SIZES = [20, 15] as const
+const SIZES = [15, 20] as const
 
 // Prices will be provided for each kit and size combination.
 export const NAIL_KIT_PRICES: { master: Record<typeof SIZES[number], number | null>; pro: { 20: number | null }; basic: { 20: number | null } } = {
@@ -56,7 +56,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
       <fieldset style={{ border: 0, padding: 0, margin: '0 0 24px' }}>
         <legend className="kicker" style={{ marginBottom: 12 }}>{t("Escolha o kit")}</legend>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          {t(KITS.filter(option => size === 20 || option.id === 'master').map(option => (
+          {t(KITS.filter(option => size === 20 ? option.id !== 'pro' : option.id === 'master').map(option => (
             <label key={option.id} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '12px 14px', border: `1px solid ${kit === option.id ? 'var(--ink)' : 'var(--rule)'}`, borderRadius: 6, cursor: 'pointer', background: kit === option.id ? 'var(--linen)' : 'transparent' }}>
               <input type="radio" name="nail-kit-version" value={option.id} checked={kit === option.id} onChange={() => { onKitChange(option.id); setSelectedBits([]) }} style={{ accentColor: 'var(--terracotta)', marginTop: 3 }} />
               <span style={{ fontSize: 14 }}>{t(option.name)}{t(option.detail && <small style={{ display: 'block', color: 'var(--ink-soft)', fontSize: 11, marginTop: 5 }}>{t(option.detail)}</small>)}</span>
