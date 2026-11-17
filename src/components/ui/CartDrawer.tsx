@@ -8,7 +8,7 @@ import type { ShopProduct } from '../../data/shop'
 type Props = { open: boolean; onClose: () => void }
 
 export function CartDrawer({ open, onClose }: Props) {
-  const { items, removeItem, updateQty, clearCart, total, couponCode, discount, finalTotal, applyCoupon, removeCoupon, markCouponUsed } = useCart()
+  const { items, removeItem, updateQty, clearCart, total, couponCode, discount, promoSavings, finalTotal, applyCoupon, removeCoupon, markCouponUsed } = useCart()
   const [couponInput, setCouponInput] = useState('')
   const [couponState, setCouponState] = useState<'idle' | 'loading' | 'valid' | 'invalid' | 'used' | 'error'>('idle')
   const [selectedProduct, setSelectedProduct] = useState<ShopProduct | null>(null)
@@ -38,7 +38,8 @@ export function CartDrawer({ open, onClose }: Props) {
   }
 
   const handleOrder = async () => {
-    const savings = discount > 0 ? `\n${t("Desconto (10%)")}: -€${(total - finalTotal).toFixed(2)}` : ''
+    const totalSavings = Math.max(0, total - finalTotal)
+    const savings = totalSavings > 0 ? `\n${t("Descontos aplicados")}: -€${totalSavings.toFixed(2)}` : ''
     const lines = items.map((item, i) => {
       if (item.size) {
         const previewLine = item.previewUrl?.startsWith('http') ? `\n   Preview: ${item.previewUrl}` : ''
@@ -324,9 +325,14 @@ export function CartDrawer({ open, onClose }: Props) {
                 <span>{t("Subtotal")}</span><span>{t("€")}{t(total.toFixed(2).replace('.00', ''))}</span>
               </div>
             ))}
+            {t(promoSavings > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, color: 'var(--terracotta)', fontSize: 13 }}>
+                <span>{t("Black Friday · 10%")}</span><span>−€{t(promoSavings.toFixed(2))}</span>
+              </div>
+            ))}
             {t(discount > 0 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, color: 'var(--olive)', fontSize: 13 }}>
-                <span>{t("Desconto (10%)")}</span><span>{t("−€")}{t((total - finalTotal).toFixed(2))}</span>
+                <span>{t("Cupão (10%)")}</span><span>{t("−€")}{t(Math.max(0, total - finalTotal - promoSavings).toFixed(2))}</span>
               </div>
             ))}
             <div style={{

@@ -5,6 +5,7 @@ import { NailKitGallery } from './NailKitGallery'
 import { NailKitOptions, type NailKitVersion } from './NailKitOptions'
 import { ProductOverlay } from './ProductOverlay'
 import { useIsMobile } from '../../hooks/useIsMobile'
+import { blackFridayBusinessPrice } from '../../lib/blackFriday'
 
 type Solution = (typeof BUSINESS_SOLUTIONS)[number]
 
@@ -35,7 +36,7 @@ export function BusinessProductModal({ solution, onClose }: { solution: Solution
               <p className="kicker" style={{ color: 'var(--ink-mute)', marginTop: 20 }}>{t(['kit-nail-instrutor', 'kit-pedi-instrutor'].includes(solution.id) ? 'FORMAÇÃO & DEMONSTRAÇÃO' : 'À MEDIDA DA SUA MARCA')}</p>
               <h2 className="serif" style={{ fontWeight: 400, fontSize: 34, margin: '12px 0' }}>{t(solution.title)}</h2>
               {t('price' in solution && solution.price !== undefined && (
-                <p style={{ fontFamily: 'var(--serif)', fontSize: 28, margin: '0 0 12px' }}>{t("€")}{t(solution.price)} <span style={{ fontFamily: 'var(--sans)', fontSize: 13 }}>{t("/ unidade")}</span></p>
+                <p style={{ fontFamily: 'var(--serif)', fontSize: 28, margin: '0 0 12px' }}>{blackFridayBusinessPrice(solution.id, solution.price) < solution.price && <s style={{ fontSize: 18, color: 'var(--ink-mute)', marginRight: 10 }}>€{solution.price}</s>}<span style={{ color: blackFridayBusinessPrice(solution.id, solution.price) < solution.price ? 'var(--terracotta)' : 'inherit' }}>€{blackFridayBusinessPrice(solution.id, solution.price)}</span> <span style={{ fontFamily: 'var(--sans)', fontSize: 13 }}>{t("/ unidade")}</span></p>
               ))}
               <p style={{ color: 'var(--ink-soft)', lineHeight: 1.7, whiteSpace: 'pre-line' }}>{t(solution.description)}</p>
               {t(solution.id === 'kit-nail-instrutor' && (

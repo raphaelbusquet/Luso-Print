@@ -4,6 +4,7 @@ import { PetFrameModal } from './PetFrameModal'
 import { useState, useEffect, useRef } from 'react'
 import { useFavorites } from '../../context/FavoritesContext'
 import { useCart } from '../../context/CartContext'
+import { blackFridayPrice } from '../../lib/blackFriday'
 import { UNIVERSOS } from '../../data'
 import { useIsMobile } from '../../hooks/useIsMobile'
 import { VISUAL_COLORS } from '../../data/shop'
@@ -198,7 +199,8 @@ export function ProductModal({ product: p, onClose }: Props) {
   )
 
   const isBubble = p.id === 'bebes-bubble-layers'
-  const unitPrice = isBubble && bubbleStyle === 'themed' ? 45 : p.price
+  const regularUnitPrice = isBubble && bubbleStyle === 'themed' ? 45 : p.price
+  const unitPrice = blackFridayPrice(regularUnitPrice, p.universoId)
   const fav = isFav(p.id)
   const inCart = items.some(i => i.productId === p.id)
   const btnDisabled = inCart && !qtyModified
@@ -380,7 +382,7 @@ export function ProductModal({ product: p, onClose }: Props) {
 
           {/* Price + tag inline */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '8px 0 20px' }}>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{t(isBubble && bubbleStyle === 'simple' ? 'Desde ' : '')}{t("€")}{t(unitPrice)}</div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{unitPrice < regularUnitPrice && <s style={{ display: 'block', fontSize: 16, color: 'var(--ink-mute)' }}>€{regularUnitPrice}</s>}{t(isBubble && bubbleStyle === 'simple' ? 'Desde ' : '')}{t("€")}{t(unitPrice)}</div>
             {t(p.tag && (
               <span style={{
                 background: TAG_COLOR[p.tag] ?? 'rgba(43,39,34,0.55)',

@@ -12,6 +12,7 @@ import { FavoritesDrawer } from '../components/ui/FavoritesDrawer'
 import { useCart } from '../context/CartContext'
 import { useIsMobile } from '../hooks/useIsMobile'
 import { BUSINESS_SOLUTIONS } from '../data/empresas'
+import { blackFridayBusinessPrice } from '../lib/blackFriday'
 
 const BEAUTY_IDS = new Set(['kit-nail-instrutor', 'kit-pedi-instrutor', 'organizador-atendimento-f1'])
 const COLLECTIONS = [
@@ -62,7 +63,7 @@ export function EmpresasPage() {
                 </span>
                 <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, marginTop: 12 }}>
                   <span className="serif" role="heading" aria-level={3} style={{ fontSize: 17, lineHeight: 1.2 }}>{t(solution.title)}</span>
-                  <span className="serif" style={{ fontSize: 17, flexShrink: 0 }}>{t(solution.id === 'kit-nail-instrutor' ? 'Desde €59' : 'price' in solution && solution.price !== undefined ? `€${solution.price}` : 'Sob consulta')}</span>
+                  <span className="serif" style={{ fontSize: 17, flexShrink: 0, textAlign: 'right' }}>{solution.id === 'kit-nail-instrutor' ? <>{blackFridayBusinessPrice(solution.id, 59) < 59 && <s style={{ fontSize: 13, color: 'var(--ink-mute)' }}>€59</s>}<br />Desde €{blackFridayBusinessPrice(solution.id, 59).toFixed(2).replace('.00', '')}</> : 'price' in solution && solution.price !== undefined ? <>{blackFridayBusinessPrice(solution.id, solution.price) < solution.price && <s style={{ fontSize: 13, color: 'var(--ink-mute)' }}>€{solution.price}</s>}<br />€{blackFridayBusinessPrice(solution.id, solution.price).toFixed(2).replace('.00', '')}</> : t('Sob consulta')}</span>
                 </span>
               </button>
             </article>

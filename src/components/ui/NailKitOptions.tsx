@@ -1,6 +1,7 @@
 import { translate as t } from '../../i18n/translate'
 import { NAIL_BITS } from '../../data/nail-bits'
 import { useState } from 'react'
+import { blackFridayPrice, isBlackFridayActive } from '../../lib/blackFriday'
 
 const KITS = [
   { id: 'master', name: 'Kit Master', detail: 'O kit mais completo', contents: '1 dedo didático 3D · 6 modelos de unha · 5 brocas com suporte · 2 lixas' },
@@ -27,7 +28,8 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
   const included = selectedBits.slice(0, includedCount)
   const extrasCount = Object.values(extras).reduce((sum, value) => sum + value, 0)
   const selectedKit = KITS.find(option => option.id === kit)!
-  const price = size === 20 ? NAIL_KIT_PRICES[kit][20] : NAIL_KIT_PRICES.master[size]
+  const regularPrice = size === 20 ? NAIL_KIT_PRICES[kit][20] : NAIL_KIT_PRICES.master[size]
+  const price = isBlackFridayActive() && kit === 'master' && size === 15 ? 79 : regularPrice === null ? null : blackFridayPrice(regularPrice, 'beauty')
   const extraCost = extrasCount * 7
   const personalizationCost = personalization === 'none' ? 0 : 10
   const total = (price ?? 0) + extraCost + personalizationCost
@@ -98,7 +100,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
       </fieldset>
       <div aria-live="polite" style={{ background: 'var(--linen)', padding: 16, borderRadius: 6, marginBottom: 20, lineHeight: 1.8, fontSize: 14 }}>
         <strong>{t(selectedKit.name)}{t(" · ")}{t(size)}{t(" cm")}</strong>
-        <div>{t("Kit: ")}{t(money(price ?? 0))}</div>
+        <div>{t("Kit: ")}{price !== regularPrice && regularPrice !== null && <s style={{ color: 'var(--ink-mute)', marginRight: 8 }}>{t(money(regularPrice))}</s>}{t(money(price ?? 0))}</div>
         <div>{t("Extras: ")}{t(extrasCount)}{t(" brocas · ")}{t(money(extraCost))}</div>
         <div>{t("Personalização: ")}{t(money(personalizationCost))}</div>
         <div style={{ borderTop: '1px solid var(--rule)', marginTop: 10, paddingTop: 10, fontSize: 20 }}>{t("Total: ")}{t(money(total))}</div>

@@ -2,6 +2,7 @@ import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import type { Product } from '../../data'
 import { useFavorites } from '../../context/FavoritesContext'
+import { blackFridayPrice } from '../../lib/blackFriday'
 
 type Props = {
   product: Product
@@ -23,6 +24,7 @@ export function ProductCard({ product: p, big = false }: Props) {
   const [hover, setHover] = useState(false)
   const { isFav, toggle } = useFavorites()
   const fav = isFav(p.id)
+  const salePrice = blackFridayPrice(p.price, p.collection)
 
   const tagColor = p.tag === 'NOVO'
     ? 'var(--terracotta)'
@@ -83,7 +85,7 @@ export function ProductCard({ product: p, big = false }: Props) {
           <button
             className="btn btn-solid"
             style={{ width: '100%', padding: '12px 14px', fontSize: 10, justifyContent: 'center' }}
-          >{t("Adicionar — €")}{t(p.price)}
+          >{t("Adicionar — €")}{t(salePrice)}
           </button>
         </div>
       </div>
@@ -93,7 +95,7 @@ export function ProductCard({ product: p, big = false }: Props) {
           <div className="kicker" style={{ marginBottom: 4, fontSize: 9 }}>{t(p.collection)}</div>
           <div className="serif" style={{ fontSize: big ? 22 : 18, lineHeight: 1.15 }}>{t(p.name)}</div>
         </div>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: big ? 22 : 18, color: 'var(--ink)' }}>{t("€")}{t(p.price)}</div>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: big ? 22 : 18, color: 'var(--ink)', textAlign: 'right' }}>{salePrice < p.price && <s style={{ display: 'block', fontSize: 13, color: 'var(--ink-mute)' }}>€{p.price}</s>}<span style={{ color: salePrice < p.price ? 'var(--terracotta)' : 'inherit' }}>{t("€")}{t(salePrice)}</span></div>
       </div>
     </div>
   )

@@ -13,6 +13,7 @@ import { FavoritesDrawer } from '../components/ui/FavoritesDrawer'
 import { ProductModal } from '../components/ui/ProductModal'
 import { useIsMobile } from '../hooks/useIsMobile'
 import type { ShopProduct } from '../data/shop'
+import { blackFridayPrice, isBlackFridayActive } from '../lib/blackFriday'
 
 const TAG_COLOR: Record<string, string> = {
   'NOVO':            'var(--terracotta)',
@@ -35,6 +36,7 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
   const { isFav, toggle } = useFavorites()
   const [hover, setHover] = useState(false)
   const fav = isFav(p.id)
+  const salePrice = blackFridayPrice(p.price, p.universoId)
 
 
   return (
@@ -93,7 +95,7 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
 
       <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
         <button type="button" onClick={onOpen} className="serif" style={{ padding: 0, border: 0, background: 'transparent', color: 'inherit', textAlign: 'left', cursor: 'pointer', fontSize: 17, lineHeight: 1.2 }}>{t(p.name)}</button>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0 }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : `${['bebes-bubble-layers', 'familia-funko'].includes(p.id) ? 'Desde ' : ''}€${p.price}`)}</div>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0, textAlign: 'right' }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : isBlackFridayActive() && salePrice < p.price ? <><s style={{ fontSize: 13, opacity: 0.55 }}>€{p.price}</s><br /><strong style={{ color: 'var(--terracotta)', fontWeight: 500 }}>€{salePrice.toFixed(2).replace('.00', '')}</strong></> : `${['bebes-bubble-layers', 'familia-funko'].includes(p.id) ? 'Desde ' : ''}€${p.price}`)}</div>
       </div>
     </div>
   )
