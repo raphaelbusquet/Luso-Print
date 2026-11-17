@@ -24,15 +24,18 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
   const [extras, setExtras] = useState<Record<string, number>>({})
   const [personalization, setPersonalization] = useState<'none' | 'custom'>('none')
   const [customName, setCustomName] = useState('')
+  const [quantity, setQuantity] = useState(1)
   const includedCount = kit === 'master' ? 5 : kit === 'pro' ? 4 : 2
   const included = selectedBits.slice(0, includedCount)
   const extrasCount = Object.values(extras).reduce((sum, value) => sum + value, 0)
   const selectedKit = KITS.find(option => option.id === kit)!
   const regularPrice = size === 20 ? NAIL_KIT_PRICES[kit][20] : NAIL_KIT_PRICES.master[size]
   const price = isBlackFridayActive() && kit === 'master' && size === 15 ? 79 : regularPrice === null ? null : blackFridayPrice(regularPrice, 'beauty')
+  const secondUnitPrice = isBlackFridayActive() && kit === 'master' && size === 15 ? 69 : price
   const extraCost = extrasCount * 7
   const personalizationCost = personalization === 'none' ? 0 : 10
-  const total = (price ?? 0) + extraCost + personalizationCost
+  const kitsTotal = (price ?? 0) + (quantity > 1 ? (secondUnitPrice ?? 0) : 0) + Math.max(0, quantity - 2) * (price ?? 0)
+  const total = kitsTotal + quantity * (extraCost + personalizationCost)
   const money = (value: number) => `€${value.toFixed(2).replace('.', ',')}`
   const ready = included.length === includedCount
   const includedNames = NAIL_BITS.filter(bit => included.includes(bit.id)).map(bit => t(bit.name)).join(', ')
@@ -40,7 +43,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
   const personalisationLabel = personalization === 'none'
     ? t('Sem personalização')
     : `${t('Nome ou logótipo (+€10)')}${customName.trim() ? ` — ${customName.trim()}` : ''}. ${t('Ao finalizar no WhatsApp, confirme o nome ou envie a imagem do seu logótipo. O acréscimo é de €10.')}`
-  const message = `${t('Olá! Gostaria de encomendar')} Kit Nail Instrutor — ${t(selectedKit.name)}, ${size} cm.\n${t('Brocas incluídas:')} ${includedNames}.\n${t('Extras:')} ${extraNames || t('Nenhum')} (${money(extraCost)}).\n${t('Personalização:')} ${personalisationLabel}.\n${t('Total:')} ${money(total)}.`
+  const message = `${t('Olá! Gostaria de encomendar')} ${quantity} × Kit Nail Instrutor — ${t(selectedKit.name)}, ${size} cm.\n${quantity > 1 ? `${t('1.ª unidade')}: ${money(price ?? 0)} · ${t('2.ª unidade')}: ${money(secondUnitPrice ?? 0)}.\n` : ''}${t('Brocas incluídas:')} ${includedNames}.\n${t('Extras:')} ${extraNames || t('Nenhum')} (${money(extraCost)} ${t('por kit')}).\n${t('Personalização:')} ${personalisationLabel}.\n${t('Total:')} ${money(total)}.`
   const contact = `https://wa.me/351928419522?text=${encodeURIComponent(message)}`
 
   return (
@@ -68,6 +71,8 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
       </fieldset>
       {t(size !== 20 && <p style={{ fontSize: 12, color: 'var(--ink-soft)', margin: '0 0 16px' }}>{t("No tamanho de 15 cm, está disponível apenas o Kit Master.")}</p>)}
       <p style={{ fontSize: 13, color: 'var(--ink-soft)', lineHeight: 1.7, margin: '0 0 20px' }}>{t(selectedKit.contents)}</p>
+      <label style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '0 0 20px', fontSize: 14 }}>{t('Quantidade')}<input type="number" min={1} step={1} value={quantity} onChange={event => setQuantity(Math.max(1, Math.floor(Number(event.target.value) || 1)))} style={{ width: 72, padding: 8, border: '1px solid var(--rule)', borderRadius: 4, font: 'inherit' }} /></label>
+      {t(isBlackFridayActive() && kit === 'master' && size === 15 && quantity > 1 && <p style={{ margin: '-10px 0 18px', color: 'var(--terracotta)', fontSize: 13 }}>{t('Na Black Friday, a 2.ª unidade do Kit Nail Master de 15 cm fica por €69.')}</p>)}
       <fieldset style={{ border: '1px solid var(--rule)', padding: 16, margin: '24px 0', borderRadius: 6 }}>
         <legend style={{ fontSize: 14 }}>{t("Escolha as ")}{t(includedCount)}{t(" brocas incluídas")}</legend>
         <p aria-live="polite" style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t(included.length)}{t(" de ")}{t(includedCount)}{t(" selecionadas · 10 modelos disponíveis")}</p>
@@ -100,7 +105,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
       </fieldset>
       <div aria-live="polite" style={{ background: 'var(--linen)', padding: 16, borderRadius: 6, marginBottom: 20, lineHeight: 1.8, fontSize: 14 }}>
         <strong>{t(selectedKit.name)}{t(" · ")}{t(size)}{t(" cm")}</strong>
-        <div>{t("Kit: ")}{price !== regularPrice && regularPrice !== null && <s style={{ color: 'var(--ink-mute)', marginRight: 8 }}>{t(money(regularPrice))}</s>}{t(money(price ?? 0))}</div>
+        <div>{t("Kits: ")}{price !== regularPrice && regularPrice !== null && <s style={{ color: 'var(--ink-mute)', marginRight: 8 }}>{t(money(regularPrice))}</s>}{t(money(price ?? 0))}{quantity > 1 && ` + ${money(secondUnitPrice ?? 0)} (${t('2.ª unidade')})`}{quantity > 2 && ` + ${money((price ?? 0) * (quantity - 2))}`}</div>
         <div>{t("Extras: ")}{t(extrasCount)}{t(" brocas · ")}{t(money(extraCost))}</div>
         <div>{t("Personalização: ")}{t(money(personalizationCost))}</div>
         <div style={{ borderTop: '1px solid var(--rule)', marginTop: 10, paddingTop: 10, fontSize: 20 }}>{t("Total: ")}{t(money(total))}</div>
