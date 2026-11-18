@@ -16,5 +16,6 @@ export function blackFridayBusinessPrice(id: string, regularPrice: number) {
   if (!isBlackFridayActive()) return regularPrice
   if (id === 'kit-pedi-instrutor') return 54.9
   if (id === 'organizador-atendimento-f1') return 11.9
+  if (id === 'kit-nail-instrutor') return 45.9
   return Math.round(regularPrice * 0.7 * 100) / 100
 }

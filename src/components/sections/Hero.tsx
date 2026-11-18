@@ -29,7 +29,7 @@ const SLIDES: Slide[] = [
     ctaPrimary: { label: 'Conhecer o lançamento', href: '/empresas#kit-nail-instrutor' },
     ctaSecondary: { label: 'Ver soluções para empresas', href: '/empresas' },
     image: '/assets/empresas/IMG_3584-kit-nail-fundo-infinito.png',
-    caption: { eyebrow: 'Novo na Luso', title: 'Kit Nail Instrutor', sub: '20 cm e 15 cm · Desde €59' },
+    caption: { eyebrow: 'Novo na Luso', title: 'Kit Nail Instrutor', sub: '20 cm e 15 cm · Desde €45,90' },
     theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     shapes: 'personal',
   },

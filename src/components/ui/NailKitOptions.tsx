@@ -1,7 +1,7 @@
 import { translate as t } from '../../i18n/translate'
 import { NAIL_BITS } from '../../data/nail-bits'
 import { useState } from 'react'
-import { blackFridayPrice, isBlackFridayActive } from '../../lib/blackFriday'
+import { isBlackFridayActive } from '../../lib/blackFriday'
 
 const KITS = [
   { id: 'master', name: 'Kit Master', detail: 'O kit mais completo', contents: '1 dedo didático 3D · 6 modelos de unha · 5 brocas com suporte · 2 lixas' },
@@ -30,7 +30,12 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
   const extrasCount = Object.values(extras).reduce((sum, value) => sum + value, 0)
   const selectedKit = KITS.find(option => option.id === kit)!
   const regularPrice = size === 20 ? NAIL_KIT_PRICES[kit][20] : NAIL_KIT_PRICES.master[size]
-  const price = isBlackFridayActive() && kit === 'master' && size === 15 ? 74.9 : regularPrice === null ? null : blackFridayPrice(regularPrice, 'beauty')
+  const blackFridayKitPrice = kit === 'master'
+    ? (size === 15 ? 74.9 : 94.9)
+    : kit === 'basic'
+      ? 45.9
+      : null
+  const price = regularPrice === null ? null : isBlackFridayActive() && blackFridayKitPrice !== null ? blackFridayKitPrice : regularPrice
   const secondUnitPrice = isBlackFridayActive() && kit === 'master' && size === 15 ? 69 : price
   const extraCost = extrasCount * 7
   const personalizationCost = personalization === 'none' ? 0 : 10
