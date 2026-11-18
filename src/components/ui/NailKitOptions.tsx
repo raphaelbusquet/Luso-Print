@@ -36,7 +36,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
       ? 45.9
       : null
   const price = regularPrice === null ? null : isBlackFridayActive() && blackFridayKitPrice !== null ? blackFridayKitPrice : regularPrice
-  const secondUnitPrice = isBlackFridayActive() && kit === 'master' && size === 15 ? 69 : price
+  const secondUnitPrice = isBlackFridayActive() && kit === 'master' && size === 15 ? 62.9 : price
   const extraCost = extrasCount * 7
   const personalizationCost = personalization === 'none' ? 0 : 10
   const kitsTotal = (price ?? 0) + (quantity > 1 ? (secondUnitPrice ?? 0) : 0) + Math.max(0, quantity - 2) * (price ?? 0)
@@ -77,7 +77,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
       {t(size !== 20 && <p style={{ fontSize: 12, color: 'var(--ink-soft)', margin: '0 0 16px' }}>{t("No tamanho de 15 cm, está disponível apenas o Kit Master.")}</p>)}
       <p style={{ fontSize: 13, color: 'var(--ink-soft)', lineHeight: 1.7, margin: '0 0 20px' }}>{t(selectedKit.contents)}</p>
       <label style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '0 0 20px', fontSize: 14 }}>{t('Quantidade')}<input type="number" min={1} step={1} value={quantity} onChange={event => setQuantity(Math.max(1, Math.floor(Number(event.target.value) || 1)))} style={{ width: 72, padding: 8, border: '1px solid var(--rule)', borderRadius: 4, font: 'inherit' }} /></label>
-      {t(isBlackFridayActive() && kit === 'master' && size === 15 && quantity > 1 && <p style={{ margin: '-10px 0 18px', color: 'var(--terracotta)', fontSize: 13 }}>{t('Na Black Friday, a 2.ª unidade do Kit Nail Master de 15 cm fica por €69.')}</p>)}
+      {t(isBlackFridayActive() && kit === 'master' && size === 15 && <p style={{ margin: '-10px 0 18px', color: 'var(--terracotta)', fontSize: 13 }}>{t('Na Black Friday, a 2.ª unidade do Kit Nail Master de 15 cm fica por €62,90.')}</p>)}
       <fieldset style={{ border: '1px solid var(--rule)', padding: 16, margin: '24px 0', borderRadius: 6 }}>
         <legend style={{ fontSize: 14 }}>{t("Escolha as ")}{t(includedCount)}{t(" brocas incluídas")}</legend>
         <p aria-live="polite" style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{t(included.length)}{t(" de ")}{t(includedCount)}{t(" selecionadas · 10 modelos disponíveis")}</p>
