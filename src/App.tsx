@@ -7,7 +7,7 @@ import { FavoritesProvider } from './context/FavoritesContext'
 import { Announce } from './components/layout/Announce'
 import { Nav } from './components/layout/Nav'
 import { Footer } from './components/layout/Footer'
-import { Hero } from './components/sections/Hero'
+import { FeaturedProfessionalProducts } from './components/sections/FeaturedProfessionalProducts'
 import { BlackFridayBand } from './components/sections/BlackFridayBand'
 import { Universos } from './components/sections/Universos'
 import { Edito } from './components/sections/Edito'
@@ -45,7 +45,7 @@ function HomePage() {
         cartCount={count}
       />
       <BlackFridayBand />
-      <Hero />
+      <FeaturedProfessionalProducts />
       <Universos />
       <Empresas />
       <Edito />
