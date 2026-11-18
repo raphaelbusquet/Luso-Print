@@ -9,12 +9,12 @@ const EXCLUDED_COLLECTIONS = new Set(['cozinha', 'sala', 'escritório', 'escrito
 
 export function blackFridayPrice(price: number, category?: string) {
   if (!isBlackFridayActive() || (category && (EXCLUDED_UNIVERSES.has(category.toLowerCase()) || EXCLUDED_COLLECTIONS.has(category.toLowerCase())))) return price
-  return Math.round(price * 0.9 * 100) / 100
+  return Math.round(price * 0.7 * 100) / 100
 }
 
 export function blackFridayBusinessPrice(id: string, regularPrice: number) {
   if (!isBlackFridayActive()) return regularPrice
-  if (id === 'kit-pedi-instrutor') return 59
-  if (id === 'organizador-atendimento-f1') return 12.9
-  return id === 'kit-nail-instrutor' ? Math.round(regularPrice * 0.9 * 100) / 100 : regularPrice
+  if (id === 'kit-pedi-instrutor') return 54.9
+  if (id === 'organizador-atendimento-f1') return 11.9
+  return Math.round(regularPrice * 0.7 * 100) / 100
 }

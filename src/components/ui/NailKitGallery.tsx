@@ -17,7 +17,7 @@ export function NailKitGallery() {
   return (
     <figure style={{ margin: 0 }}>
       <a href={PHOTOS[active].src} target="_blank" rel="noopener noreferrer" aria-label={t(`Ampliar: ${PHOTOS[active].alt}`)}>
-        <img src={PHOTOS[active].src} alt={t(PHOTOS[active].alt)} style={{ width: '100%', aspectRatio: '3/4', objectFit: 'contain', display: 'block', borderRadius: 8 }} />
+        <img src={PHOTOS[active].src} alt={t(PHOTOS[active].alt)} style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', objectPosition: 'center', display: 'block', borderRadius: 8 }} />
       </a>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: 8, marginTop: 12 }}>
         {t(PHOTOS.map((photo, i) => (

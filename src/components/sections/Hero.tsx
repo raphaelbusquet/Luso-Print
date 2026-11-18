@@ -28,7 +28,7 @@ const SLIDES: Slide[] = [
     lede: 'Dê uma nova dimensão às suas aulas. Peças didáticas ampliadas para explicar técnicas de unhas com clareza, personalizáveis com o seu nome ou logótipo.',
     ctaPrimary: { label: 'Conhecer o lançamento', href: '/empresas#kit-nail-instrutor' },
     ctaSecondary: { label: 'Ver soluções para empresas', href: '/empresas' },
-    image: '/assets/empresas/IMG_3593-kit-nail-fundo-infinito.png',
+    image: '/assets/empresas/IMG_3584-kit-nail-fundo-infinito.png',
     caption: { eyebrow: 'Novo na Luso', title: 'Kit Nail Instrutor', sub: '20 cm e 15 cm · Desde €59' },
     theme: { bg: 'var(--linen)', fg: 'var(--ink)', muted: 'var(--ink-soft)', rule: 'var(--rule)', accent: 'var(--terracotta)' },
     shapes: 'personal',

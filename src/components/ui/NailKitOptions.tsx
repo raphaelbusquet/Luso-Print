@@ -30,7 +30,7 @@ export function NailKitOptions({ kit, onKitChange }: { kit: NailKitVersion; onKi
   const extrasCount = Object.values(extras).reduce((sum, value) => sum + value, 0)
   const selectedKit = KITS.find(option => option.id === kit)!
   const regularPrice = size === 20 ? NAIL_KIT_PRICES[kit][20] : NAIL_KIT_PRICES.master[size]
-  const price = isBlackFridayActive() && kit === 'master' && size === 15 ? 79 : regularPrice === null ? null : blackFridayPrice(regularPrice, 'beauty')
+  const price = isBlackFridayActive() && kit === 'master' && size === 15 ? 74.9 : regularPrice === null ? null : blackFridayPrice(regularPrice, 'beauty')
   const secondUnitPrice = isBlackFridayActive() && kit === 'master' && size === 15 ? 69 : price
   const extraCost = extrasCount * 7
   const personalizationCost = personalization === 'none' ? 0 : 10

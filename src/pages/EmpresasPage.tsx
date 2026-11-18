@@ -58,7 +58,7 @@ export function EmpresasPage() {
             <article className="catalog-card" key={solution.id} id={solution.id}>
               <button type="button" onClick={() => setSelectedSolution(solution)} aria-haspopup="dialog" style={{ display: 'block', width: '100%', padding: 0, border: 0, background: 'transparent', color: 'inherit', textAlign: 'left', cursor: 'pointer' }}>
                 <span style={{ display: 'block', position: 'relative' }}>
-                <img src={solution.image} alt={t(solution.title)} style={{ width: '100%', aspectRatio: '4/5', objectFit: 'contain', display: 'block', borderRadius: 4, background: 'var(--linen)' }} />
+                <img src={solution.image} alt={t(solution.title)} style={{ width: '100%', aspectRatio: '4/5', objectFit: BEAUTY_IDS.has(solution.id) ? 'cover' : 'contain', objectPosition: 'center', display: 'block', borderRadius: 4, background: 'var(--linen)' }} />
                   <span className="catalog-details">{t("Ver detalhes")}</span>
                 </span>
                 <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8, marginTop: 12 }}>

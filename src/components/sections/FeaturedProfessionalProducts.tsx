@@ -35,7 +35,7 @@ export function FeaturedProfessionalProducts() {
             return (
               <button key={product.id} type="button" onClick={() => setSelected(product)} aria-label={`Ver ${product.title}`} style={{ padding: 0, textAlign: 'left', color: 'var(--ink)', background: 'transparent', border: '1px solid var(--rule)', borderRadius: 6, cursor: 'pointer', overflow: 'hidden', transition: 'transform 180ms ease, box-shadow 180ms ease' }} onMouseEnter={event => { event.currentTarget.style.transform = 'translateY(-3px)'; event.currentTarget.style.boxShadow = '0 14px 32px rgba(38,34,30,.09)' }} onMouseLeave={event => { event.currentTarget.style.transform = 'none'; event.currentTarget.style.boxShadow = 'none' }}>
                 <div style={{ background: '#eee8df', overflow: 'hidden' }}>
-                  <img src={product.image} alt={product.title} loading="eager" style={{ display: 'block', width: '100%', aspectRatio: '1.14 / 1', objectFit: product.id === 'kit-pedi-instrutor' ? 'contain' : 'cover' }} />
+                  <img src={product.image} alt={product.title} loading="eager" style={{ display: 'block', width: '100%', aspectRatio: '1.14 / 1', objectFit: 'cover', objectPosition: 'center' }} />
                 </div>
                 <div style={{ padding: mobile ? '17px 18px 20px' : '20px 22px 24px' }}>
                   <p className="kicker" style={{ margin: '0 0 8px', color: 'var(--ink-mute)', fontSize: 11 }}>LUSO PRINT · PROFISSIONAL</p>

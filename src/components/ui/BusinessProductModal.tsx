@@ -29,7 +29,7 @@ export function BusinessProductModal({ solution, onClose }: { solution: Solution
   const [plateColor, setPlateColor] = useState('')
   const [nameColor, setNameColor] = useState('')
   const organizerPrice = blackFridayBusinessPrice(solution.id, 'price' in solution && typeof solution.price === 'number' ? solution.price : 0)
-  const organizerSecondPrice = solution.id === 'organizador-atendimento-f1' && organizerPrice === 12.9 ? 9.9 : organizerPrice
+  const organizerSecondPrice = solution.id === 'organizador-atendimento-f1' && organizerPrice === 11.9 ? 8.9 : organizerPrice
   const organizerTotal = organizerPrice + (organizerQty > 1 ? organizerSecondPrice : 0) + Math.max(0, organizerQty - 2) * organizerPrice
   const organizerMessage = encodeURIComponent(`Olá! Gostaria de encomendar ${organizerQty} × ${solution.title}. Cor da placa: ${plateColor || 'por escolher'}. Cor do nome: ${nameColor || 'por escolher'}. Total indicado: €${organizerTotal.toFixed(2).replace('.', ',')}.`)
   const colorsReady = Boolean(plateColor && nameColor)
@@ -40,7 +40,7 @@ export function BusinessProductModal({ solution, onClose }: { solution: Solution
               {t(solution.id === 'kit-nail-instrutor' ? (
                 <NailKitGallery />
               ) : (
-                <img src={selectedPhotos[solution.id] ?? solution.image} alt={t(solution.title)} style={{ width: '100%', display: 'block', borderRadius: 4, ...(solution.id === 'kit-pedi-instrutor' ? { aspectRatio: '3/4', objectFit: 'contain' as const } : {}) }} />
+                <img src={selectedPhotos[solution.id] ?? solution.image} alt={t(solution.title)} style={{ width: '100%', display: 'block', borderRadius: 4, ...(solution.id === 'kit-pedi-instrutor' ? { aspectRatio: '3/4', objectFit: 'cover' as const, objectPosition: 'center' } : {}) }} />
               ))}
               {t('images' in solution && solution.images && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 12 }}>
@@ -71,7 +71,7 @@ export function BusinessProductModal({ solution, onClose }: { solution: Solution
                     {ORGANIZER_COLORS.map(color => <button key={`name-${color.name}`} type="button" onClick={() => setNameColor(color.name)} aria-label={`Cor do nome: ${color.name}`} aria-pressed={nameColor === color.name} title={color.name} style={{ width: 38, height: 38, borderRadius: '50%', background: color.hex, border: nameColor === color.name ? '3px solid var(--linen)' : '1px solid rgba(40,36,32,.08)', outline: nameColor === color.name ? '2px solid var(--ink)' : 'none', outlineOffset: 2, boxShadow: '0 2px 5px rgba(30,26,22,.12)', cursor: 'pointer' }} />)}
                   </div>
                 </fieldset>
-                <div style={{ margin: '0 0 20px', color: 'var(--terracotta)', fontSize: 13, lineHeight: 1.6 }}>{isBlackFridayActive() && t('Black Friday: a 2.ª unidade fica por €9,90.')}<label style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, color: 'var(--ink-soft)' }}>{t('Quantidade')}<input type="number" min={1} step={1} value={organizerQty} onChange={event => setOrganizerQty(Math.max(1, Math.floor(Number(event.target.value) || 1)))} style={{ width: 70, padding: 7, border: '1px solid var(--rule)', borderRadius: 4, font: 'inherit' }} /></label><strong style={{ display: 'block', marginTop: 8, color: 'var(--ink)' }}>{t('Total:')} €{organizerTotal.toFixed(2).replace('.', ',')}</strong></div>
+                <div style={{ margin: '0 0 20px', color: 'var(--terracotta)', fontSize: 13, lineHeight: 1.6 }}>{isBlackFridayActive() && t('Black Friday: a 2.ª unidade fica por €8,90.')}<label style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, color: 'var(--ink-soft)' }}>{t('Quantidade')}<input type="number" min={1} step={1} value={organizerQty} onChange={event => setOrganizerQty(Math.max(1, Math.floor(Number(event.target.value) || 1)))} style={{ width: 70, padding: 7, border: '1px solid var(--rule)', borderRadius: 4, font: 'inherit' }} /></label><strong style={{ display: 'block', marginTop: 8, color: 'var(--ink)' }}>{t('Total:')} €{organizerTotal.toFixed(2).replace('.', ',')}</strong></div>
               </>)}
               <p style={{ color: 'var(--ink-soft)', lineHeight: 1.7, whiteSpace: 'pre-line' }}>{t(solution.description)}</p>
               {t(solution.id === 'kit-nail-instrutor' && (
