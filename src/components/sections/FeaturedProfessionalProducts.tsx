@@ -29,7 +29,7 @@ export function FeaturedProfessionalProducts() {
         <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 24, marginBottom: mobile ? 24 : 36, flexWrap: 'wrap' }}>
           <div>
             <p className="kicker" style={{ color: 'var(--ink-mute)', margin: '0 0 12px' }}>FORMAÇÃO &amp; DEMONSTRAÇÃO</p>
-            <h1 className="serif" style={{ fontWeight: 400, fontSize: mobile ? 38 : 54, lineHeight: 1.05, margin: 0 }}>Os essenciais para profissionais</h1>
+            <h1 className="serif" style={{ fontWeight: 400, fontSize: mobile ? 'clamp(27px, 8vw, 36px)' : 54, lineHeight: 1.05, margin: 0 }}>Os essenciais para profissionais</h1>
           </div>
           <a href="/empresas#kit-nail-instrutor" className="btn-ghost" style={{ whiteSpace: 'nowrap' }}>Ver todos os detalhes →</a>
         </div>
@@ -42,7 +42,8 @@ export function FeaturedProfessionalProducts() {
             gap: mobile ? 12 : 24,
             ...(mobile ? {
               gridAutoFlow: 'column',
-              gridAutoColumns: 'minmax(0, 90%)',
+              gridTemplateColumns: 'none',
+              gridAutoColumns: '82vw',
               overflowX: 'auto',
               scrollSnapType: 'x mandatory',
               paddingBlock: 4,
@@ -54,15 +55,15 @@ export function FeaturedProfessionalProducts() {
           {products.map(product => {
             const { amount, sale } = priceLabel(product)
             return (
-              <button key={product.id} type="button" onClick={() => setSelected(product)} aria-label={`Ver ${product.title}`} style={{ scrollSnapAlign: mobile ? 'start' : undefined, padding: 0, textAlign: 'left', color: 'var(--ink)', background: 'transparent', border: '1px solid var(--rule)', borderRadius: 6, cursor: 'pointer', overflow: 'hidden', transition: 'transform 180ms ease, box-shadow 180ms ease' }} onMouseEnter={event => { event.currentTarget.style.transform = 'translateY(-3px)'; event.currentTarget.style.boxShadow = '0 14px 32px rgba(38,34,30,.09)' }} onMouseLeave={event => { event.currentTarget.style.transform = 'none'; event.currentTarget.style.boxShadow = 'none' }}>
-                <div style={{ background: '#eee8df', overflow: 'hidden' }}>
-                  <img src={product.image} alt={product.title} loading="eager" style={{ display: 'block', width: '100%', aspectRatio: '1.14 / 1', objectFit: 'cover', objectPosition: 'center' }} />
+              <button key={product.id} type="button" onClick={() => setSelected(product)} aria-label={`Ver ${product.title}`} style={{ scrollSnapAlign: mobile ? 'start' : undefined, display: 'flex', flexDirection: 'column', minWidth: 0, padding: 0, textAlign: 'left', color: 'var(--ink)', background: 'transparent', border: '1px solid var(--rule)', borderRadius: 6, cursor: 'pointer', overflow: 'hidden', transition: 'transform 180ms ease, box-shadow 180ms ease' }} onMouseEnter={event => { event.currentTarget.style.transform = 'translateY(-3px)'; event.currentTarget.style.boxShadow = '0 14px 32px rgba(38,34,30,.09)' }} onMouseLeave={event => { event.currentTarget.style.transform = 'none'; event.currentTarget.style.boxShadow = 'none' }}>
+                <div style={{ width: '100%', flexShrink: 0, position: 'relative', aspectRatio: '1 / 1', background: '#eee8df', overflow: 'hidden' }}>
+                  <img src={product.image} alt={product.title} loading="eager" style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                 </div>
-                <div style={{ padding: mobile ? '17px 18px 20px' : '20px 22px 24px' }}>
+                <div style={{ width: '100%', boxSizing: 'border-box', padding: mobile ? '12px 14px 16px' : '20px 22px 24px' }}>
                   <p className="kicker" style={{ margin: '0 0 8px', color: 'var(--ink-mute)', fontSize: 11 }}>LUSO PRINT · PROFISSIONAL</p>
-                  <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: mobile ? 'wrap' : 'nowrap', gap: mobile ? 4 : 12 }}>
-                    <h2 className="serif" style={{ fontWeight: 400, fontSize: mobile ? 21 : 27, margin: 0 }}>{product.title}</h2>
-                    <span style={{ fontFamily: 'var(--serif)', fontSize: 21, textAlign: 'right', color: sale ? 'var(--terracotta)' : 'var(--ink)' }}>{amount}</span>
+                  <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexDirection: mobile ? 'column' : 'row', gap: mobile ? 4 : 12 }}>
+                    <h2 className="serif" style={{ fontWeight: 400, fontSize: mobile ? 19 : 27, margin: 0 }}>{product.title}</h2>
+                    <span style={{ fontFamily: 'var(--serif)', fontSize: mobile ? 16 : 21, whiteSpace: mobile ? 'nowrap' : 'normal', textAlign: mobile ? 'left' : 'right', color: sale ? 'var(--terracotta)' : 'var(--ink)' }}>{amount}</span>
                   </div>
                   {sale && isBlackFridayActive() && <span style={{ display: 'inline-block', marginTop: 10, color: 'var(--terracotta)', fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase' }}>Black Friday</span>}
                 </div>

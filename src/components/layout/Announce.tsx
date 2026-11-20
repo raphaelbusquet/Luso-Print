@@ -12,7 +12,7 @@ export function Announce() {
         fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase',
         padding: '7px 16px', textAlign: 'center', fontWeight: 400,
         lineHeight: 1.5,
-      }}><span>{t("Portugal · Envios grátis acima de €60")}</span>
+      }}><span>{t("Portugal · Envios grátis acima de €70")}</span>
         <LanguageSelector /></div>
     )
   }
@@ -25,7 +25,7 @@ export function Announce() {
     }}>
       <div className="shell-wide" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <span style={{ opacity: 0.6 }}>{t("LISBOA · PORTUGAL")}</span>
-        <span>{t("Envios gratuitos para Portugal em encomendas acima de €60")}</span>
+        <span>{t("Envios gratuitos para Portugal em encomendas acima de €70")}</span>
         <span style={{ opacity: 0.6, display: 'flex', gap: 18 }}>
           <span></span>
           <span style={{ opacity: 0.4 }}>{t("·")}</span>
