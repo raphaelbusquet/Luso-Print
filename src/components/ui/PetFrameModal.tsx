@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../../lib/blackFriday'
 import { translate as t } from '../../i18n/translate'
 import { ProductOverlay } from './ProductOverlay'
 import { useCart } from '../../context/CartContext'
@@ -40,10 +41,10 @@ export function PetFrameModal({ product, onClose }: { product: ShopProduct; onCl
               <strong>{t("Fotografias e nomes pelo WhatsApp")}</strong>
               <p style={{ margin: '6px 0 0' }}>{t("Ao finalizar a encomenda no WhatsApp, envie uma fotografia nítida e o nome de cada pet que deseja incluir no quadro. Vamos usar essas informações para personalizar a sua peça.")}</p>
             </div>
-            <p aria-live="polite" style={{ fontSize: 14 }}>{t("Quadro com ")}{t(label)}{t(" · €")}{t(product.price)}{t(" por unidade")}</p>
+            <p aria-live="polite" style={{ fontSize: 14 }}>{t("Quadro com ")}{t(label)}{t(" · ")}{blackFridayPriceLabel(product.price, blackFridayPrice(product.price, product.id))}{t(" por unidade")}</p>
             <label style={{ display: 'block', fontSize: 13, margin: '20px 0' }}>{t("Quantidade de quadros")}<input type="number" min={1} step={1} value={qty} onChange={e => { setQty(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 80, padding: 10, marginTop: 8, border: '1px solid var(--rule)', borderRadius: 4, background: 'var(--paper)', color: 'var(--ink)', fontFamily: 'inherit' }} />
             </label>
-            <button type="button" disabled={added} onClick={addFrame} className="btn btn-solid">{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${product.price * qty}`)}</button>
+            <button type="button" disabled={added} onClick={addFrame} className="btn btn-solid">{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${(blackFridayPrice(product.price, product.id) * qty).toFixed(2).replace('.', ',')}`)}</button>
             <br /><br />
             <a href={contact} target="_blank" rel="noopener noreferrer" className="btn btn-solid">{t("Pedir informações →")}</a>
           </div>

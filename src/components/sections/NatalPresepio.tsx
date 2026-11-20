@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../../lib/blackFriday'
 import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext'
@@ -31,12 +32,12 @@ export function NatalPresepio() {
       <div>
         <span className="kicker">{t("NATAL · FÉ, AMOR E ESPERANÇA")}</span>
         <h3 className="serif" style={{ fontSize: mobile ? 38 : 48, lineHeight: 1.1, fontWeight: 400, margin: '18px 0' }}>{t("Presépio de Natal")}</h3>
-        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{t("€16 ")}<span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade")}</span></p>
+        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{blackFridayPriceLabel(16, blackFridayPrice(16))} <span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade")}</span></p>
         <p style={{ color: 'var(--ink-soft)', lineHeight: 1.8 }}>{t("No coração do Natal está o nascimento de Jesus. Este presépio celebra a Sagrada Família e recorda a humildade, o amor e a esperança que tornam esta época tão especial. Uma peça para dar um lugar de destaque ao verdadeiro sentido do Natal, reunir a família e cultivar momentos de fé e gratidão em casa.")}</p>
         <label style={{ display: 'block', fontSize: 13, margin: '24px 0 16px' }}>{t("Quantidade de presépios")}<input type="number" min={1} step={1} value={qty} onChange={e => { setQty(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 90, marginTop: 8, padding: 10, border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', background: 'var(--paper)', color: 'var(--ink)' }} />
         </label>
-        <p style={{ fontSize: 14 }}>{t("Total: €")}{t(16 * qty)}</p>
-        <button type="button" onClick={addPresepio} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${16 * qty}`)}</button>
+        <p style={{ fontSize: 14 }}>{t("Total: €")}{t(blackFridayPrice(16) * qty)}</p>
+        <button type="button" onClick={addPresepio} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${blackFridayPrice(16) * qty}`)}</button>
       </div>
     </article>
   )

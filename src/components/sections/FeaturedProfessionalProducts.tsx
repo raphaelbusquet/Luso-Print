@@ -1,6 +1,7 @@
+import { blackFridayPriceLabel } from '../../lib/blackFriday'
 import { useState } from 'react'
 import { BUSINESS_SOLUTIONS } from '../../data/empresas'
-import { blackFridayBusinessPrice, isBlackFridayActive } from '../../lib/blackFriday'
+import { blackFridayBusinessPrice, blackFridayNailKitPrice, isBlackFridayActive } from '../../lib/blackFriday'
 import { useIsMobile } from '../../hooks/useIsMobile'
 import { BusinessProductModal } from '../ui/BusinessProductModal'
 
@@ -14,8 +15,11 @@ export function FeaturedProfessionalProducts() {
 
   const priceLabel = (product: Solution) => {
     const regular = 'price' in product && typeof product.price === 'number' ? product.price : 59
-    const sale = blackFridayBusinessPrice(product.id, regular)
-    const amount = product.id === 'kit-nail-instrutor' ? `Desde €${sale.toFixed(2).replace('.', ',')}` : `€${sale.toFixed(2).replace('.', ',')}`
+    const sale = product.id === 'kit-nail-instrutor'
+      ? blackFridayNailKitPrice(regular, 20)
+      : blackFridayBusinessPrice(regular)
+    const offer = blackFridayPriceLabel(regular, sale)
+    const amount = product.id === 'kit-nail-instrutor' ? `Desde ${offer}` : offer
     return { amount, sale: sale < regular }
   }
 
@@ -58,7 +62,7 @@ export function FeaturedProfessionalProducts() {
                   <p className="kicker" style={{ margin: '0 0 8px', color: 'var(--ink-mute)', fontSize: 11 }}>LUSO PRINT · PROFISSIONAL</p>
                   <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: mobile ? 'wrap' : 'nowrap', gap: mobile ? 4 : 12 }}>
                     <h2 className="serif" style={{ fontWeight: 400, fontSize: mobile ? 21 : 27, margin: 0 }}>{product.title}</h2>
-                    <span style={{ fontFamily: 'var(--serif)', fontSize: 21, whiteSpace: 'nowrap', color: sale ? 'var(--terracotta)' : 'var(--ink)' }}>{amount}</span>
+                    <span style={{ fontFamily: 'var(--serif)', fontSize: 21, textAlign: 'right', color: sale ? 'var(--terracotta)' : 'var(--ink)' }}>{amount}</span>
                   </div>
                   {sale && isBlackFridayActive() && <span style={{ display: 'inline-block', marginTop: 10, color: 'var(--terracotta)', fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase' }}>Black Friday</span>}
                 </div>

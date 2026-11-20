@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../../lib/blackFriday'
 import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext'
@@ -22,7 +23,7 @@ export function NatalOrnamentos() {
     addItem({ name: 'Ornamentos para Árvore de Natal — pack de 10 unidades', price: 10, productId: 'natal-ornamentos-arvore-pack-10', img: PHOTOS[0], note: `Cor: ${color} · Cada pack contém 10 ornamentos` }, packs)
     setAdded(true)
   }
-  const contact = `https://wa.me/351928419522?text=${encodeURIComponent(`Olá! Gostaria de encomendar a Ornamentos para Árvore de Natal na cor ${color}, ${packs} pack(s) de 10 unidades, a €10 por pack. Podem dar-me mais informações?`)}`
+  const contact = `https://wa.me/351928419522?text=${encodeURIComponent(`Olá! Gostaria de encomendar a Ornamentos para Árvore de Natal na cor ${color}, ${packs} pack(s) de 10 unidades, a €${blackFridayPrice(10).toFixed(2).replace('.', ',')} por pack. Podem dar-me mais informações?`)}`
   return (
     <article style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: mobile ? 28 : 56, marginTop: 64, paddingTop: 64, borderTop: '1px solid var(--rule)', alignItems: 'center' }}>
       <div>
@@ -38,7 +39,7 @@ export function NatalOrnamentos() {
       <div>
         <span className="kicker">{t("NATAL · À SUA COR")}</span>
         <h3 className="serif" style={{ fontSize: mobile ? 38 : 48, lineHeight: 1.1, fontWeight: 400, margin: '18px 0' }}>{t("Ornamentos para Árvore de Natal")}</h3>
-        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{t("€10 ")}<span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / pack de 10 unidades")}</span></p>
+        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{blackFridayPriceLabel(10, blackFridayPrice(10))} <span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / pack de 10 unidades")}</span></p>
         <p style={{ color: 'var(--ink-soft)', lineHeight: 1.8 }}>{t("Pequenos enfeites para uma árvore cheia de encanto. Com motivos natalícios como flocos de neve, árvores e outros símbolos desta época, estes ornamentos dão um toque leve e divertido à decoração. Escolha a cor que combina com o seu Natal. Cada pack inclui 10 unidades.")}</p>
         <fieldset style={{ border: 0, padding: 0, margin: '28px 0' }}>
           <legend className="kicker" style={{ marginBottom: 16 }}>{t("Cor — ")}{t(color)}</legend>
@@ -55,8 +56,8 @@ export function NatalOrnamentos() {
         <p style={{ fontSize: 12, color: 'var(--ink-mute)', lineHeight: 1.6 }}>{t("As fotografias ilustram o modelo. A peça será produzida na cor escolhida.")}</p>
         <label style={{ display: 'block', fontSize: 13, margin: '24px 0 16px' }}>{t("Quantidade de packs (10 ornamentos por pack)")}<input type="number" min={1} step={1} value={packs} onChange={e => { setPacks(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 90, marginTop: 8, padding: 10, border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', background: 'var(--paper)', color: 'var(--ink)' }} />
         </label>
-        <p style={{ fontSize: 14 }}>{t(packs * 10)}{t(" ornamentos · Total: €")}{t(packs * 10)}</p>
-        <button type="button" onClick={addPack} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${packs * 10}`)}</button>
+        <p style={{ fontSize: 14 }}>{t(packs * 10)}{t(" ornamentos · Total: €")}{t((packs * blackFridayPrice(10)).toFixed(2).replace('.', ','))}</p>
+        <button type="button" onClick={addPack} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${packs * blackFridayPrice(10)}`)}</button>
         <a style={{ display: 'block', marginTop: 20, fontSize: 13, color: 'var(--ink-soft)' }} href={contact} target="_blank" rel="noopener noreferrer" className="btn btn-solid">{t("Pedir informações →")}</a>
       </div>
     </article>

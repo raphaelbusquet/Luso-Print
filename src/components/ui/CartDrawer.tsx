@@ -327,7 +327,7 @@ export function CartDrawer({ open, onClose }: Props) {
             ))}
             {t(promoSavings > 0 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10, color: 'var(--terracotta)', fontSize: 13 }}>
-                <span>{t("Black Friday · 30%")}</span><span>−€{t(promoSavings.toFixed(2))}</span>
+                <span>{t("Black Friday")}</span><span>−€{t(promoSavings.toFixed(2))}</span>
               </div>
             ))}
             {t(discount > 0 && (

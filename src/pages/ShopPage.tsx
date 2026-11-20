@@ -1,3 +1,4 @@
+import { blackFridayPriceLabel } from '../lib/blackFriday'
 import { translate as t } from '../i18n/translate'
 import { useState, useEffect } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
@@ -36,7 +37,7 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
   const { isFav, toggle } = useFavorites()
   const [hover, setHover] = useState(false)
   const fav = isFav(p.id)
-  const salePrice = blackFridayPrice(p.price, p.universoId)
+  const salePrice = blackFridayPrice(p.price, p.id)
 
 
   return (
@@ -95,7 +96,7 @@ function ShopCard({ product: p, onOpen }: { product: ShopProduct; onOpen: () => 
 
       <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
         <button type="button" onClick={onOpen} className="serif" style={{ padding: 0, border: 0, background: 'transparent', color: 'inherit', textAlign: 'left', cursor: 'pointer', fontSize: 17, lineHeight: 1.2 }}>{t(p.name)}</button>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0, textAlign: 'right' }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : isBlackFridayActive() && salePrice < p.price ? <><s style={{ fontSize: 13, opacity: 0.55 }}>€{p.price}</s><br /><strong style={{ color: 'var(--terracotta)', fontWeight: 500 }}>€{salePrice.toFixed(2).replace('.00', '')}</strong></> : `${['bebes-bubble-layers', 'familia-funko'].includes(p.id) ? 'Desde ' : ''}€${p.price}`)}</div>
+        <div style={{ fontFamily: 'var(--serif)', fontSize: 17, flexShrink: 0, textAlign: 'right' }}>{t(p.quoteOnly ? 'Sob consulta' : p.comingSoon ? 'Em breve' : isBlackFridayActive() && salePrice < p.price ? <><s style={{ fontSize: 13, opacity: 0.55 }}>€{p.price}</s><br /><strong style={{ color: 'var(--terracotta)', fontWeight: 500 }}>{blackFridayPriceLabel(p.price, salePrice)}</strong></> : `${['bebes-bubble-layers', 'familia-funko'].includes(p.id) ? 'Desde ' : ''}€${p.price}`)}</div>
       </div>
     </div>
   )

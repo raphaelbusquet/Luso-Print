@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../../lib/blackFriday'
 import { useState } from 'react'
 import { translate as t } from '../../i18n/translate'
 import { FUNKO_OPTIONS } from '../../data/funko'
@@ -42,7 +43,7 @@ export function FunkoFamilyModal({ product, onClose }: { product: ShopProduct; o
                 <label key={option.people} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, position: 'relative', aspectRatio: '1/1', border: `2px solid ${people === option.people ? 'var(--terracotta)' : 'var(--rule)'}`, borderRadius: 4, background: people === option.people ? 'var(--linen)' : 'transparent', cursor: 'pointer' }}>
                   <input type="radio" name="funko-people" value={option.people} checked={people === option.people} onChange={() => { setPeople(option.people); setAdded(false) }} style={{ accentColor: 'var(--terracotta)' }} />
                   <span>{option.people} {t(option.people === 1 ? 'pessoa' : 'pessoas')}</span>
-                  <strong className="serif" style={{ fontSize: 28, fontWeight: 400 }}>€{option.price}</strong>
+                  <strong className="serif" style={{ fontSize: 28, fontWeight: 400 }}>{blackFridayPriceLabel(option.price, blackFridayPrice(option.price, product.id))}</strong>
                 </label>
               ))}
             </div>
@@ -51,8 +52,8 @@ export function FunkoFamilyModal({ product, onClose }: { product: ShopProduct; o
             <strong>{t('Funko Pet — em breve')}</strong>
             <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.6 }}>{t('Ainda sem data de lançamento. Esta opção não está disponível para encomenda.')}</p>
           </div>
-          <p aria-live="polite" className="serif" style={{ fontSize: 28 }}>{t('Total:')} €{selected.price}</p>
-          <button type="button" className="btn btn-solid" onClick={add} disabled={added} style={{ width: '100%', justifyContent: 'center' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${selected.price}`)}</button>
+          <p aria-live="polite" className="serif" style={{ fontSize: 28 }}>{t('Total:')} {blackFridayPriceLabel(selected.price, blackFridayPrice(selected.price, product.id))}</p>
+          <button type="button" className="btn btn-solid" onClick={add} disabled={added} style={{ width: '100%', justifyContent: 'center' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${blackFridayPrice(selected.price, product.id).toFixed(2).replace('.', ',')}`)}</button>
         </div>
       </div>
     </ProductOverlay>

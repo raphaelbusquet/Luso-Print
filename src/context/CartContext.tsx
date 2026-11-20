@@ -2,8 +2,6 @@ import { translate as t } from '../i18n/translate'
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { supabase } from '../lib/supabase'
 import { blackFridayPrice } from '../lib/blackFriday'
-import { ALL_SHOP_PRODUCTS } from '../data/shop'
-import { PRODUCTS } from '../data'
 
 export type CartItem = {
   id: string
@@ -117,12 +115,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   const total = items.reduce((s, i) => s + i.price * i.qty, 0)
-  const discountedTotal = items.reduce((sum, item) => {
-    const shopProduct = ALL_SHOP_PRODUCTS.find(product => product.id === item.productId)
-    const homeProduct = PRODUCTS.find(product => product.id === item.productId)
-    const category = shopProduct?.universoId ?? homeProduct?.collection
-    return sum + blackFridayPrice(item.price, category) * item.qty
-  }, 0)
+  const discountedTotal = items.reduce((sum, item) => sum + blackFridayPrice(item.price, item.productId) * item.qty, 0)
   const promoSavings = Math.round((total - discountedTotal) * 100) / 100
   const finalTotal = discount > 0 ? Math.round(discountedTotal * (1 - discount) * 100) / 100 : discountedTotal
   const count = items.reduce((s, i) => s + i.qty, 0)

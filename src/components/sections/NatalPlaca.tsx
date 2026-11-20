@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../../lib/blackFriday'
 import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext'
@@ -31,7 +32,7 @@ export function NatalPlaca() {
       <div>
         <span className="kicker">{t("NATAL · PEQUENOS DETALHES")}</span>
         <h3 className="serif" style={{ fontSize: mobile ? 38 : 48, lineHeight: 1.1, fontWeight: 400, margin: '18px 0' }}>{t("Placa Feliz Natal")}</h3>
-        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{t("€8,49 ")}<span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade")}</span></p>
+        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{blackFridayPriceLabel(8.49, blackFridayPrice(8.49))} <span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade")}</span></p>
         <p style={{ color: 'var(--ink-soft)', lineHeight: 1.8 }}>{t("Uma mensagem simples que enche a casa de espírito natalício. A placa Feliz Natal combina letras em relevo com um floco de neve decorativo, criando um detalhe especial para a sala, a entrada ou uma prateleira. Uma peça para dar as boas-vindas à época mais acolhedora do ano.")}</p>
         <div style={{ borderTop: '1px solid var(--rule)', borderBottom: '1px solid var(--rule)', padding: '16px 0', margin: '24px 0', fontSize: 14, lineHeight: 1.8 }}>
           <div>{t("Placa decorativa Feliz Natal")}</div>
@@ -39,8 +40,8 @@ export function NatalPlaca() {
         </div>
         <label style={{ display: 'block', fontSize: 13, margin: '24px 0 16px' }}>{t("Quantidade de placas")}<input type="number" min={1} step={1} value={qty} onChange={e => { setQty(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 90, marginTop: 8, padding: 10, border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', background: 'var(--paper)', color: 'var(--ink)' }} />
         </label>
-        <p style={{ fontSize: 14 }}>{t("Total: €")}{t((8.49 * qty).toFixed(2).replace('.', ','))}</p>
-        <button type="button" onClick={addPlaque} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${(8.49 * qty).toFixed(2).replace('.', ',')}`)}</button>
+        <p style={{ fontSize: 14 }}>{t("Total: €")}{t((blackFridayPrice(8.49) * qty).toFixed(2).replace('.', ','))}</p>
+        <button type="button" onClick={addPlaque} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${(blackFridayPrice(8.49) * qty).toFixed(2).replace('.', ',')}`)}</button>
       </div>
     </article>
   )

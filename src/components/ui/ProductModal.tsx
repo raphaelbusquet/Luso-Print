@@ -1,3 +1,4 @@
+import { blackFridayPriceLabel } from '../../lib/blackFriday'
 import { FunkoFamilyModal } from './FunkoFamilyModal'
 import { translate as t } from '../../i18n/translate'
 import { PetFrameModal } from './PetFrameModal'
@@ -200,7 +201,7 @@ export function ProductModal({ product: p, onClose }: Props) {
 
   const isBubble = p.id === 'bebes-bubble-layers'
   const regularUnitPrice = isBubble && bubbleStyle === 'themed' ? 45 : p.price
-  const unitPrice = blackFridayPrice(regularUnitPrice, p.universoId)
+  const unitPrice = blackFridayPrice(regularUnitPrice, p.id)
   const fav = isFav(p.id)
   const inCart = items.some(i => i.productId === p.id)
   const btnDisabled = inCart && !qtyModified
@@ -233,7 +234,7 @@ export function ProductModal({ product: p, onClose }: Props) {
       const colors = isTrevoKit ? `Kit com 2 bandejas · Bandeja 1: ${selectedColor} · Bandeja 2: ${secondColor}` : `Cor: ${selectedColor}`
       note = note ? `${note} · ${colors}` : colors
     }
-    addItem({ name: p.name, price: unitPrice, img: p.img, productId: p.id, note }, qty)
+    addItem({ name: p.name, price: regularUnitPrice, img: p.img, productId: p.id, note }, qty)
     setQtyModified(false)
   }
 
@@ -382,7 +383,7 @@ export function ProductModal({ product: p, onClose }: Props) {
 
           {/* Price + tag inline */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '8px 0 20px' }}>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{unitPrice < regularUnitPrice && <s style={{ display: 'block', fontSize: 16, color: 'var(--ink-mute)' }}>€{regularUnitPrice}</s>}{t(isBubble && bubbleStyle === 'simple' ? 'Desde ' : '')}{t("€")}{t(unitPrice)}</div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: 26, color: 'var(--ink)' }}>{unitPrice < regularUnitPrice && <s style={{ display: 'block', fontSize: 16, color: 'var(--ink-mute)' }}>€{regularUnitPrice}</s>}{t(isBubble && bubbleStyle === 'simple' ? 'Desde ' : '')}{blackFridayPriceLabel(regularUnitPrice, unitPrice)}</div>
             {t(p.tag && (
               <span style={{
                 background: TAG_COLOR[p.tag] ?? 'rgba(43,39,34,0.55)',

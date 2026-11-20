@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../lib/blackFriday'
 import { ProductOverlay } from '../components/ui/ProductOverlay'
 import { translate as t } from '../i18n/translate'
 import { NatalOrnamentos } from '../components/sections/NatalOrnamentos'
@@ -20,14 +21,14 @@ import { useCart } from '../context/CartContext'
 import { useIsMobile } from '../hooks/useIsMobile'
 
 const NATAL_ITEMS = [
-  { id: 'bolas', title: 'Bola de Natal Vazada', price: '€10', image: '/assets/products/natal/bola-natal-vazada-1.png', Detail: NatalProducts },
-  { id: 'ornamentos', title: 'Ornamentos para Árvore de Natal', price: '€10', image: '/assets/products/natal/ornamentos-arvore-2.png', Detail: NatalOrnamentos },
-  { id: 'mini-arvore', title: 'Miniárvore de Natal', price: 'Desde €10', image: '/assets/products/natal/mini-arvore-atual-1.png', Detail: NatalMiniArvore },
-  { id: 'porta-retrato', title: 'Porta-retrato Árvore de Natal', price: 'Desde €6', image: '/assets/products/natal/porta-retrato-arvore-1.png', Detail: NatalPortaRetrato },
-  { id: 'vela', title: 'Árvore de Natal para Vela', price: '€6,49', image: '/assets/products/natal/arvore-natal-vela-1.png', Detail: NatalArvoreVela },
-  { id: 'placa', title: 'Placa Feliz Natal', price: '€8,49', image: '/assets/products/natal/placa-feliz-natal-2.png', Detail: NatalPlaca },
-  { id: 'presepio', title: 'Presépio de Natal', price: '€16', image: '/assets/products/natal/presepio-1.png', Detail: NatalPresepio },
-  { id: 'grinch', title: 'Suporte de Parede Grinch', price: '€26', image: '/assets/products/natal/suporte-parede-grinch.png', Detail: NatalGrinch },
+  { id: 'bolas', title: 'Bola de Natal Vazada', price: blackFridayPriceLabel(10, blackFridayPrice(10)), image: '/assets/products/natal/bola-natal-vazada-1.png', Detail: NatalProducts },
+  { id: 'ornamentos', title: 'Ornamentos para Árvore de Natal', price: blackFridayPriceLabel(10, blackFridayPrice(10)), image: '/assets/products/natal/ornamentos-arvore-2.png', Detail: NatalOrnamentos },
+  { id: 'mini-arvore', title: 'Miniárvore de Natal', price: 'Desde ' + blackFridayPriceLabel(10, blackFridayPrice(10)), image: '/assets/products/natal/mini-arvore-atual-1.png', Detail: NatalMiniArvore },
+  { id: 'porta-retrato', title: 'Porta-retrato Árvore de Natal', price: 'Desde ' + blackFridayPriceLabel(6, blackFridayPrice(6)), image: '/assets/products/natal/porta-retrato-arvore-1.png', Detail: NatalPortaRetrato },
+  { id: 'vela', title: 'Árvore de Natal para Vela', price: blackFridayPriceLabel(6.49, blackFridayPrice(6.49)), image: '/assets/products/natal/arvore-natal-vela-1.png', Detail: NatalArvoreVela },
+  { id: 'placa', title: 'Placa Feliz Natal', price: blackFridayPriceLabel(8.49, blackFridayPrice(8.49)), image: '/assets/products/natal/placa-feliz-natal-2.png', Detail: NatalPlaca },
+  { id: 'presepio', title: 'Presépio de Natal', price: blackFridayPriceLabel(16, blackFridayPrice(16)), image: '/assets/products/natal/presepio-1.png', Detail: NatalPresepio },
+  { id: 'grinch', title: 'Suporte de Parede Grinch', price: blackFridayPriceLabel(26, blackFridayPrice(26)), image: '/assets/products/natal/suporte-parede-grinch.png', Detail: NatalGrinch },
 ]
 
 export function NatalPage() {

@@ -1,3 +1,4 @@
+import { blackFridayPriceLabel } from '../../lib/blackFriday'
 import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { BUSINESS_SOLUTIONS, businessContact } from '../../data/empresas'
@@ -28,8 +29,8 @@ export function BusinessProductModal({ solution, onClose }: { solution: Solution
   const [organizerQty, setOrganizerQty] = useState(1)
   const [plateColor, setPlateColor] = useState('')
   const [nameColor, setNameColor] = useState('')
-  const organizerPrice = blackFridayBusinessPrice(solution.id, 'price' in solution && typeof solution.price === 'number' ? solution.price : 0)
-  const organizerSecondPrice = solution.id === 'organizador-atendimento-f1' && organizerPrice === 11.9 ? 8.9 : organizerPrice
+  const organizerPrice = blackFridayBusinessPrice('price' in solution && typeof solution.price === 'number' ? solution.price : 0)
+  const organizerSecondPrice = solution.id === 'organizador-atendimento-f1' && isBlackFridayActive() ? 8.9 : organizerPrice
   const organizerTotal = organizerPrice + (organizerQty > 1 ? organizerSecondPrice : 0) + Math.max(0, organizerQty - 2) * organizerPrice
   const organizerMessage = encodeURIComponent(`Olá! Gostaria de encomendar ${organizerQty} × ${solution.title}. Cor da placa: ${plateColor || 'por escolher'}. Cor do nome: ${nameColor || 'por escolher'}. Total indicado: €${organizerTotal.toFixed(2).replace('.', ',')}.`)
   const colorsReady = Boolean(plateColor && nameColor)
@@ -56,7 +57,7 @@ export function BusinessProductModal({ solution, onClose }: { solution: Solution
               <p className="kicker" style={{ color: 'var(--ink-mute)', marginTop: 20 }}>{t(['kit-nail-instrutor', 'kit-pedi-instrutor'].includes(solution.id) ? 'FORMAÇÃO & DEMONSTRAÇÃO' : 'À MEDIDA DA SUA MARCA')}</p>
               <h2 className="serif" style={{ fontWeight: 400, fontSize: 34, margin: '12px 0' }}>{t(solution.title)}</h2>
               {t('price' in solution && solution.price !== undefined && (
-                <p style={{ fontFamily: 'var(--serif)', fontSize: 28, margin: '0 0 12px' }}>{blackFridayBusinessPrice(solution.id, solution.price) < solution.price && <s style={{ fontSize: 18, color: 'var(--ink-mute)', marginRight: 10 }}>€{solution.price}</s>}<span style={{ color: blackFridayBusinessPrice(solution.id, solution.price) < solution.price ? 'var(--terracotta)' : 'inherit' }}>€{blackFridayBusinessPrice(solution.id, solution.price)}</span> <span style={{ fontFamily: 'var(--sans)', fontSize: 13 }}>{t("/ unidade")}</span></p>
+                <p style={{ fontFamily: 'var(--serif)', fontSize: 28, margin: '0 0 12px' }}>{blackFridayBusinessPrice(solution.price) < solution.price && <s style={{ fontSize: 18, color: 'var(--ink-mute)', marginRight: 10 }}>€{solution.price}</s>}<span style={{ color: blackFridayBusinessPrice(solution.price) < solution.price ? 'var(--terracotta)' : 'inherit' }}>{blackFridayPriceLabel(solution.price, blackFridayBusinessPrice(solution.price))}</span> <span style={{ fontFamily: 'var(--sans)', fontSize: 13 }}>{t("/ unidade")}</span></p>
               ))}
               {t(solution.id === 'organizador-atendimento-f1' && <>
                 <fieldset style={{ border: 0, padding: 0, margin: '24px 0' }}>

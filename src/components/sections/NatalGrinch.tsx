@@ -1,3 +1,4 @@
+import { blackFridayPrice, blackFridayPriceLabel } from '../../lib/blackFriday'
 import { translate as t } from '../../i18n/translate'
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext'
@@ -19,12 +20,12 @@ export function NatalGrinch() {
       <div>
         <span className="kicker">{t("NATAL · UM TOQUE DE DIVERSÃO")}</span>
         <h3 className="serif" style={{ fontSize: mobile ? 38 : 48, lineHeight: 1.1, fontWeight: 400, margin: '18px 0' }}>{t("Suporte de Parede Grinch")}</h3>
-        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{t("€26 ")}<span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade")}</span></p>
+        <p style={{ fontFamily: 'var(--serif)', fontSize: 30, margin: '0 0 8px' }}>{blackFridayPriceLabel(26, blackFridayPrice(26))} <span style={{ fontFamily: 'var(--sans)', fontSize: 14 }}>{t(" / unidade")}</span></p>
         <p style={{ color: 'var(--ink-soft)', lineHeight: 1.8 }}>{t("Para quem gosta de um Natal com uma pitada de humor. Com a inconfundível mão verde do Grinch, este suporte de parede dá um toque mais animado à decoração e transforma um cantinho da casa num detalhe cheio de personalidade. Uma forma divertida de surpreender a família e trazer ainda mais sorrisos a esta época.")}</p>
         <label style={{ display: 'block', fontSize: 13, margin: '24px 0 16px' }}>{t("Quantidade de suportes")}<input type="number" min={1} step={1} value={qty} onChange={e => { setQty(Math.max(1, Math.floor(Number(e.target.value) || 1))); setAdded(false) }} style={{ display: 'block', width: 90, marginTop: 8, padding: 10, border: '1px solid var(--rule)', borderRadius: 4, fontFamily: 'inherit', background: 'var(--paper)', color: 'var(--ink)' }} />
         </label>
-        <p style={{ fontSize: 14 }}>{t("Total: €")}{t(26 * qty)}</p>
-        <button type="button" onClick={addGrinch} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${26 * qty}`)}</button>
+        <p style={{ fontSize: 14 }}>{t("Total: €")}{t(blackFridayPrice(26) * qty)}</p>
+        <button type="button" onClick={addGrinch} disabled={added} className="btn btn-solid" style={{ cursor: added ? 'default' : 'pointer' }}>{t(added ? 'Adicionado ao cesto ✓' : `Adicionar ao cesto — €${blackFridayPrice(26) * qty}`)}</button>
       </div>
     </article>
   )
